@@ -1,5 +1,7 @@
-function Star() {
-  return <div>Star</div>;
+import { CSSProperties } from 'react';
+
+function Star(props: CSSProperties) {
+  return <div style={{ ...props }}>Star</div>;
 }
 
 export default Star;
