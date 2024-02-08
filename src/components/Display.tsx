@@ -5,7 +5,7 @@ import { selectCount } from 'store/counter';
 function Display(props: CSSProperties) {
   const counter = useAppSelector(selectCount);
   return (
-    <div id='display' style={{ ...props }}>
+    <div id='display' draggable='false' style={{ ...props }}>
       Display {counter.count}
     </div>
   );

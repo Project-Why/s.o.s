@@ -9,14 +9,15 @@ import { CSSProperties } from 'react';
 
 function Cockpit(props: CSSProperties) {
   return (
-    <div id='Cockpit' style={{ ...props }}>
+    <div id='Cockpit' draggable='false' style={{ ...props }}>
       <img
+        draggable='false'
         src={CockpitScreen}
         alt='Cockpit Screen'
         style={{ objectFit: 'cover' }}
       />
       <Display
-        zIndex={3}
+        zIndex={4}
         left='37%'
         width='28%'
         top='54%'
@@ -27,7 +28,7 @@ function Cockpit(props: CSSProperties) {
         alignItems='center'
       />
       <WritingButton
-        zIndex={3}
+        zIndex={4}
         left='20%'
         width='10%'
         top='90%'
@@ -36,7 +37,7 @@ function Cockpit(props: CSSProperties) {
         display='flex'
       />
       <LeftButton
-        zIndex={3}
+        zIndex={4}
         left='40%'
         width='10%'
         top='90%'
@@ -45,7 +46,7 @@ function Cockpit(props: CSSProperties) {
         display='flex'
       />
       <RightButton
-        zIndex={3}
+        zIndex={4}
         left='50%'
         width='10%'
         top='90%'

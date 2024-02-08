@@ -1,7 +1,33 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, useState } from 'react';
 
-function Star(props: CSSProperties) {
-  return <div style={{ ...props }}>Star</div>;
+import StarBubble from './StarBubble';
+
+export type StarProps = {
+  id: string;
+  image: string;
+  createdAt: Date;
+};
+
+function Star(props: CSSProperties & StarProps) {
+  const { id, image, createdAt } = props;
+  const [isHover, setIsHover] = useState(false);
+  return (
+    <>
+      <div id={`star_${id}`} draggable='false' style={{ ...props }}>
+        <img
+          draggable='false'
+          src={image}
+          alt={`star_${id}`}
+          style={{ objectFit: 'cover' }}
+        />
+      </div>
+      <StarBubble
+        id={id}
+        createdAt={createdAt}
+        visibility={isHover ? 'visible' : 'hidden'}
+      />
+    </>
+  );
 }
 
 export default Star;

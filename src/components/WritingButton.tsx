@@ -1,3 +1,4 @@
+import WritingButtonImageClickHover from 'assets/images/Cockpit/Button/Writing/W-Button-Click Hover.gif';
 import WritingButtonImageClick from 'assets/images/Cockpit/Button/Writing/W-Button-Click.gif';
 import WritingButtonImageHover from 'assets/images/Cockpit/Button/Writing/W-Button-Hover.gif';
 import WritingButtonImage from 'assets/images/Cockpit/Button/Writing/W-Button.gif';
@@ -19,7 +20,8 @@ function WritingButton(props: CSSProperties) {
       id='Writing button'
       image={WritingButtonImage}
       hoverImage={WritingButtonImageHover}
-      clickImange={WritingButtonImageClick}
+      clickImage={WritingButtonImageClick}
+      hoverClickImage={WritingButtonImageClickHover}
       clickHandler={clickHandler}
     />
   );

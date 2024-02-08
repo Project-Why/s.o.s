@@ -1,5 +1,5 @@
 import Cockpit from 'components/Cockpit';
-import DescryptionPaper from 'components/DescryptionPaper';
+import DescryptionPaper from 'components/DecryptionPaper';
 import Space from 'components/Space';
 
 import 'pages/App.css';
@@ -31,6 +31,7 @@ function App() {
   return (
     <div
       id='App'
+      draggable='false'
       style={{
         backgroundColor: 'black',
         position: 'relative',
@@ -39,6 +40,9 @@ function App() {
         justifyContent: 'center',
         fontFamily: 'FlowerScent',
         color: 'white',
+        WebkitUserSelect: 'none',
+        WebkitTouchCallout: 'none',
+        userSelect: 'none',
       }}
     >
       <Space
@@ -49,14 +53,14 @@ function App() {
         display='flex'
       />
       <DescryptionPaper
-        zIndex={1}
+        zIndex={2}
         width='100%'
         height='100%'
         position='absolute'
         display='flex'
       />
       <Cockpit
-        zIndex={2}
+        zIndex={3}
         width='100%'
         height='100%'
         position='absolute'
