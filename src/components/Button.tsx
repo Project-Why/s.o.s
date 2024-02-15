@@ -6,12 +6,20 @@ export type ButtonProps = {
   hoverImage: string;
   hoverClickImage: string;
   clickImage: string;
+  buttonType: 'Latching' | 'Momentary'; // Latching 상태 유지, Momentary 띄워짐
   clickHandler: MouseEventHandler;
 };
 
 function Button(props: CSSProperties & ButtonProps) {
-  const { id, image, hoverImage, clickImage, hoverClickImage, clickHandler } =
-    props;
+  const {
+    id,
+    image,
+    hoverImage,
+    clickImage,
+    hoverClickImage,
+    buttonType,
+    clickHandler,
+  } = props;
   const [isHover, setIsHover] = useState(false);
   const [isClick, setIsClick] = useState(false);
   return (
@@ -35,13 +43,15 @@ function Button(props: CSSProperties & ButtonProps) {
       <img
         draggable='false'
         src={
-          isHover
-            ? isClick
-              ? hoverClickImage
-              : hoverImage
-            : isClick
-              ? hoverImage
-              : image
+          buttonType === 'Momentary'
+            ? isHover
+              ? isClick
+                ? hoverClickImage
+                : hoverImage
+              : isClick
+                ? hoverImage
+                : image
+            : hoverImage
         }
         alt={id}
         style={{ objectFit: 'cover' }}

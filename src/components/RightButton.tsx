@@ -22,6 +22,7 @@ function RightButton(props: CSSProperties) {
       hoverImage={RightButtonImageHover}
       clickImage={RightButtonImageClick}
       hoverClickImage={RightButtonImageClickHover}
+      buttonType='Momentary'
       clickHandler={clickHandler}
     />
   );
