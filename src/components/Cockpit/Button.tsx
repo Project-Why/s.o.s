@@ -1,4 +1,6 @@
+import { useAppSelector } from 'hooks';
 import { CSSProperties, MouseEventHandler, useState } from 'react';
+import { selectMode } from 'store/mode';
 
 export type ButtonProps = {
   id: string;
@@ -22,6 +24,7 @@ function Button(props: CSSProperties & ButtonProps) {
   } = props;
   const [isHover, setIsHover] = useState(false);
   const [isClick, setIsClick] = useState(false);
+  const mode = useAppSelector(selectMode);
   return (
     <div
       id={id}
@@ -44,14 +47,20 @@ function Button(props: CSSProperties & ButtonProps) {
         draggable='false'
         src={
           buttonType === 'Momentary'
-            ? isHover
+            ? isHover // Momentary Condition
               ? isClick
                 ? hoverClickImage
                 : hoverImage
               : isClick
                 ? clickImage
                 : image
-            : hoverImage
+            : mode.currentMode === 'Writing' // Latching Condition (temp)
+              ? isHover
+                ? hoverClickImage
+                : clickImage
+              : isHover
+                ? hoverImage
+                : image
         }
         alt={id}
         style={{ objectFit: 'cover' }}

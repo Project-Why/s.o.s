@@ -5,14 +5,27 @@ import WritingButtonImage from 'assets/images/Cockpit/Button/Writing/W-Button.gi
 
 import Button from 'components/Cockpit/Button';
 
-import { useAppDispatch } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import { CSSProperties, MouseEventHandler } from 'react';
-import { counterActions } from 'store/counter';
+import { modeActions, selectMode } from 'store/mode';
 
 function WritingButton(props: CSSProperties) {
+  const mode = useAppSelector(selectMode);
   const dispatch = useAppDispatch();
   const clickHandler: MouseEventHandler = () => {
-    dispatch(counterActions.set());
+    switch (mode.currentMode) {
+      case 'Writing':
+        dispatch(modeActions.changeMode(mode.prevMode));
+        break;
+
+      case 'Searching' || 'Decrypting':
+        dispatch(modeActions.changeMode('Writing'));
+        break;
+
+      default:
+        dispatch(modeActions.changeMode(mode.prevMode));
+        break;
+    }
   };
   return (
     <Button

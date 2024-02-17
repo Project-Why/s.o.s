@@ -33,6 +33,6 @@ export const modeSlice = createSlice({
   },
 });
 
-export const counterActions = modeSlice.actions;
-export const selectCount = (state: RootState) => state.mode;
+export const modeActions = modeSlice.actions;
+export const selectMode = (state: RootState) => state.mode;
 export default modeSlice.reducer;
