@@ -49,7 +49,7 @@ function Button(props: CSSProperties & ButtonProps) {
                 ? hoverClickImage
                 : hoverImage
               : isClick
-                ? hoverImage
+                ? clickImage
                 : image
             : hoverImage
         }

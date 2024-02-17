@@ -15,6 +15,10 @@ function Star(props: CSSProperties & StarProps) {
     <>
       <div id={`star_${id}`} draggable='false' style={{ ...props }}>
         <img
+          onMouseOver={() => setIsHover(true)}
+          onMouseOut={() => setIsHover(false)}
+          onFocus={() => setIsHover(true)}
+          onBlur={() => setIsHover(false)}
           draggable='false'
           src={image}
           alt={`star_${id}`}
