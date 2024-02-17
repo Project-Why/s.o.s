@@ -3,7 +3,7 @@ import WritingButtonImageClick from 'assets/images/Cockpit/Button/Writing/W-Butt
 import WritingButtonImageHover from 'assets/images/Cockpit/Button/Writing/W-Button-Hover.gif';
 import WritingButtonImage from 'assets/images/Cockpit/Button/Writing/W-Button.gif';
 
-import Button from 'components/Button';
+import Button from 'components/Cockpit/Button';
 
 import { useAppDispatch } from 'hooks';
 import { CSSProperties, MouseEventHandler } from 'react';

@@ -4,9 +4,9 @@ import Star3 from 'assets/images/Window/Star/Star03.gif';
 import Star4 from 'assets/images/Window/Star/Star04.gif';
 import Star5 from 'assets/images/Window/Star/Star05.gif';
 
-import { CSSProperties } from 'react';
+import Star from 'components/Space/Star';
 
-import Star from './Star';
+import { CSSProperties } from 'react';
 
 export type StarInformation = {
   left: string;

@@ -1,6 +1,6 @@
-import Cockpit from 'components/Cockpit';
-import DescryptionPaper from 'components/DecryptionPaper';
-import Space from 'components/Space';
+import Cockpit from 'components/Cockpit/Cockpit';
+import DescryptionPaper from 'components/Cockpit/DecryptionPaper';
+import Space from 'components/Space/Space';
 
 import 'pages/App.css';
 

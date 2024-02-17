@@ -1,9 +1,9 @@
 import CockpitScreen from 'assets/images/Cockpit/Cockpit.gif';
 
-import Display from 'components/Display';
-import LeftButton from 'components/LeftButton';
-import RightButton from 'components/RightButton';
-import WritingButton from 'components/WritingButton';
+import Display from 'components/Cockpit/Display';
+import LeftButton from 'components/Cockpit/LeftButton';
+import RightButton from 'components/Cockpit/RightButton';
+import WritingButton from 'components/Cockpit/WritingButton';
 
 import { CSSProperties } from 'react';
 

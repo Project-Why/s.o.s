@@ -1,6 +1,6 @@
-import { CSSProperties, useState } from 'react';
+import StarBubble from 'components/Space/StarBubble';
 
-import StarBubble from './StarBubble';
+import { CSSProperties, useState } from 'react';
 
 export type StarProps = {
   id: string;
