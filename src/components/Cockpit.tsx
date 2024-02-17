@@ -29,28 +29,28 @@ function Cockpit(props: CSSProperties) {
       />
       <WritingButton
         zIndex={4}
-        left='20%'
-        width='10%'
-        top='90%'
-        height='10%'
+        left='24%'
+        width='9.1%'
+        top='79.4%'
+        height='13.7%'
         position='absolute'
         display='flex'
       />
       <LeftButton
         zIndex={4}
-        left='40%'
-        width='10%'
-        top='90%'
-        height='10%'
+        left='42.6%'
+        width='8.6%'
+        top='88.1%'
+        height='9.7%'
         position='absolute'
         display='flex'
       />
       <RightButton
         zIndex={4}
-        left='50%'
-        width='10%'
-        top='90%'
-        height='10%'
+        left='52.1%'
+        width='8.6%'
+        top='88.2%'
+        height='9.6%'
         position='absolute'
         display='flex'
       />

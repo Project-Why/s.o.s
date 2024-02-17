@@ -22,6 +22,7 @@ function LeftButton(props: CSSProperties) {
       hoverImage={LeftButtonImageHover}
       clickImage={LeftButtonImageClick}
       hoverClickImage={LeftButtonImageClickHover}
+      buttonType='Momentary'
       clickHandler={clickHandler}
     />
   );

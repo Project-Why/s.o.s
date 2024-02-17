@@ -22,6 +22,7 @@ function WritingButton(props: CSSProperties) {
       hoverImage={WritingButtonImageHover}
       clickImage={WritingButtonImageClick}
       hoverClickImage={WritingButtonImageClickHover}
+      buttonType='Latching'
       clickHandler={clickHandler}
     />
   );
