@@ -36,6 +36,7 @@ function WritingButton(props: CSSProperties) {
       clickImage={WritingButtonImageClick}
       hoverClickImage={WritingButtonImageClickHover}
       buttonType='Latching'
+      condition={mode.currentMode === 'Writing'}
       clickHandler={clickHandler}
     />
   );

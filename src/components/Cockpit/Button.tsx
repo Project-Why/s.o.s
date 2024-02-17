@@ -1,18 +1,7 @@
-import { useAppSelector } from 'hooks';
-import { CSSProperties, MouseEventHandler, useState } from 'react';
-import { selectMode } from 'store/mode';
+import { CSSProperties, useState } from 'react';
+import { ButtonProps } from 'types/ButtonProps';
 
-export type ButtonProps = {
-  id: string;
-  image: string;
-  hoverImage: string;
-  hoverClickImage: string;
-  clickImage: string;
-  buttonType: 'Latching' | 'Momentary'; // Latching 상태 유지, Momentary 띄워짐
-  clickHandler: MouseEventHandler;
-};
-
-function Button(props: CSSProperties & ButtonProps) {
+function Button(props: CSSProperties & ButtonProps.ButtonProps) {
   const {
     id,
     image,
@@ -24,7 +13,6 @@ function Button(props: CSSProperties & ButtonProps) {
   } = props;
   const [isHover, setIsHover] = useState(false);
   const [isClick, setIsClick] = useState(false);
-  const mode = useAppSelector(selectMode);
   return (
     <div
       id={id}
@@ -54,7 +42,7 @@ function Button(props: CSSProperties & ButtonProps) {
               : isClick
                 ? clickImage
                 : image
-            : mode.currentMode === 'Writing' // Latching Condition (temp)
+            : props.condition // Latching Condition
               ? isHover
                 ? hoverClickImage
                 : clickImage
