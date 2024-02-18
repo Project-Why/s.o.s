@@ -1,23 +1,33 @@
 import StarBubbleImage from 'assets/images/Window/Star Hover/Bubble_1.gif';
 
-import { CSSProperties, useState } from 'react';
+import { CSSProperties } from 'react';
 
-export type StarProps = {
+export type StarBubbleProps = {
   id: string;
   createdAt: Date;
 };
 
-function StarBubble(props: CSSProperties & StarProps) {
-  const { id, createdAt } = props;
-  const [isHover, setIsHover] = useState(false);
+function StarBubble(props: CSSProperties & StarBubbleProps) {
+  const { id, createdAt, ...cssProps } = props;
   return (
-    <div id={`star_bubble_${id}`} draggable='false' style={{ ...props }}>
+    <div id={`star_bubble_${id}`} draggable='false' style={{ ...cssProps }}>
       <img
         draggable='false'
         src={StarBubbleImage}
         alt={`star_bubble_${id}`}
         style={{ objectFit: 'cover' }}
       />
+      <span
+        style={{
+          padding: '10%',
+          position: 'absolute',
+          color: 'black',
+          fontSize: '20px',
+        }}
+      >
+        hello my name is &#39;{id}&#39; <br />I was born in{' '}
+        {createdAt.toLocaleDateString()}
+      </span>
     </div>
   );
 }

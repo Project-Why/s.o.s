@@ -10,6 +10,7 @@ function Button(props: CSSProperties & ButtonProps.ButtonProps) {
     hoverClickImage,
     buttonType,
     clickHandler,
+    ...cssProps
   } = props;
   const [isHover, setIsHover] = useState(false);
   const [isClick, setIsClick] = useState(false);
@@ -17,7 +18,7 @@ function Button(props: CSSProperties & ButtonProps.ButtonProps) {
     <div
       id={id}
       draggable='false'
-      style={{ ...props }}
+      style={{ ...cssProps }}
       onMouseOver={() => setIsHover(true)}
       onMouseOut={() => {
         setIsHover(false);
