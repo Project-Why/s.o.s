@@ -1,6 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from 'store/counter';
 import modeReducer from 'store/mode';
+
+import { configureStore } from '@reduxjs/toolkit';
 
 const store = configureStore({
   reducer: { counter: counterReducer, mode: modeReducer },

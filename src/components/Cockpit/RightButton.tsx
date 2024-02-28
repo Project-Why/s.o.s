@@ -3,11 +3,13 @@ import RightButtonImageClick from 'assets/images/Cockpit/Button/Right/R-Button-C
 import RightButtonImageHover from 'assets/images/Cockpit/Button/Right/R-Button-Hover.gif';
 import RightButtonImage from 'assets/images/Cockpit/Button/Right/R-Button.gif';
 
+import { useAppDispatch } from 'hooks';
+
+import { counterActions } from 'store/counter';
+
 import Button from 'components/Cockpit/Button';
 
-import { useAppDispatch } from 'hooks';
 import { CSSProperties, MouseEventHandler } from 'react';
-import { counterActions } from 'store/counter';
 
 function RightButton(props: CSSProperties) {
   const dispatch = useAppDispatch();

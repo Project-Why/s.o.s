@@ -1,7 +1,9 @@
 import { useAppSelector } from 'hooks';
-import { CSSProperties } from 'react';
+
 import { selectCount } from 'store/counter';
 import { selectMode } from 'store/mode';
+
+import { CSSProperties } from 'react';
 
 function Display(props: CSSProperties) {
   const counter = useAppSelector(selectCount);

@@ -1,3 +1,7 @@
+import { useAppSelector } from 'hooks';
+
+import { selectMode } from 'store/mode';
+
 import Cockpit from 'components/Cockpit/Cockpit';
 import DescryptionPaper from 'components/Cockpit/DecryptionPaper';
 import Display from 'components/Cockpit/Display';
@@ -8,9 +12,7 @@ import Space from 'components/Space/Space';
 
 import 'pages/App.css';
 
-import { useAppSelector } from 'hooks';
 import { useLayoutEffect } from 'react';
-import { selectMode } from 'store/mode';
 
 function App() {
   const mode = useAppSelector(selectMode);

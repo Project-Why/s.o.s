@@ -1,8 +1,10 @@
+import { useAppDispatch } from 'hooks';
+
+import { modeActions } from 'store/mode';
+
 import StarBubble from 'components/Space/StarBubble';
 
-import { useAppDispatch } from 'hooks';
 import { CSSProperties, MouseEventHandler, useState } from 'react';
-import { modeActions } from 'store/mode';
 
 export type StarProps = {
   id: string;

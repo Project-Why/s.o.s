@@ -3,11 +3,13 @@ import LeftButtonImageClick from 'assets/images/Cockpit/Button/Left/L-Button-Cli
 import LeftButtonImageHover from 'assets/images/Cockpit/Button/Left/L-Button-Hover.gif';
 import LeftButtonImage from 'assets/images/Cockpit/Button/Left/L-Button.gif';
 
+import { useAppDispatch } from 'hooks';
+
+import { counterActions } from 'store/counter';
+
 import Button from 'components/Cockpit/Button';
 
-import { useAppDispatch } from 'hooks';
 import { CSSProperties, MouseEventHandler } from 'react';
-import { counterActions } from 'store/counter';
 
 function LeftButton(props: CSSProperties) {
   const dispatch = useAppDispatch();
