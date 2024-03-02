@@ -8,6 +8,7 @@ import Display from 'components/Cockpit/Display';
 import LeftButton from 'components/Cockpit/LeftButton';
 import RightButton from 'components/Cockpit/RightButton';
 import WritingButton from 'components/Cockpit/WritingButton';
+import Message from 'components/Space/Message';
 import Space from 'components/Space/Space';
 
 import 'pages/App.css';
@@ -60,6 +61,15 @@ function App() {
         height='100%'
         position='absolute'
         display='flex'
+      />
+      <Message
+        zIndex={1}
+        width='100%'
+        height='100%'
+        position='absolute'
+        padding='10%'
+        boxSizing='border-box'
+        backgroundColor='#FFFFFF'
       />
       <DescryptionPaper
         zIndex={2}

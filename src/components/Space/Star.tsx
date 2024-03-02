@@ -49,13 +49,12 @@ function Star(props: CSSProperties & StarProps) {
       </div>
       <StarBubble
         id={id}
-        visibility={isHover ? 'visible' : 'hidden'}
         width='12.5%'
         height='12%'
-        left={`${left}%`}
-        top={`${top + height}%`}
+        left={`${left < 87.5 ? left : 87.5}%`}
+        top={`${top + height + 12 < 80 ? top + height : top - 12}%`}
         zIndex={5}
-        display='flex'
+        display={isHover ? 'flex' : 'none'}
         position='absolute'
       />
     </>

@@ -20,7 +20,7 @@ function Space(props: CSSProperties) {
   const starHeight = 5.56; // 60px when 1080px
 
   const maxLeft = 100 - starWidth;
-  const maxTop = 100 - starHeight;
+  const maxTop = 80 - starHeight;
 
   const starImages = [Star1, Star2, Star3, Star4, Star5];
   const starInformations: StarInformation[] = Array(starCount)

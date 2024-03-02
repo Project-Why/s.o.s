@@ -1,24 +1,15 @@
 import XButton from 'assets/images/Cockpit/Decryption/X-Button.gif';
 
-import { useAppDispatch, useAppSelector } from 'hooks';
+import { useAppDispatch } from 'hooks';
 
-import { modeActions, selectMode } from 'store/mode';
+import { modeActions } from 'store/mode';
 
 import { CSSProperties, MouseEventHandler } from 'react';
 
 function DecryptionPaperXButton(props: CSSProperties) {
-  const mode = useAppSelector(selectMode);
   const dispatch = useAppDispatch();
   const clickHandler: MouseEventHandler = () => {
-    switch (mode.currentMode) {
-      case 'Decrypting':
-        dispatch(modeActions.changeMode(mode.prevMode));
-        break;
-
-      default:
-        dispatch(modeActions.changeMode('Searching'));
-        break;
-    }
+    dispatch(modeActions.changeMode('Searching'));
   };
   return (
     <div

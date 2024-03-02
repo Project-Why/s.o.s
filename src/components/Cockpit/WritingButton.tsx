@@ -20,7 +20,8 @@ function WritingButton(props: CSSProperties) {
         dispatch(modeActions.changeMode(mode.prevMode));
         break;
 
-      case 'Searching' || 'Decrypting':
+      case 'Searching':
+      case 'Decrypting':
         dispatch(modeActions.changeMode('Writing'));
         break;
 
