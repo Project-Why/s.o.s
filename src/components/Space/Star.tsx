@@ -7,7 +7,7 @@ import StarBubble from 'components/Space/StarBubble';
 import { CSSProperties, MouseEventHandler, useState } from 'react';
 
 export type StarProps = {
-  id: string;
+  id: number;
   image: string;
   width: number;
   height: number;
@@ -25,7 +25,7 @@ function Star(props: CSSProperties & StarProps) {
   return (
     <>
       <div
-        id={`star_${id}`}
+        id={`Star ${id}`}
         draggable='false'
         onMouseOver={() => setIsHover(true)}
         onMouseOut={() => setIsHover(false)}

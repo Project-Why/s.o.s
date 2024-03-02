@@ -32,10 +32,10 @@ function Space(props: CSSProperties) {
     }));
 
   return (
-    <div id='space' draggable='false' style={{ ...props }}>
+    <div id='Space' draggable='false' style={{ ...props }}>
       {starInformations.map((value, index) => (
         <Star
-          id={`${index}`}
+          id={index}
           key={`${index}`}
           left={value.left}
           top={value.top}

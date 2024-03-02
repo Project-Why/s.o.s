@@ -3,13 +3,13 @@ import StarBubbleImage from 'assets/images/Window/Star Hover/Bubble01.gif';
 import { CSSProperties } from 'react';
 
 export type StarBubbleProps = {
-  id: string;
+  id: number;
 };
 
 function StarBubble(props: CSSProperties & StarBubbleProps) {
   const { id, ...cssProps } = props;
   return (
-    <div id={`star_bubble_${id}`} draggable='false' style={{ ...cssProps }}>
+    <div id={`Star Bubble ${id}`} draggable='false' style={{ ...cssProps }}>
       <img
         draggable='false'
         src={StarBubbleImage}

@@ -19,7 +19,7 @@ function RightButton(props: CSSProperties) {
   return (
     <Button
       {...props}
-      id='Right button'
+      id='Right Button'
       image={RightButtonImage}
       hoverImage={RightButtonImageHover}
       clickImage={RightButtonImageClick}

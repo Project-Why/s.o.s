@@ -19,7 +19,7 @@ function DecryptionPaperOpening(props: CSSProperties) {
   };
 
   return (
-    <div id='Script Opened' draggable='false' style={{ ...props }}>
+    <div id='Script Opening' draggable='false' style={{ ...props }}>
       {paperAnimation ? (
         <img
           id='Paper Animation'
@@ -43,7 +43,7 @@ function DecryptionPaperOpening(props: CSSProperties) {
             style={{ width: '100%', objectFit: 'cover', position: 'absolute' }}
           />
           <img
-            id='Paper Animation'
+            id='Morse Animation'
             draggable='false'
             src={MorseOpening}
             alt='morse open animation'

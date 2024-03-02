@@ -19,7 +19,7 @@ function LeftButton(props: CSSProperties) {
   return (
     <Button
       {...props}
-      id='left button'
+      id='Left Button'
       image={LeftButtonImage}
       hoverImage={LeftButtonImageHover}
       clickImage={LeftButtonImageClick}

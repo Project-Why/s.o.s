@@ -33,7 +33,7 @@ function WritingButton(props: CSSProperties) {
   return (
     <Button
       {...props}
-      id='Writing button'
+      id='Writing Button'
       image={WritingButtonImage}
       hoverImage={WritingButtonImageHover}
       clickImage={WritingButtonImageClick}
