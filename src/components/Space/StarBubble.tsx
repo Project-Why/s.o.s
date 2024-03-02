@@ -1,14 +1,13 @@
-import StarBubbleImage from 'assets/images/Window/Star Hover/Bubble_1.gif';
+import StarBubbleImage from 'assets/images/Window/Star Hover/Bubble01.gif';
 
 import { CSSProperties } from 'react';
 
 export type StarBubbleProps = {
   id: string;
-  createdAt: Date;
 };
 
 function StarBubble(props: CSSProperties & StarBubbleProps) {
-  const { id, createdAt, ...cssProps } = props;
+  const { id, ...cssProps } = props;
   return (
     <div id={`star_bubble_${id}`} draggable='false' style={{ ...cssProps }}>
       <img
@@ -25,8 +24,7 @@ function StarBubble(props: CSSProperties & StarBubbleProps) {
           fontSize: '20px',
         }}
       >
-        hello my name is &#39;{id}&#39; <br />I was born in{' '}
-        {createdAt.toLocaleDateString()}
+        hello my name is &#39;{id}&#39;
       </span>
     </div>
   );

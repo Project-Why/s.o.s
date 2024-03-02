@@ -9,7 +9,6 @@ import { CSSProperties, MouseEventHandler, useState } from 'react';
 export type StarProps = {
   id: string;
   image: string;
-  createdAt: Date;
   width: number;
   height: number;
   left: number;
@@ -17,7 +16,7 @@ export type StarProps = {
 };
 
 function Star(props: CSSProperties & StarProps) {
-  const { id, image, createdAt, width, height, left, top, ...cssProps } = props;
+  const { id, image, width, height, left, top, ...cssProps } = props;
   const [isHover, setIsHover] = useState(false);
   const dispatch = useAppDispatch();
   const clickHandler: MouseEventHandler = () => {
@@ -50,7 +49,6 @@ function Star(props: CSSProperties & StarProps) {
       </div>
       <StarBubble
         id={id}
-        createdAt={createdAt}
         visibility={isHover ? 'visible' : 'hidden'}
         width='12.5%'
         height='12%'

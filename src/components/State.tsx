@@ -2,12 +2,13 @@ import { useAppSelector } from 'hooks';
 
 import { selectMode } from 'store/mode';
 
-import { CSSProperties, ReactElement, ReactNode } from 'react';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
+import { CSSProperties } from 'react';
 
 export type StateProps = {
-  writingElement: ReactNode;
-  searchingElement: ReactNode;
-  decryptingElement: ReactNode;
+  writingElement: EmotionJSX.Element;
+  searchingElement: EmotionJSX.Element;
+  decryptingElement: EmotionJSX.Element;
 };
 
 function State(props: CSSProperties & StateProps) {

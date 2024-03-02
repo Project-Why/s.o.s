@@ -15,8 +15,6 @@ export type StarInformation = {
 };
 
 function Space(props: CSSProperties) {
-  const date: Date = new Date('2024.01.29');
-
   const starCount = 20;
   const starWidth = 3.13; // 60px when 1920px
   const starHeight = 5.56; // 60px when 1080px
@@ -46,7 +44,6 @@ function Space(props: CSSProperties) {
           display='flex'
           position='absolute'
           image={value.image}
-          createdAt={date}
         />
       ))}
     </div>
