@@ -1,16 +1,7 @@
-import { CSSProperties, MouseEventHandler, useState } from 'react';
+import { CSSProperties, useState } from 'react';
+import { ButtonProps } from 'types/ButtonProps';
 
-export type ButtonProps = {
-  id: string;
-  image: string;
-  hoverImage: string;
-  hoverClickImage: string;
-  clickImage: string;
-  buttonType: 'Latching' | 'Momentary'; // Latching 상태 유지, Momentary 띄워짐
-  clickHandler: MouseEventHandler;
-};
-
-function Button(props: CSSProperties & ButtonProps) {
+function Button(props: CSSProperties & ButtonProps.ButtonProps) {
   const {
     id,
     image,
@@ -19,6 +10,7 @@ function Button(props: CSSProperties & ButtonProps) {
     hoverClickImage,
     buttonType,
     clickHandler,
+    ...cssProps
   } = props;
   const [isHover, setIsHover] = useState(false);
   const [isClick, setIsClick] = useState(false);
@@ -26,7 +18,7 @@ function Button(props: CSSProperties & ButtonProps) {
     <div
       id={id}
       draggable='false'
-      style={{ ...props }}
+      style={{ ...cssProps }}
       onMouseOver={() => setIsHover(true)}
       onMouseOut={() => {
         setIsHover(false);
@@ -44,14 +36,20 @@ function Button(props: CSSProperties & ButtonProps) {
         draggable='false'
         src={
           buttonType === 'Momentary'
-            ? isHover
+            ? isHover // Momentary Condition
               ? isClick
                 ? hoverClickImage
                 : hoverImage
               : isClick
+                ? clickImage
+                : image
+            : props.condition // Latching Condition
+              ? isHover
+                ? hoverClickImage
+                : clickImage
+              : isHover
                 ? hoverImage
                 : image
-            : hoverImage
         }
         alt={id}
         style={{ objectFit: 'cover' }}

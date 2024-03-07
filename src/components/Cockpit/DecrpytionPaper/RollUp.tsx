@@ -2,7 +2,7 @@ import PaperRollUp from 'assets/images/Cockpit/Decryption/Paper-RollUp.gif';
 
 import { CSSProperties } from 'react';
 
-function DecryptionPaper(props: CSSProperties) {
+function DecryptionPaperRollUp(props: CSSProperties) {
   return (
     <div id='Script' draggable='false' style={{ ...props }}>
       <img
@@ -15,4 +15,4 @@ function DecryptionPaper(props: CSSProperties) {
   );
 }
 
-export default DecryptionPaper;
+export default DecryptionPaperRollUp;

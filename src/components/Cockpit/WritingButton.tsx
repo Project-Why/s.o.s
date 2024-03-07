@@ -3,26 +3,43 @@ import WritingButtonImageClick from 'assets/images/Cockpit/Button/Writing/W-Butt
 import WritingButtonImageHover from 'assets/images/Cockpit/Button/Writing/W-Button-Hover.gif';
 import WritingButtonImage from 'assets/images/Cockpit/Button/Writing/W-Button.gif';
 
-import Button from 'components/Button';
+import { useAppDispatch, useAppSelector } from 'hooks';
 
-import { useAppDispatch } from 'hooks';
+import { modeActions, selectMode } from 'store/mode';
+
+import Button from 'components/Cockpit/Button';
+
 import { CSSProperties, MouseEventHandler } from 'react';
-import { counterActions } from 'store/counter';
 
 function WritingButton(props: CSSProperties) {
+  const mode = useAppSelector(selectMode);
   const dispatch = useAppDispatch();
   const clickHandler: MouseEventHandler = () => {
-    dispatch(counterActions.set());
+    switch (mode.currentMode) {
+      case 'Writing':
+        dispatch(modeActions.changeMode(mode.prevMode));
+        break;
+
+      case 'Searching':
+      case 'Decrypting':
+        dispatch(modeActions.changeMode('Writing'));
+        break;
+
+      default:
+        dispatch(modeActions.changeMode(mode.prevMode));
+        break;
+    }
   };
   return (
     <Button
       {...props}
-      id='Writing button'
+      id='Writing Button'
       image={WritingButtonImage}
       hoverImage={WritingButtonImageHover}
       clickImage={WritingButtonImageClick}
       hoverClickImage={WritingButtonImageClickHover}
       buttonType='Latching'
+      condition={mode.currentMode === 'Writing'}
       clickHandler={clickHandler}
     />
   );
