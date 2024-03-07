@@ -29,7 +29,7 @@ function Message(props: CSSProperties) {
           height: '100%',
           verticalAlign: 'top',
           fontFamily: 'FlowerScent',
-          fontSize: '150%',
+          fontSize: '7vw',
           borderWidth: 0,
           outline: 'none',
           resize: 'none',

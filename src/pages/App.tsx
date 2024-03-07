@@ -55,13 +55,7 @@ function App() {
         userSelect: 'none',
       }}
     >
-      <Space
-        zIndex={0}
-        width='100%'
-        height='100%'
-        position='absolute'
-        display='flex'
-      />
+      <Space zIndex={0} width='100%' height='100%' display='flex' />
       <Message
         zIndex={1}
         width='100%'
@@ -83,7 +77,7 @@ function App() {
         zIndex={3}
         width='100%'
         height='100%'
-        position='absolute'
+        // position='absolute'
         display='flex'
         pointerEvents='none'
       />
