@@ -1,4 +1,4 @@
-import PaperRollUp from 'assets/images/Cockpit/Decryption/Paper-RollUp.gif';
+import PaperRollUp from 'assets/images/Cockpit/Decryption/Paper-Roll-Up.gif';
 
 import { CSSProperties } from 'react';
 

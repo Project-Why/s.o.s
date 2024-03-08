@@ -1,4 +1,4 @@
-import WritingButtonImageClickHover from 'assets/images/Cockpit/Button/Writing/W-Button-Click Hover.gif';
+import WritingButtonImageClickHover from 'assets/images/Cockpit/Button/Writing/W-Button-Click-Hover.gif';
 import WritingButtonImageClick from 'assets/images/Cockpit/Button/Writing/W-Button-Click.gif';
 import WritingButtonImageHover from 'assets/images/Cockpit/Button/Writing/W-Button-Hover.gif';
 import WritingButtonImage from 'assets/images/Cockpit/Button/Writing/W-Button.gif';

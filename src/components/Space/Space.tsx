@@ -1,8 +1,13 @@
-import Star1 from 'assets/images/Window/Star/Star01.gif';
-import Star2 from 'assets/images/Window/Star/Star02.gif';
-import Star3 from 'assets/images/Window/Star/Star03.gif';
-import Star4 from 'assets/images/Window/Star/Star04.gif';
-import Star5 from 'assets/images/Window/Star/Star05.gif';
+import Star1 from 'assets/images/Window/Star/Star_1.gif';
+import Star2 from 'assets/images/Window/Star/Star_2.gif';
+import Star3 from 'assets/images/Window/Star/Star_3.gif';
+import Star4 from 'assets/images/Window/Star/Star_4.gif';
+import Star5 from 'assets/images/Window/Star/Star_5.gif';
+import Star6 from 'assets/images/Window/Star/Star_6.gif';
+import Star7 from 'assets/images/Window/Star/Star_7.gif';
+import Star8 from 'assets/images/Window/Star/Star_8.gif';
+import Star9 from 'assets/images/Window/Star/Star_9.gif';
+import Star10 from 'assets/images/Window/Star/Star_10.gif';
 
 import Star from 'components/Space/Star';
 
@@ -22,7 +27,18 @@ function Space(props: CSSProperties) {
   const maxLeft = 100 - starWidth;
   const maxTop = 80 - starHeight;
 
-  const starImages = [Star1, Star2, Star3, Star4, Star5];
+  const starImages = [
+    Star1,
+    Star2,
+    Star3,
+    Star4,
+    Star5,
+    Star6,
+    Star7,
+    Star8,
+    Star9,
+    Star10,
+  ];
   const starInformations: StarInformation[] = Array(starCount)
     .fill(0)
     .map(() => ({

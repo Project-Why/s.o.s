@@ -1,4 +1,4 @@
-import RightButtonImageClickHover from 'assets/images/Cockpit/Button/Right/R-Button-Click Hover.gif';
+import RightButtonImageClickHover from 'assets/images/Cockpit/Button/Right/R-Button-Click-Hover.gif';
 import RightButtonImageClick from 'assets/images/Cockpit/Button/Right/R-Button-Click.gif';
 import RightButtonImageHover from 'assets/images/Cockpit/Button/Right/R-Button-Hover.gif';
 import RightButtonImage from 'assets/images/Cockpit/Button/Right/R-Button.gif';

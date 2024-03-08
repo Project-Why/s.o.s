@@ -1,4 +1,4 @@
-import MorseOpened from 'assets/images/Cockpit/Decryption/Morse/Morse-opened.gif';
+import MorseOpened from 'assets/images/Cockpit/Decryption/Morse/Morse.png';
 import PaperOpened from 'assets/images/Cockpit/Decryption/Paper-Opened.gif';
 
 import { CSSProperties } from 'react';

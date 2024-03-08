@@ -1,4 +1,4 @@
-import StarBubbleImage from 'assets/images/Window/Star Hover/Bubble01.gif';
+import StarBubbleImage from 'assets/images/Window/Star Hover/Bubble_1.gif';
 
 import { CSSProperties } from 'react';
 
