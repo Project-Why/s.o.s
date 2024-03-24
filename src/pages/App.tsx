@@ -8,8 +8,8 @@ import Display from 'components/Cockpit/Display';
 import LeftButton from 'components/Cockpit/LeftButton';
 import RightButton from 'components/Cockpit/RightButton';
 import WritingButton from 'components/Cockpit/WritingButton';
-import Message from 'components/Space/Message';
 import Space from 'components/Space/Space';
+import Writing from 'components/Space/Writing';
 
 import 'pages/App.css';
 
@@ -56,12 +56,14 @@ function App() {
       }}
     >
       <Space zIndex={0} width='100%' height='100%' display='flex' />
-      <Message
+      <Writing
         zIndex={1}
         width='100%'
         height='100%'
         position='absolute'
         padding='10%'
+        paddingLeft='16%'
+        paddingRight='16%'
         boxSizing='border-box'
         backgroundColor='#FFFFFF'
       />
@@ -91,6 +93,7 @@ function App() {
         display='flex'
         justifyContent='center'
         alignItems='center'
+        fontSize='2vw'
       />
       <WritingButton
         zIndex={4}
