@@ -1,19 +1,21 @@
 import { useAppSelector } from 'hooks';
 
-import { selectCount } from 'store/counter';
 import { selectMode } from 'store/mode';
 
 import { CSSProperties } from 'react';
 
+import DisplayDecrypting from './Display/Decrypting';
+import DisplaySearching from './Display/Searching';
+import DisplayWriting from './Display/Writing';
+
 function Display(props: CSSProperties) {
-  const counter = useAppSelector(selectCount);
   const mode = useAppSelector(selectMode);
-  return (
-    <div id='Display' draggable='false' style={{ ...props }}>
-      Display {counter.count} <br />
-      prev: {mode.prevMode} <br />
-      current: {mode.currentMode}
-    </div>
+  return mode.currentMode === 'Searching' ? (
+    <DisplaySearching {...props} />
+  ) : mode.currentMode === 'Writing' ? (
+    <DisplayWriting {...props} />
+  ) : (
+    <DisplayDecrypting {...props} />
   );
 }
 
