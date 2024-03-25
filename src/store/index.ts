@@ -1,10 +1,15 @@
-import counterReducer from 'store/counter';
-import modeReducer from 'store/mode';
+import counter from 'store/counter';
+import message from 'store/message';
+import mode from 'store/mode';
 
 import { configureStore } from '@reduxjs/toolkit';
 
 const store = configureStore({
-  reducer: { counter: counterReducer, mode: modeReducer },
+  reducer: {
+    counter,
+    mode,
+    message,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

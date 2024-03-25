@@ -7,13 +7,11 @@ export type Mode = 'Writing' | 'Searching' | 'Decrypting';
 type ModeState = {
   currentMode: Mode;
   prevMode: Mode;
-  message: string;
 };
 
 const initialState: ModeState = {
   currentMode: 'Searching',
   prevMode: 'Searching',
-  message: '',
 };
 
 export const modeSlice = createSlice({
@@ -24,11 +22,6 @@ export const modeSlice = createSlice({
       Object.assign<ModeState, Partial<ModeState>>(state, {
         prevMode: state.currentMode,
         currentMode: action.payload,
-      });
-    },
-    setMessage: (state: ModeState, action: PayloadAction<string>) => {
-      Object.assign<ModeState, Partial<ModeState>>(state, {
-        message: action.payload,
       });
     },
   },

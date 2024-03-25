@@ -1,26 +1,22 @@
 import GuideLine1 from 'assets/images/Window/Writing/Guide-Line_1.gif';
 import GuideLine2 from 'assets/images/Window/Writing/Guide-Line_2.gif';
 
-import { useAppSelector } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 
+import { messageActions, selectMessage } from 'store/message';
 import { selectMode } from 'store/mode';
 
-import {
-  CSSProperties,
-  ChangeEvent,
-  FocusEvent,
-  useRef,
-  useState,
-} from 'react';
+import { CSSProperties, ChangeEvent, FocusEvent, useRef } from 'react';
 
 function Writing(props: CSSProperties) {
   const lineHeight = 9;
-  const maxByte = 90;
-  const maxLine = 2;
+  const maxByte = 150;
+  const allowedCharacters = /^[A-Za-z0-9 ,:?'–/()"=+×@ㄱ-ㅎ가-힣ㅏ-ㅣéÉ\n]*$/;
 
   const mode = useAppSelector(selectMode);
-  const [text, setText] = useState('');
+  const message = useAppSelector(selectMessage);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const dispatch = useAppDispatch();
 
   const onBlurHandler = (e: FocusEvent<HTMLElement, Element>) => {
     if (e.relatedTarget === null) {
@@ -32,12 +28,13 @@ function Writing(props: CSSProperties) {
     const byteLength = new TextEncoder().encode(inputText).length;
     if (
       byteLength <= maxByte &&
+      allowedCharacters.test(inputText) &&
       textAreaRef.current &&
       textAreaRef.current.scrollHeight === textAreaRef.current.clientHeight
     ) {
-      setText(inputText);
+      dispatch(messageActions.setMessage(inputText));
     } else {
-      e.target.value = text;
+      e.target.value = message.text;
     }
   };
 
@@ -77,9 +74,10 @@ function Writing(props: CSSProperties) {
       />
       <textarea
         ref={textAreaRef}
-        value={text}
+        value={message.text}
         onBlur={onBlurHandler}
         onChange={onChangeHandler}
+        spellCheck={false}
         style={{
           width: '100%',
           height: `${2 * lineHeight}vw`,
