@@ -3,12 +3,18 @@ import LeftButtonImageClick from 'assets/images/Cockpit/Button/Left/L-Button-Cli
 import LeftButtonImageHover from 'assets/images/Cockpit/Button/Left/L-Button-Hover.gif';
 import LeftButtonImage from 'assets/images/Cockpit/Button/Left/L-Button.gif';
 
+import { modeActions } from 'store/mode';
+
 import Button from 'components/Cockpit/Button';
 
 import { CSSProperties, MouseEventHandler } from 'react';
+import { useDispatch } from 'react-redux';
 
 function LeftButton(props: CSSProperties) {
-  const clickHandler: MouseEventHandler = () => {};
+  const dispatch = useDispatch();
+  const clickHandler: MouseEventHandler = () => {
+    dispatch(modeActions.setPrev());
+  };
   return (
     <Button
       {...props}

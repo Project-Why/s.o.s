@@ -59,7 +59,7 @@ export const modeSlice = createSlice({
               ModeState.DecryptingState,
               Partial<ModeState.DecryptingState>
             >(state.decryptingState, {
-              currentIdx: state.writingState.currentIdx - 1,
+              currentIdx: state.decryptingState.currentIdx - 1,
             });
           }
           break;
@@ -69,7 +69,7 @@ export const modeSlice = createSlice({
               ModeState.SearchingState,
               Partial<ModeState.SearchingState>
             >(state.searchingState, {
-              currentIdx: state.writingState.currentIdx - 1,
+              currentIdx: state.searchingState.currentIdx - 1,
             });
           }
           break;
@@ -124,7 +124,7 @@ export const modeSlice = createSlice({
     },
     setDisplay: (
       state: ModeState.ModeManageState,
-      action: PayloadAction<[EmotionJSX.Element]>,
+      action: PayloadAction<EmotionJSX.Element[]>,
     ) => {
       switch (state.currentMode) {
         case 'Decrypting':
@@ -169,7 +169,17 @@ export const modeSlice = createSlice({
         },
       );
     },
-    // setStars: ()
+    setStars: (
+      state: ModeState.ModeManageState,
+      action: PayloadAction<EmotionJSX.Element[]>,
+    ) => {
+      Object.assign<
+        ModeState.SearchingState,
+        Partial<ModeState.SearchingState>
+      >(state.searchingState, {
+        stars: action.payload,
+      });
+    },
   },
 });
 

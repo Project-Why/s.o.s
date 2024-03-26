@@ -9,9 +9,14 @@ import Star8 from 'assets/images/Window/Star/Star_8.gif';
 import Star9 from 'assets/images/Window/Star/Star_9.gif';
 import Star10 from 'assets/images/Window/Star/Star_10.gif';
 
+import { useAppSelector } from 'hooks';
+
+import { modeActions, selectMode } from 'store/mode';
+
 import Star from 'components/Space/Star';
 
-import { CSSProperties } from 'react';
+import { CSSProperties, useLayoutEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 export type StarInformation = {
   left: number;
@@ -39,29 +44,34 @@ function Space(props: CSSProperties) {
     Star9,
     Star10,
   ];
-  const starInformations: StarInformation[] = Array(starCount)
-    .fill(0)
-    .map(() => ({
-      left: +(Math.random() * maxLeft).toFixed(2),
-      top: +(Math.random() * maxTop).toFixed(2),
-      image: starImages[Math.floor(Math.random() * 5)],
-    }));
+
+  const mode = useAppSelector(selectMode);
+  const dispatch = useDispatch();
+
+  useLayoutEffect(() => {
+    if (mode.searchingState.stars.length === 0) {
+      const stars = Array(starCount)
+        .fill(0)
+        .map((_, index) => (
+          <Star
+            id={index}
+            key={`${index}`}
+            left={+(Math.random() * maxLeft).toFixed(2)}
+            top={+(Math.random() * maxTop).toFixed(2)}
+            width={starWidth}
+            height={starHeight}
+            display='flex'
+            position='absolute'
+            image={starImages[Math.floor(Math.random() * 5)]}
+          />
+        ));
+      dispatch(modeActions.setStars(stars));
+    }
+  }, []);
 
   return (
     <div id='Space' draggable='false' style={{ ...props }}>
-      {starInformations.map((value, index) => (
-        <Star
-          id={index}
-          key={`${index}`}
-          left={value.left}
-          top={value.top}
-          width={starWidth}
-          height={starHeight}
-          display='flex'
-          position='absolute'
-          image={value.image}
-        />
-      ))}
+      {mode.searchingState.stars}
     </div>
   );
 }

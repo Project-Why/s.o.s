@@ -2,11 +2,11 @@ export declare namespace ModeState {
   export type Mode = 'Writing' | 'Searching' | 'Decrypting';
 
   export interface ModeState {
-    display: [EmotionJSX.Element] | [];
+    display: EmotionJSX.Element[];
     currentIdx: number;
   }
   export interface SearchingState extends ModeState {
-    stars: [EmotionJSX.Element] | [];
+    stars: EmotionJSX.Element[];
   }
   export interface DecryptingState extends ModeState {
     starId: number;

@@ -3,12 +3,18 @@ import RightButtonImageClick from 'assets/images/Cockpit/Button/Right/R-Button-C
 import RightButtonImageHover from 'assets/images/Cockpit/Button/Right/R-Button-Hover.gif';
 import RightButtonImage from 'assets/images/Cockpit/Button/Right/R-Button.gif';
 
+import { modeActions } from 'store/mode';
+
 import Button from 'components/Cockpit/Button';
 
 import { CSSProperties, MouseEventHandler } from 'react';
+import { useDispatch } from 'react-redux';
 
 function RightButton(props: CSSProperties) {
-  const clickHandler: MouseEventHandler = () => {};
+  const dispatch = useDispatch();
+  const clickHandler: MouseEventHandler = () => {
+    dispatch(modeActions.setPost());
+  };
   return (
     <Button
       {...props}
