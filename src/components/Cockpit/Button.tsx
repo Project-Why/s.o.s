@@ -1,5 +1,6 @@
-import { CSSProperties, useState } from 'react';
 import { ButtonProps } from 'types/ButtonProps';
+
+import { CSSProperties, useState } from 'react';
 
 function Button(props: CSSProperties & ButtonProps.ButtonProps) {
   const {

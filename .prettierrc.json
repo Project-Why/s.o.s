@@ -6,6 +6,7 @@
   "trailingComma": "all",
   "jsxSingleQuote": true,
   "importOrder": [
+    "^types/(.*)$",
     "^assets/(.*)$",
     "^hooks/(.*)$",
     "^hooks",

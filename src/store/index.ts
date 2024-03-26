@@ -1,4 +1,3 @@
-import message from 'store/message';
 import mode from 'store/mode';
 
 import { configureStore } from '@reduxjs/toolkit';
@@ -6,7 +5,6 @@ import { configureStore } from '@reduxjs/toolkit';
 const store = configureStore({
   reducer: {
     mode,
-    message,
   },
 });
 

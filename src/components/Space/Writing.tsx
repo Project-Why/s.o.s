@@ -3,8 +3,7 @@ import GuideLine2 from 'assets/images/Window/Writing/Guide-Line_2.gif';
 
 import { useAppDispatch, useAppSelector } from 'hooks';
 
-import { messageActions, selectMessage } from 'store/message';
-import { selectMode } from 'store/mode';
+import { modeActions, selectMode } from 'store/mode';
 
 import { CSSProperties, ChangeEvent, FocusEvent, useRef } from 'react';
 
@@ -14,7 +13,6 @@ function Writing(props: CSSProperties) {
   const allowedCharacters = /^[A-Za-z0-9 ,:?'–/()"=+×@ㄱ-ㅎ가-힣ㅏ-ㅣéÉ\n]*$/;
 
   const mode = useAppSelector(selectMode);
-  const message = useAppSelector(selectMessage);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const dispatch = useAppDispatch();
 
@@ -32,9 +30,9 @@ function Writing(props: CSSProperties) {
       textAreaRef.current &&
       textAreaRef.current.scrollHeight === textAreaRef.current.clientHeight
     ) {
-      dispatch(messageActions.setMessage(inputText));
+      dispatch(modeActions.setText(inputText));
     } else {
-      e.target.value = message.text;
+      e.target.value = mode.writingState.text;
     }
   };
 
@@ -74,7 +72,7 @@ function Writing(props: CSSProperties) {
       />
       <textarea
         ref={textAreaRef}
-        value={message.text}
+        value={mode.writingState.text}
         onBlur={onBlurHandler}
         onChange={onChangeHandler}
         spellCheck={false}
