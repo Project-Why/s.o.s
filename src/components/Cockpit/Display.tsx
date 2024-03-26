@@ -1,6 +1,4 @@
-import { useAppSelector } from 'hooks';
-
-import { selectMode } from 'store/mode';
+import State from 'components/State';
 
 import { CSSProperties } from 'react';
 
@@ -9,13 +7,12 @@ import DisplaySearching from './Display/Searching';
 import DisplayWriting from './Display/Writing';
 
 function Display(props: CSSProperties) {
-  const mode = useAppSelector(selectMode);
-  return mode.currentMode === 'Searching' ? (
-    <DisplaySearching {...props} />
-  ) : mode.currentMode === 'Writing' ? (
-    <DisplayWriting {...props} />
-  ) : (
-    <DisplayDecrypting {...props} />
+  return (
+    <State
+      writingElement={<DisplayWriting {...props} />}
+      searchingElement={<DisplaySearching {...props} />}
+      decryptingElement={<DisplayDecrypting {...props} />}
+    />
   );
 }
 

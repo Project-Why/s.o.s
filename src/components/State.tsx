@@ -3,7 +3,6 @@ import { useAppSelector } from 'hooks';
 import { selectMode } from 'store/mode';
 
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { CSSProperties } from 'react';
 
 export type StateProps = {
   writingElement: EmotionJSX.Element;
@@ -11,19 +10,18 @@ export type StateProps = {
   decryptingElement: EmotionJSX.Element;
 };
 
-function State(props: CSSProperties & StateProps) {
-  const { writingElement, searchingElement, decryptingElement, ...cssProps } =
-    props;
+function State(props: Partial<StateProps>) {
+  const {
+    writingElement = null,
+    searchingElement = null,
+    decryptingElement = null,
+  } = props;
   const mode = useAppSelector(selectMode);
-  return (
-    <div style={{ ...cssProps }}>
-      {mode.currentMode === 'Writing'
-        ? writingElement
-        : mode.currentMode === 'Decrypting'
-          ? decryptingElement
-          : searchingElement}
-    </div>
-  );
+  return mode.currentMode === 'Writing'
+    ? writingElement
+    : mode.currentMode === 'Decrypting'
+      ? decryptingElement
+      : searchingElement;
 }
 
 export default State;
