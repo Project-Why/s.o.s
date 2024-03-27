@@ -14,12 +14,12 @@ function DisplayWriting(props: CSSProperties) {
   const handleMouseOver = (
     e: MouseEvent<HTMLImageElement> | FocusEvent<HTMLImageElement>,
   ) => {
-    e.currentTarget.style.scale = '0.9';
+    e.currentTarget.style.scale = '1.1';
   };
   const handleMouseOut = (
     e: MouseEvent<HTMLImageElement> | FocusEvent<HTMLImageElement>,
   ) => {
-    e.currentTarget.style.scale = '0.9';
+    e.currentTarget.style.scale = '1';
   };
   const handleMouseDown = () => {
     console.log('send~');
