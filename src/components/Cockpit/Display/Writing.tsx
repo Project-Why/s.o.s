@@ -19,10 +19,10 @@ function DisplayWriting(props: CSSProperties) {
   const handleMouseOut = (
     e: MouseEvent<HTMLImageElement> | FocusEvent<HTMLImageElement>,
   ) => {
-    e.currentTarget.style.scale = '1';
+    e.currentTarget.style.scale = '0.9';
   };
   const handleMouseDown = () => {
-    console.log('hi~');
+    console.log('send~');
   };
   useLayoutEffect(() => {
     if (mode.writingState.display.length === 0) {
@@ -32,7 +32,10 @@ function DisplayWriting(props: CSSProperties) {
           key='Writing Send'
           alt='Writing Send Button'
           draggable='false'
-          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+          style={{
+            width: '100%',
+            objectFit: 'contain',
+          }}
           role='presentation'
           onMouseOver={handleMouseOver}
           onFocus={handleMouseOver}

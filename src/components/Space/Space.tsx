@@ -15,7 +15,7 @@ import { modeActions, selectMode } from 'store/mode';
 
 import Star from 'components/Space/Star';
 
-import { CSSProperties, useLayoutEffect } from 'react';
+import { CSSProperties, MouseEvent, useLayoutEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 export type StarInformation = {
@@ -48,6 +48,10 @@ function Space(props: CSSProperties) {
   const mode = useAppSelector(selectMode);
   const dispatch = useDispatch();
 
+  const handleOnMouseDown = (e: MouseEvent) => {
+    console.log(e.clientX, e.clientY);
+  };
+
   useLayoutEffect(() => {
     if (mode.searchingState.stars.length === 0) {
       const stars = Array(starCount)
@@ -71,6 +75,11 @@ function Space(props: CSSProperties) {
 
   return (
     <div id='Space' draggable='false' style={{ ...props }}>
+      <div
+        id='Empty Space'
+        onMouseDown={handleOnMouseDown}
+        style={{ width: '100%', height: '100%' }}
+      />
       {mode.searchingState.stars}
     </div>
   );
