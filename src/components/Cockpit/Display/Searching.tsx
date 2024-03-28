@@ -1,5 +1,5 @@
 import Searching1 from 'assets/images/Cockpit/Display/Searching/Searching_1.gif';
-import TempImg from 'assets/images/Cockpit/Display/Writing/Complete-Glitch.gif';
+import Searching2 from 'assets/images/Cockpit/Display/Searching/Searching_2.gif';
 
 import { useAppSelector } from 'hooks';
 
@@ -23,7 +23,7 @@ function DisplaySearching(props: CSSProperties) {
           style={{ width: '100%', height: '100%', objectFit: 'contain' }}
         />,
         <img
-          src={TempImg}
+          src={Searching2}
           key='Searching 2'
           alt='Searching 2'
           draggable='false'
