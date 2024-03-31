@@ -1,74 +1,95 @@
-import MorseOpening from 'assets/images/Cockpit/Decryption/Morse/Morse-opening.gif';
-import PaperAnimation from 'assets/images/Cockpit/Decryption/Paper-Animation.gif';
+import morseAnimation from 'assets/images/Cockpit/Decryption/Morse/Morse-Animation.gif';
+import paperAnimation from 'assets/images/Cockpit/Decryption/Paper-Animation.gif';
 import PaperOpened from 'assets/images/Cockpit/Decryption/Paper-Opened.gif';
 
-import { CSSProperties, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 
+import DecryptionPaperOpened from './Opened';
 import DecryptionPaperXButton from './XButton';
 
 function DecryptionPaperOpening(props: CSSProperties) {
-  const [paperAnimation, setPaperAnimation] = useState(true);
-  const [morseAnimation, setMorseAnimation] = useState(false);
+  const [showPaperAnimation, setShowPaperAnimation] = useState(true);
+  const [showMorseAnimation, setShowMorseAnimation] = useState(false);
 
-  const turnOffPaperAnimation = () => {
-    setPaperAnimation(false);
-    setMorseAnimation(true);
+  const showPaperAnimationInterval = 1533;
+  const showMorseAnimationInterval = 500;
+
+  const turnOffshowPaperAnimation = () => {
+    setShowPaperAnimation(false);
+    setShowMorseAnimation(true);
   };
-  const turnOffMorseAnimation = () => {
-    setMorseAnimation(false);
+  const turnOffshowMorseAnimation = () => {
+    setShowMorseAnimation(false);
   };
 
-  return (
+  useEffect(() => {
+    const turnOffshowPaperAnimationTime =
+      showPaperAnimation &&
+      setInterval(turnOffshowPaperAnimation, showPaperAnimationInterval);
+    const turnOffshowMorseAnimationTime =
+      showMorseAnimation &&
+      setInterval(turnOffshowMorseAnimation, showMorseAnimationInterval);
+    return () => {
+      if (turnOffshowPaperAnimationTime) {
+        clearInterval(turnOffshowPaperAnimationTime);
+      }
+      if (turnOffshowMorseAnimationTime) {
+        clearInterval(turnOffshowMorseAnimationTime);
+      }
+    };
+  }, [showPaperAnimation, showMorseAnimation]);
+
+  return showPaperAnimation ? (
     <div id='Script Opening' draggable='false' style={{ ...props }}>
-      {paperAnimation ? (
-        <img
-          id='Paper Animation'
-          draggable='false'
-          src={PaperAnimation}
-          alt='paper open animation'
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            position: 'absolute',
-          }}
-          onAnimationEnd={turnOffPaperAnimation}
-        />
-      ) : (
-        <>
-          <img
-            draggable='false'
-            src={PaperOpened}
-            alt='paper roll up'
-            style={{ width: '100%', objectFit: 'cover', position: 'absolute' }}
-          />
-          <img
-            id='Morse Animation'
-            draggable='false'
-            src={MorseOpening}
-            alt='morse open animation'
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              position: 'absolute',
-              // backgroundRepeat: 'no-repeat',
-              // animationDelay: '0s',
-              // animationDuration: '2s',
-            }}
-            onAnimationEnd={turnOffMorseAnimation}
-          />
-          <DecryptionPaperXButton
-            width='4%'
-            left='84%'
-            height='8%'
-            top='18%'
-            position='absolute'
-            display='flex'
-          />
-        </>
-      )}
+      <img
+        id='Paper Animation'
+        draggable='false'
+        src={paperAnimation}
+        alt='paper open animation'
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          position: 'absolute',
+        }}
+        onAnimationEnd={turnOffshowPaperAnimation}
+      />
     </div>
+  ) : showMorseAnimation ? (
+    <div id='Script Opening' draggable='false' style={{ ...props }}>
+      <img
+        draggable='false'
+        src={PaperOpened}
+        alt='paper roll up'
+        style={{ width: '100%', objectFit: 'cover', position: 'absolute' }}
+      />
+      <img
+        id='Morse Animation'
+        draggable='false'
+        src={morseAnimation}
+        alt='morse open animation'
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          position: 'absolute',
+          // backgroundRepeat: 'no-repeat',
+          // animationDelay: '0s',
+          // animationDuration: '2s',
+        }}
+        onAnimationEnd={turnOffshowMorseAnimation}
+      />
+      <DecryptionPaperXButton
+        width='4%'
+        left='84%'
+        height='8%'
+        top='18%'
+        position='absolute'
+        display='flex'
+      />
+    </div>
+  ) : (
+    <DecryptionPaperOpened {...props} />
   );
 }
 
