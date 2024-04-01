@@ -7,17 +7,17 @@ import DecryptionPaperXButton from './XButton';
 
 function DecryptionPaperOpened(props: CSSProperties) {
   return (
-    <div id='Script Opened' draggable='false' style={{ ...props }}>
+    <div id='Paper Opened' draggable='false' style={{ ...props }}>
       <img
         draggable='false'
         src={PaperOpened}
-        alt='paper roll up'
+        alt='paper opened'
         style={{ width: '100%', objectFit: 'cover', position: 'absolute' }}
       />
       <img
         draggable='false'
         src={MorseOpened}
-        alt='morse opend'
+        alt='morse opened'
         style={{ width: '100%', objectFit: 'cover', position: 'absolute' }}
       />
       <DecryptionPaperXButton

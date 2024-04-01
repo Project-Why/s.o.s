@@ -40,31 +40,28 @@ function DecryptionPaperOpening(props: CSSProperties) {
   }, [showPaperAnimation, showMorseAnimation]);
 
   return showPaperAnimation ? (
-    <div id='Script Opening' draggable='false' style={{ ...props }}>
+    <div id='Paper Opening 1' draggable='false' style={{ ...props }}>
       <img
-        id='Paper Animation'
         draggable='false'
         src={paperAnimation}
-        alt='paper open animation'
+        alt='paper opening'
         style={{
           width: '100%',
           height: '100%',
           objectFit: 'cover',
           position: 'absolute',
         }}
-        onAnimationEnd={turnOffshowPaperAnimation}
       />
     </div>
   ) : showMorseAnimation ? (
-    <div id='Script Opening' draggable='false' style={{ ...props }}>
+    <div id='Paper Opening 2' draggable='false' style={{ ...props }}>
       <img
         draggable='false'
         src={PaperOpened}
-        alt='paper roll up'
+        alt='paper opened'
         style={{ width: '100%', objectFit: 'cover', position: 'absolute' }}
       />
       <img
-        id='Morse Animation'
         draggable='false'
         src={morseAnimation}
         alt='morse open animation'
@@ -73,11 +70,7 @@ function DecryptionPaperOpening(props: CSSProperties) {
           height: '100%',
           objectFit: 'cover',
           position: 'absolute',
-          // backgroundRepeat: 'no-repeat',
-          // animationDelay: '0s',
-          // animationDuration: '2s',
         }}
-        onAnimationEnd={turnOffshowMorseAnimation}
       />
       <DecryptionPaperXButton
         width='4%'
