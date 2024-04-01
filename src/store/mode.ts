@@ -194,6 +194,15 @@ export const modeSlice = createSlice({
         stars: action.payload,
       });
     },
+    setStar: (
+      state: ModeState.ModeManageState,
+      action: PayloadAction<ModeState.DecryptingState>,
+    ) => {
+      Object.assign<
+        ModeState.ModeManageState,
+        Partial<ModeState.ModeManageState>
+      >(state, { decryptingState: action.payload });
+    },
   },
 });
 
