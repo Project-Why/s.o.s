@@ -88,6 +88,22 @@ function Writing(props: CSSProperties) {
           resize: 'none',
         }}
       />
+      <div
+        id=''
+        style={{
+          left: '70%',
+          top: '55%',
+          width: '15vw',
+          height: '2vw',
+          position: 'absolute',
+          textAlign: 'right',
+          fontFamily: 'FlowerScent',
+          fontSize: '2vw',
+          color: '#000000',
+        }}
+      >
+        {new TextEncoder().encode(mode.writingState.text).length} / 150 Byte
+      </div>
     </div>
   );
 }
