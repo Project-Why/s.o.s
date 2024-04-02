@@ -4,13 +4,12 @@ import { selectMode } from 'store/mode';
 import { screenActions, selectScreen } from 'store/screen';
 
 import Cockpit from 'components/Cockpit/Cockpit';
-import DescryptionPaper from 'components/Cockpit/DecryptionPaper';
 import Display from 'components/Cockpit/Display';
 import LeftButton from 'components/Cockpit/LeftButton';
 import RightButton from 'components/Cockpit/RightButton';
 import WritingButton from 'components/Cockpit/WritingButton';
+import DescryptionPaper from 'components/Space/DecryptionPaper';
 import Space from 'components/Space/Space';
-import Writing from 'components/Space/Writing';
 
 import 'pages/App.css';
 
@@ -67,27 +66,16 @@ function App() {
         position='absolute'
         display='flex'
       />
-      <Writing
+      <DescryptionPaper
         zIndex={1}
         width='100%'
         height='100%'
         position='absolute'
-        padding='10%'
-        paddingLeft='16%'
-        paddingRight='16%'
-        boxSizing='border-box'
-        backgroundColor='#FFFFFF'
-      />
-      <DescryptionPaper
-        zIndex={2}
-        width='100%'
-        height='100%'
-        position='absolute'
         display='flex'
-        pointerEvents={mode.currentMode === 'Decrypting' ? 'auto' : 'none'}
+        pointerEvents={mode.currentMode === 'Searching' ? 'none' : 'auto'}
       />
       <Cockpit
-        zIndex={3}
+        zIndex={2}
         width='100%'
         height='100%'
         position='absolute'
@@ -95,7 +83,7 @@ function App() {
         pointerEvents='none'
       />
       <Display
-        zIndex={4}
+        zIndex={3}
         left='37%'
         width='28%'
         top='54%'
@@ -104,10 +92,9 @@ function App() {
         display='flex'
         justifyContent='center'
         alignItems='center'
-        fontSize='2vw'
       />
       <WritingButton
-        zIndex={4}
+        zIndex={3}
         left='24%'
         width='9.1%'
         top='79.4%'
@@ -116,7 +103,7 @@ function App() {
         display='flex'
       />
       <LeftButton
-        zIndex={4}
+        zIndex={3}
         left='42.6%'
         width='8.6%'
         top='88.1%'
@@ -125,7 +112,7 @@ function App() {
         display='flex'
       />
       <RightButton
-        zIndex={4}
+        zIndex={3}
         left='52.1%'
         width='8.6%'
         top='88.2%'

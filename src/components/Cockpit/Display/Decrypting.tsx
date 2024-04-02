@@ -2,6 +2,8 @@ import { useAppSelector } from 'hooks';
 
 import { selectMode } from 'store/mode';
 
+import LimitInfo from 'components/Common/LimitInfo';
+
 import { CSSProperties } from 'react';
 
 function DisplayDecrypting(props: CSSProperties) {
@@ -9,20 +11,13 @@ function DisplayDecrypting(props: CSSProperties) {
   return (
     <div id='Display Decrypting' style={{ ...props }}>
       {mode.decryptingState.display[mode.decryptingState.currentIdx]}
-      <div
-        style={{
-          width: '15vw',
-          height: '2vw',
-          left: '40%',
-          top: '80%',
-          position: 'absolute',
-          fontSize: '2vw',
-          textAlign: 'right',
-        }}
-      >
-        {mode.decryptingState.currentIdx + 1} /{' '}
-        {mode.decryptingState.display.length}
-      </div>
+      <LimitInfo
+        right={1}
+        top={25}
+        current={mode.decryptingState.currentIdx + 1}
+        max={mode.decryptingState.display.length}
+        fontSize={4}
+      />
     </div>
   );
 }

@@ -5,9 +5,9 @@ import { useAppDispatch } from 'hooks';
 
 import { modeActions } from 'store/mode';
 
-import { CSSProperties, MouseEventHandler } from 'react';
+import Button from 'components/Common/Button';
 
-import Button from '../Button';
+import { CSSProperties, MouseEventHandler } from 'react';
 
 function DecryptionPaperXButton(props: CSSProperties) {
   const dispatch = useAppDispatch();

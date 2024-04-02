@@ -5,7 +5,7 @@ import LeftButtonImage from 'assets/images/Cockpit/Button/Left/L-Button.gif';
 
 import { modeActions } from 'store/mode';
 
-import Button from 'components/Cockpit/Button';
+import Button from 'components/Common/Button';
 
 import { CSSProperties, MouseEventHandler } from 'react';
 import { useDispatch } from 'react-redux';

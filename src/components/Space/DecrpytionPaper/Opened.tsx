@@ -1,9 +1,9 @@
 import MorseOpened from 'assets/images/Cockpit/Decryption/Morse/Morse.png';
 import PaperOpened from 'assets/images/Cockpit/Decryption/Paper-Opened.gif';
 
-import { CSSProperties } from 'react';
+import DecryptionPaperXButton from 'components/Space/DecrpytionPaper/XButton';
 
-import DecryptionPaperXButton from './XButton';
+import { CSSProperties } from 'react';
 
 function DecryptionPaperOpened(props: CSSProperties) {
   return (

@@ -4,16 +4,31 @@ import GuideLine2 from 'assets/images/Window/Writing/Guide-Line_2.gif';
 import { useAppDispatch, useAppSelector } from 'hooks';
 
 import { modeActions, selectMode } from 'store/mode';
+import { selectScreen } from 'store/screen';
 
-import { CSSProperties, ChangeEvent, FocusEvent, useRef } from 'react';
+import LimitInfo from 'components/Common/LimitInfo';
+
+import {
+  CSSProperties,
+  ChangeEvent,
+  FocusEvent,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 
 function Writing(props: CSSProperties) {
-  const lineHeight = 9;
+  const lineHeight = 15;
+  const fontHeight = 6;
   const maxByte = 150;
+  const maxLineCount = 2;
   const allowedCharacters = /^[A-Za-z0-9 ,:?'–/()"=+×@ㄱ-ㅎ가-힣ㅏ-ㅣéÉ\n]*$/;
 
+  const [lineCount, setLineCount] = useState(1);
   const mode = useAppSelector(selectMode);
+  const { height } = useAppSelector(selectScreen);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const lineCheckerRef = useRef<HTMLTextAreaElement>(null);
   const dispatch = useAppDispatch();
 
   const onBlurHandler = (e: FocusEvent<HTMLElement, Element>) => {
@@ -24,23 +39,37 @@ function Writing(props: CSSProperties) {
   const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const inputText = e.target.value;
     const byteLength = new TextEncoder().encode(inputText).length;
+    const textArea = textAreaRef.current;
     if (
       byteLength <= maxByte &&
       allowedCharacters.test(inputText) &&
-      textAreaRef.current &&
-      textAreaRef.current.scrollHeight === textAreaRef.current.clientHeight
+      textArea &&
+      textArea.clientHeight === textArea.scrollHeight
     ) {
       dispatch(modeActions.setText(inputText));
-    } else {
-      e.target.value = mode.writingState.text;
     }
   };
+  const onTextChangeHandler = () => {
+    const lineChecker = lineCheckerRef.current;
+    let currentLineCount = 1;
+    if (lineChecker) {
+      currentLineCount = Math.ceil(
+        lineChecker.scrollHeight / lineChecker.clientHeight,
+      );
+    }
+    setLineCount(currentLineCount);
+  };
+
+  useLayoutEffect(() => {
+    onTextChangeHandler();
+  }, [mode.writingState.text]);
 
   return (
     <div
       id='Writing Input'
       style={{
         display: mode.currentMode === 'Writing' ? 'flex' : 'none',
+        flexDirection: 'column',
         ...props,
       }}
     >
@@ -52,7 +81,7 @@ function Writing(props: CSSProperties) {
           objectFit: 'cover',
           position: 'absolute',
           left: '13%',
-          top: '25%',
+          top: '23%',
           width: '74%',
           pointerEvents: 'none',
         }}
@@ -65,45 +94,70 @@ function Writing(props: CSSProperties) {
           objectFit: 'cover',
           position: 'absolute',
           left: '13%',
-          top: '40%',
+          top: '38%',
           width: '74%',
           pointerEvents: 'none',
         }}
       />
       <textarea
+        id='Text Area'
         ref={textAreaRef}
         value={mode.writingState.text}
         onBlur={onBlurHandler}
         onChange={onChangeHandler}
         spellCheck={false}
         style={{
+          padding: 0,
           width: '100%',
-          height: `${2 * lineHeight}vw`,
+          height: (2 * lineHeight * height) / 100,
           verticalAlign: 'top',
           fontFamily: 'FlowerScent',
-          fontSize: '3vw',
-          lineHeight: `${lineHeight}vw`,
+          fontSize: (fontHeight * height) / 100,
+          lineHeight: lineHeight / fontHeight,
           borderWidth: 0,
           outline: 'none',
           resize: 'none',
         }}
       />
-      <div
-        id=''
+      <textarea
+        id='Line Checker'
+        ref={lineCheckerRef}
+        value={mode.writingState.text}
+        onChange={() => {}}
+        spellCheck={false}
         style={{
-          left: '70%',
-          top: '55%',
-          width: '15vw',
-          height: '2vw',
-          position: 'absolute',
-          textAlign: 'right',
+          padding: 0,
+          width: '100%',
+          height: (lineHeight * height) / 100,
+          verticalAlign: 'top',
           fontFamily: 'FlowerScent',
-          fontSize: '2vw',
-          color: '#000000',
+          fontSize: (fontHeight * height) / 100,
+          lineHeight: lineHeight / fontHeight,
+          borderWidth: 0,
+          outline: 'none',
+          resize: 'none',
+          pointerEvents: 'none',
+          visibility: 'hidden',
         }}
-      >
-        {new TextEncoder().encode(mode.writingState.text).length} / 150 Byte
-      </div>
+      />
+      <LimitInfo
+        right={15}
+        top={52}
+        current={new TextEncoder().encode(mode.writingState.text).length}
+        max={150}
+        info='Bytes'
+        fontSize={4}
+        color='#000000'
+      />
+      <LimitInfo
+        right={15}
+        top={60}
+        current={lineCount}
+        max={maxLineCount}
+        info='Lines'
+        fontSize={4}
+        color='#000000'
+      />
     </div>
   );
 }

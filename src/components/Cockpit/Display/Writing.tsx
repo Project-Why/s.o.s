@@ -5,20 +5,16 @@ import { useAppSelector } from 'hooks';
 import { modeActions, selectMode } from 'store/mode';
 
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { CSSProperties, FocusEvent, MouseEvent, useLayoutEffect } from 'react';
+import { CSSProperties, SyntheticEvent, useLayoutEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 function DisplayWriting(props: CSSProperties) {
   const mode = useAppSelector(selectMode);
   const dispatch = useDispatch();
-  const handleMouseOver = (
-    e: MouseEvent<HTMLImageElement> | FocusEvent<HTMLImageElement>,
-  ) => {
+  const handleMouseOver = (e: SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.style.scale = '1.1';
   };
-  const handleMouseOut = (
-    e: MouseEvent<HTMLImageElement> | FocusEvent<HTMLImageElement>,
-  ) => {
+  const handleMouseOut = (e: SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.style.scale = '1';
   };
   const handleMouseDown = () => {

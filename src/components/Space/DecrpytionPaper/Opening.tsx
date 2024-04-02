@@ -2,10 +2,10 @@ import morseAnimation from 'assets/images/Cockpit/Decryption/Morse/Morse-Animati
 import paperAnimation from 'assets/images/Cockpit/Decryption/Paper-Animation.gif';
 import PaperOpened from 'assets/images/Cockpit/Decryption/Paper-Opened.gif';
 
-import { CSSProperties, useEffect, useState } from 'react';
+import DecryptionPaperOpened from 'components/Space/DecrpytionPaper/Opened';
+import DecryptionPaperXButton from 'components/Space/DecrpytionPaper/XButton';
 
-import DecryptionPaperOpened from './Opened';
-import DecryptionPaperXButton from './XButton';
+import { CSSProperties, useEffect, useState } from 'react';
 
 function DecryptionPaperOpening(props: CSSProperties) {
   const [showPaperAnimation, setShowPaperAnimation] = useState(true);

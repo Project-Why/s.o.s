@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from 'hooks';
 
 import { modeActions, selectMode } from 'store/mode';
 
-import Button from 'components/Cockpit/Button';
+import Button from 'components/Common/Button';
 
 import { CSSProperties, MouseEventHandler } from 'react';
 
