@@ -1,6 +1,7 @@
 import { useAppSelector } from 'hooks';
 
 import { selectMode } from 'store/mode';
+import { screenActions, selectScreen } from 'store/screen';
 
 import Cockpit from 'components/Cockpit/Cockpit';
 import DescryptionPaper from 'components/Cockpit/DecryptionPaper';
@@ -14,9 +15,12 @@ import Writing from 'components/Space/Writing';
 import 'pages/App.css';
 
 import { useLayoutEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 function App() {
   const mode = useAppSelector(selectMode);
+  const screen = useAppSelector(selectScreen);
+  const dispatch = useDispatch();
   const FixRatio = () => {
     const root: HTMLElement | null = document.querySelector('#root');
     const app: HTMLElement | null = document.getElementById('App');
@@ -30,8 +34,7 @@ function App() {
         width = height * 1.7777; // 1920 ÷ 1080 ≒ 1.7777
       }
 
-      app.style.width = `${width}px`;
-      app.style.height = `${height}px`;
+      dispatch(screenActions.setScreen({ width, height }));
     }
   };
   useLayoutEffect(() => {
@@ -43,6 +46,8 @@ function App() {
       id='App'
       draggable='false'
       style={{
+        width: screen.width,
+        height: screen.height,
         backgroundColor: 'black',
         position: 'relative',
         display: 'flex',
