@@ -12,7 +12,7 @@ import {
   CSSProperties,
   ChangeEvent,
   FocusEvent,
-  useLayoutEffect,
+  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -60,7 +60,7 @@ function Writing(props: CSSProperties) {
     setLineCount(currentLineCount);
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     onTextChangeHandler();
   }, [mode.writingState.text]);
 

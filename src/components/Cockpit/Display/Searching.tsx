@@ -6,13 +6,13 @@ import { useAppSelector } from 'hooks';
 import { modeActions, selectMode } from 'store/mode';
 
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { CSSProperties, useLayoutEffect } from 'react';
+import { CSSProperties, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 function DisplaySearching(props: CSSProperties) {
   const mode = useAppSelector(selectMode);
   const dispatch = useDispatch();
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (mode.searchingState.display.length === 0) {
       const displayList: EmotionJSX.Element[] = [
         <img

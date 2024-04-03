@@ -5,7 +5,7 @@ import { useAppSelector } from 'hooks';
 import { modeActions, selectMode } from 'store/mode';
 
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { CSSProperties, SyntheticEvent, useLayoutEffect } from 'react';
+import { CSSProperties, SyntheticEvent, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 function DisplayWriting(props: CSSProperties) {
@@ -20,7 +20,7 @@ function DisplayWriting(props: CSSProperties) {
   const handleMouseDown = () => {
     console.log('send~');
   };
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (mode.writingState.display.length === 0) {
       const displayList: EmotionJSX.Element[] = [
         <img

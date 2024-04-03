@@ -13,7 +13,7 @@ import Space from 'components/Space/Space';
 
 import 'pages/App.css';
 
-import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
       dispatch(screenActions.setScreen({ width, height }));
     }
   };
-  useLayoutEffect(() => {
+  useEffect(() => {
     window.onresize = FixRatio;
     FixRatio();
   }, []);
