@@ -2,6 +2,7 @@ import { useAppDispatch } from 'hooks';
 
 import { modeActions } from 'store/mode';
 
+import MorseInfo from 'components/Cockpit/Display/MorseInfo';
 import StarBubble from 'components/Space/StarBubble';
 
 import { CSSProperties, MouseEventHandler, useState } from 'react';
@@ -21,6 +22,29 @@ function Star(props: CSSProperties & StarProps) {
   const dispatch = useAppDispatch();
   const clickHandler: MouseEventHandler = () => {
     dispatch(modeActions.changeMode('Decrypting'));
+    const morseInfo = [
+      '01001 010110\n0100010 010010\n00101 001110',
+      '111010 11 110\n00 11110\n110101 001101',
+    ];
+    dispatch(
+      modeActions.setStar({
+        currentIdx: 0,
+        starId: id,
+        display: morseInfo.map((value, index) => (
+          <MorseInfo
+            key={`Signal ${index}`}
+            index={index}
+            code={value}
+            width='match-parent'
+            height='match-parent'
+            display='flex'
+            alignItems='left'
+            justifyContent='top'
+            flexDirection='column'
+          />
+        )),
+      }),
+    );
   };
   return (
     <>

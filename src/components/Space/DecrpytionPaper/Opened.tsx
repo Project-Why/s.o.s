@@ -1,23 +1,23 @@
 import MorseOpened from 'assets/images/Cockpit/Decryption/Morse/Morse.png';
 import PaperOpened from 'assets/images/Cockpit/Decryption/Paper-Opened.gif';
 
-import { CSSProperties } from 'react';
+import DecryptionPaperXButton from 'components/Space/DecrpytionPaper/XButton';
 
-import DecryptionPaperXButton from './XButton';
+import { CSSProperties } from 'react';
 
 function DecryptionPaperOpened(props: CSSProperties) {
   return (
-    <div id='Script Opened' draggable='false' style={{ ...props }}>
+    <div id='Paper Opened' draggable='false' style={{ ...props }}>
       <img
         draggable='false'
         src={PaperOpened}
-        alt='paper roll up'
+        alt='paper opened'
         style={{ width: '100%', objectFit: 'cover', position: 'absolute' }}
       />
       <img
         draggable='false'
         src={MorseOpened}
-        alt='morse opend'
+        alt='morse opened'
         style={{ width: '100%', objectFit: 'cover', position: 'absolute' }}
       />
       <DecryptionPaperXButton

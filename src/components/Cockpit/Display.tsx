@@ -1,4 +1,4 @@
-import State from 'components/State';
+import State from 'components/Common/State';
 
 import { CSSProperties } from 'react';
 

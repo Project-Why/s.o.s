@@ -15,7 +15,7 @@ import { modeActions, selectMode } from 'store/mode';
 
 import Star from 'components/Space/Star';
 
-import { CSSProperties, MouseEvent, useLayoutEffect } from 'react';
+import { CSSProperties, MouseEvent, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 export type StarInformation = {
@@ -52,7 +52,7 @@ function Space(props: CSSProperties) {
     console.log(e.clientX, e.clientY);
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (mode.searchingState.stars.length === 0) {
       const stars = Array(starCount)
         .fill(0)

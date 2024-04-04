@@ -71,6 +71,13 @@ export const modeSlice = createSlice({
             >(state.searchingState, {
               currentIdx: state.searchingState.currentIdx - 1,
             });
+          } else {
+            Object.assign<
+              ModeState.SearchingState,
+              Partial<ModeState.SearchingState>
+            >(state.searchingState, {
+              currentIdx: state.searchingState.display.length - 1,
+            });
           }
           break;
         default:
@@ -115,6 +122,13 @@ export const modeSlice = createSlice({
               Partial<ModeState.SearchingState>
             >(state.searchingState, {
               currentIdx: state.searchingState.currentIdx + 1,
+            });
+          } else {
+            Object.assign<
+              ModeState.SearchingState,
+              Partial<ModeState.SearchingState>
+            >(state.searchingState, {
+              currentIdx: 0,
             });
           }
           break;
@@ -179,6 +193,15 @@ export const modeSlice = createSlice({
       >(state.searchingState, {
         stars: action.payload,
       });
+    },
+    setStar: (
+      state: ModeState.ModeManageState,
+      action: PayloadAction<ModeState.DecryptingState>,
+    ) => {
+      Object.assign<
+        ModeState.ModeManageState,
+        Partial<ModeState.ModeManageState>
+      >(state, { decryptingState: action.payload });
     },
   },
 });

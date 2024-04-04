@@ -1,10 +1,12 @@
 import mode from 'store/mode';
+import screen from 'store/screen';
 
 import { configureStore } from '@reduxjs/toolkit';
 
 const store = configureStore({
   reducer: {
     mode,
+    screen,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),

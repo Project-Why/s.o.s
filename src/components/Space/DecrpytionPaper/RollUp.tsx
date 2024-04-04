@@ -4,7 +4,7 @@ import { CSSProperties } from 'react';
 
 function DecryptionPaperRollUp(props: CSSProperties) {
   return (
-    <div id='Script' draggable='false' style={{ ...props }}>
+    <div id='Paper Roll Up' draggable='false' style={{ ...props }}>
       <img
         draggable='false'
         src={PaperRollUp}
