@@ -1,13 +1,13 @@
-import MorseDot1 from 'assets/images/Cockpit/Display/Decrypting/Morse_Dot1.gif';
-import MorseDot2 from 'assets/images/Cockpit/Display/Decrypting/Morse_Dot2.gif';
-import MorseDot3 from 'assets/images/Cockpit/Display/Decrypting/Morse_Dot3.gif';
-import MorseDot4 from 'assets/images/Cockpit/Display/Decrypting/Morse_Dot4.gif';
-import MorseDot5 from 'assets/images/Cockpit/Display/Decrypting/Morse_Dot5.gif';
-import MorseLine1 from 'assets/images/Cockpit/Display/Decrypting/Morse_Line1.gif';
-import MorseLine2 from 'assets/images/Cockpit/Display/Decrypting/Morse_Line2.gif';
-import MorseLine3 from 'assets/images/Cockpit/Display/Decrypting/Morse_Line3.gif';
-import MorseLine4 from 'assets/images/Cockpit/Display/Decrypting/Morse_Line4.gif';
-import MorseLine5 from 'assets/images/Cockpit/Display/Decrypting/Morse_Line5.gif';
+import MorseDot1 from 'assets/images/Cockpit/Display/Decrypting/Morse-Dot_1.gif';
+import MorseDot2 from 'assets/images/Cockpit/Display/Decrypting/Morse-Dot_2.gif';
+import MorseDot3 from 'assets/images/Cockpit/Display/Decrypting/Morse-Dot_3.gif';
+import MorseDot4 from 'assets/images/Cockpit/Display/Decrypting/Morse-Dot_4.gif';
+import MorseDot5 from 'assets/images/Cockpit/Display/Decrypting/Morse-Dot_5.gif';
+import MorseLine1 from 'assets/images/Cockpit/Display/Decrypting/Morse-Line_1.gif';
+import MorseLine2 from 'assets/images/Cockpit/Display/Decrypting/Morse-Line_2.gif';
+import MorseLine3 from 'assets/images/Cockpit/Display/Decrypting/Morse-Line_3.gif';
+import MorseLine4 from 'assets/images/Cockpit/Display/Decrypting/Morse-Line_4.gif';
+import MorseLine5 from 'assets/images/Cockpit/Display/Decrypting/Morse-Line_5.gif';
 
 import { CSSProperties } from 'react';
 
