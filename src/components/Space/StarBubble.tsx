@@ -21,10 +21,12 @@ function StarBubble(props: CSSProperties & StarBubbleProps) {
           padding: '10%',
           position: 'absolute',
           color: 'black',
-          fontSize: '2vw',
+          fontSize: '1vw',
         }}
       >
-        hello my name is &#39;{id}&#39;
+        id: {id} <br />
+        date: date <br />
+        location: location
       </span>
     </div>
   );
