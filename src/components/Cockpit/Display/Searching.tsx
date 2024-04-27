@@ -1,5 +1,8 @@
 import Searching1 from 'assets/images/Cockpit/Display/Searching/Searching_1.gif';
 import Searching2 from 'assets/images/Cockpit/Display/Searching/Searching_2.gif';
+import Searching3 from 'assets/images/Cockpit/Display/Searching/Searching_3.gif';
+import Searching4 from 'assets/images/Cockpit/Display/Searching/Searching_4.gif';
+import Searching5 from 'assets/images/Cockpit/Display/Searching/Searching_5.gif';
 
 import { useAppSelector } from 'hooks';
 
@@ -26,6 +29,27 @@ function DisplaySearching(props: CSSProperties) {
           src={Searching2}
           key='Searching 2'
           alt='Searching 2'
+          draggable='false'
+          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+        />,
+        <img
+          src={Searching3}
+          key='Searching 3'
+          alt='Searching 3'
+          draggable='false'
+          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+        />,
+        <img
+          src={Searching4}
+          key='Searching 4'
+          alt='Searching 4'
+          draggable='false'
+          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+        />,
+        <img
+          src={Searching5}
+          key='Searching 5'
+          alt='Searching 5'
           draggable='false'
           style={{ width: '100%', height: '100%', objectFit: 'contain' }}
         />,
