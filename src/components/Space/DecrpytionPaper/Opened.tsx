@@ -25,6 +25,7 @@ function DecryptionPaperOpened(props: CSSProperties) {
           top: '2.22%',
           objectFit: 'cover',
           position: 'absolute',
+          opacity: '.45',
         }}
       />
       <DecryptionPaperXButton
