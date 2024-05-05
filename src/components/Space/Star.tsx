@@ -23,8 +23,8 @@ function Star(props: CSSProperties & StarProps) {
   const clickHandler: MouseEventHandler = () => {
     dispatch(modeActions.changeMode('Decrypting'));
     const morseInfo = [
-      '01001 010110\n0100010 010010\n00101 001110',
-      '111010 11 110\n00 11110\n110101 001101',
+      '001001 0101101\n0100010 010010\n001101 0101110\n0100010 010010\n001001 0101101\n0100010 010010',
+      '11101011 11110\n0011100 011110\n110101 0101101\n0011100 011110\n11101011 11110',
     ];
     dispatch(
       modeActions.setStar({
