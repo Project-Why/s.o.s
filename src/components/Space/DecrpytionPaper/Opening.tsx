@@ -66,10 +66,10 @@ function DecryptionPaperOpening(props: CSSProperties) {
         src={morseAnimation}
         alt='morse open animation'
         style={{
-          width: '96%',
-          left: '1.25%',
-          height: '95.6%',
-          top: '2.22%',
+          width: '95.05%',
+          left: '1.35%',
+          height: '95.09%',
+          top: '1.38%',
           objectFit: 'cover',
           position: 'absolute',
         }}

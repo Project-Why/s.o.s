@@ -119,15 +119,7 @@ function DecryptionPaperOpened(props: CSSProperties) {
         draggable='false'
         src={MorseOpened}
         alt='morse opened'
-        style={{
-          width: '96%',
-          left: '1.25%',
-          height: '95.6%',
-          top: '2.22%',
-          objectFit: 'cover',
-          position: 'absolute',
-          opacity: '.45',
-        }}
+        style={{ width: '100%', objectFit: 'cover', position: 'absolute' }}
       />
       <DecryptionPaperXButton
         width='4%'
