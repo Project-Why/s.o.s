@@ -8,6 +8,8 @@ import { selectScreen } from 'store/screen';
 
 import LimitInfo from 'components/Common/LimitInfo';
 
+import { allowedCharacters } from 'common/morse';
+
 import {
   CSSProperties,
   ChangeEvent,
@@ -22,7 +24,6 @@ function Writing(props: CSSProperties) {
   const fontHeight = 6;
   const maxByte = 150;
   const maxLineCount = 2;
-  const allowedCharacters = /^[A-Za-z0-9 ,:?'–/()"=+×@ㄱ-ㅎ가-힣ㅏ-ㅣéÉ\n]*$/;
 
   const [lineCount, setLineCount] = useState(1);
   const mode = useAppSelector(selectMode);

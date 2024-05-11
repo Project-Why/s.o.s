@@ -2,8 +2,10 @@ import { useAppDispatch } from 'hooks';
 
 import { modeActions } from 'store/mode';
 
-import MorseInfo from 'components/Cockpit/Display/MorseInfo';
+import MorsePage from 'components/Cockpit/Display/MorsePage';
 import StarBubble from 'components/Space/StarBubble';
+
+import { convertStringToMorseCode } from 'common/morse';
 
 import { CSSProperties, MouseEventHandler, useState } from 'react';
 
@@ -22,21 +24,24 @@ function Star(props: CSSProperties & StarProps) {
   const dispatch = useAppDispatch();
   const clickHandler: MouseEventHandler = () => {
     dispatch(modeActions.changeMode('Decrypting'));
-    const morseInfo = [
-      '001001 0101101\n0100010 010010\n001101 0101110\n0100010 010010\n001001 0101101\n0100010 010010',
-      '11101011 11110\n0011100 011110\n110101 0101101\n0011100 011110\n11101011 11110',
-    ];
+
+    // Get Morse Message from server.
+    const responseMessage =
+      '..-... -.---. ...--. -..-.. .....- ..-... --...- .....- ..-..- -..--. ...... -.--.. ...-.. ...... -.---. ....-- ...... --...- ..-..- -...-. ...... ...--- -..-.. ..-... .-.... -...-. .....- ...-.. -.-... .....- ..-..- -...-. ..-... ..-... -.---. ..-... --...- ..-... -..--- .-.-.- ..---. -.--.. ...... ...--- -.-... ...-.. -.-... .....- ..-..- -...-. ....-. -..--. ..-... -.---. .-.--. ..-... -..-.. ..-... -..--- .-.-.- -....- .-.-.- -....- .-.-.- -....- -....- ...-.. .....- -.-..- ..---- .....- ..-... .- ... -... -.. -... ... ..-. -.-.-. -.-.-- .-- --- .. -.. ..-. .--.-.';
+
+    const morseInfo = convertStringToMorseCode(responseMessage);
     dispatch(
       modeActions.setStar({
         currentIdx: 0,
         starId: id,
         display: morseInfo.map((value, index) => (
-          <MorseInfo
-            key={`Signal ${index}`}
+          <MorsePage
+            key={`Morse ${index}`}
             index={index}
-            code={value}
-            width='match-parent'
-            height='match-parent'
+            morsePage={value}
+            width='100%'
+            height='100%'
+            paddingTop='5%'
             display='flex'
             alignItems='left'
             justifyContent='top'
