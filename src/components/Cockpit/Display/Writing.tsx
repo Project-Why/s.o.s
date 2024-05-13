@@ -1,50 +1,45 @@
-import Complete from 'assets/images/Cockpit/Display/Writing/Complete.gif';
+import Send from 'assets/images/Cockpit/Display/Writing/Send.gif';
+
+import { messageAPI } from 'apis/message';
 
 import { useAppSelector } from 'hooks';
 
-import { modeActions, selectMode } from 'store/mode';
+import { selectMode } from 'store/mode';
 
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { CSSProperties, SyntheticEvent, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { CSSProperties, EventHandler, FocusEvent, MouseEvent } from 'react';
 
 function DisplayWriting(props: CSSProperties) {
   const mode = useAppSelector(selectMode);
-  const dispatch = useDispatch();
-  const handleMouseOver = (e: SyntheticEvent<HTMLImageElement>) => {
+  const handleMouseOver: EventHandler<MouseEvent | FocusEvent> = (
+    e: MouseEvent<HTMLImageElement> | FocusEvent<HTMLImageElement>,
+  ) => {
     e.currentTarget.style.scale = '1.1';
   };
-  const handleMouseOut = (e: SyntheticEvent<HTMLImageElement>) => {
+  const handleMouseOut: EventHandler<MouseEvent | FocusEvent> = (
+    e: MouseEvent<HTMLImageElement> | FocusEvent<HTMLImageElement>,
+  ) => {
     e.currentTarget.style.scale = '1';
   };
-  const handleMouseDown = () => {
-    console.log('send~');
+  const handleMouseDown: EventHandler<MouseEvent> = () => {
+    messageAPI.createMessage(mode.writingState.text);
   };
-  useEffect(() => {
-    if (mode.writingState.display.length === 0) {
-      const displayList: EmotionJSX.Element[] = [
-        <img
-          src={Complete}
-          key='Writing Send'
-          alt='Writing Send Button'
-          draggable='false'
-          style={{
-            width: '100%',
-            objectFit: 'contain',
-          }}
-          role='presentation'
-          onMouseOver={handleMouseOver}
-          onFocus={handleMouseOver}
-          onMouseOut={handleMouseOut}
-          onBlur={handleMouseOut}
-          onMouseDown={handleMouseDown}
-        />,
-      ];
-      dispatch(modeActions.setDisplay(displayList));
-    }
-  }, []);
   return (
     <div id='Display Writing' style={{ ...props }}>
+      <img
+        src={Send}
+        alt='Writing Send Button'
+        draggable='false'
+        style={{
+          width: '100%',
+          objectFit: 'contain',
+        }}
+        role='presentation'
+        onMouseOver={handleMouseOver}
+        onFocus={handleMouseOver}
+        onMouseOut={handleMouseOut}
+        onBlur={handleMouseOut}
+        onMouseDown={handleMouseDown}
+      />
       {mode.writingState.display[mode.writingState.currentIdx]}
     </div>
   );

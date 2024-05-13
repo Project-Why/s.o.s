@@ -8,6 +8,7 @@
   "importOrder": [
     "^types/(.*)$",
     "^assets/(.*)$",
+    "^apis/(.*)$",
     "^hooks/(.*)$",
     "^hooks",
     "^store/(.*)$",

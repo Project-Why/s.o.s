@@ -1,10 +1,9 @@
+import DisplayDecrypting from 'components/Cockpit/Display/Decrypting';
+import DisplaySearching from 'components/Cockpit/Display/Searching';
+import DisplayWriting from 'components/Cockpit/Display/Writing';
 import State from 'components/Common/State';
 
 import { CSSProperties } from 'react';
-
-import DisplayDecrypting from './Display/Decrypting';
-import DisplaySearching from './Display/Searching';
-import DisplayWriting from './Display/Writing';
 
 function Display(props: CSSProperties) {
   return (

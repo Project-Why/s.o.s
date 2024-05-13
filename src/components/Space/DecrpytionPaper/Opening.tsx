@@ -12,7 +12,7 @@ function DecryptionPaperOpening(props: CSSProperties) {
   const [showMorseAnimation, setShowMorseAnimation] = useState(false);
 
   const showPaperAnimationInterval = 1533;
-  const showMorseAnimationInterval = 800;
+  const showMorseAnimationInterval = 500;
 
   const turnOffshowPaperAnimation = () => {
     setShowPaperAnimation(false);
