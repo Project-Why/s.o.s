@@ -1,6 +1,6 @@
 import MorseSignal from 'components/Cockpit/Display/MorseSignal';
 
-import { DecryptingDisplay, MorseCode, morseCode } from 'common/morse';
+import { DecryptingDisplay, MorseCode, morseCodeIndex } from 'common/morse';
 
 import React, { CSSProperties } from 'react';
 
@@ -28,7 +28,7 @@ function MorsePage(props: CSSProperties & MorsePageProps) {
             <React.Fragment key={`${lineIndex}_${codeIndex}`}>
               <MorseSignal
                 signal={code}
-                index={morseCode[code]}
+                index={morseCodeIndex[code]}
                 display='flex'
                 height='100%'
                 aspectRatio={`${code.length}/1`}

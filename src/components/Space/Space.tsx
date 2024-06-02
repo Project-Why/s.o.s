@@ -9,13 +9,15 @@ import Star8 from 'assets/images/Window/Star/Star_8.gif';
 import Star9 from 'assets/images/Window/Star/Star_9.gif';
 import Star10 from 'assets/images/Window/Star/Star_10.gif';
 
+import { messageAPI } from 'apis/message';
+
 import { useAppSelector } from 'hooks';
 
 import { modeActions, selectMode } from 'store/mode';
 
-import Star from 'components/Space/Star';
+import Star, { StarProps } from 'components/Space/Star';
 
-import { CSSProperties, MouseEvent, useEffect } from 'react';
+import { CSSProperties, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 export type StarInformation = {
@@ -25,7 +27,6 @@ export type StarInformation = {
 };
 
 function Space(props: CSSProperties) {
-  const starCount = 20;
   const starWidth = 3.13; // 60px when 1920px
   const starHeight = 5.56; // 60px when 1080px
 
@@ -48,28 +49,33 @@ function Space(props: CSSProperties) {
   const mode = useAppSelector(selectMode);
   const dispatch = useDispatch();
 
-  const handleOnMouseDown = (e: MouseEvent) => {
-    console.log(e.clientX, e.clientY);
+  const getMessages = async () => {
+    const messages = await messageAPI.getMessages();
+    if (messages) {
+      const stars = messages.map<StarProps>((message) => ({
+        id: message.id,
+        location: message.location,
+        createdAt: message.createdAt,
+        message: message.code,
+        left: +(Math.random() * maxLeft).toFixed(2),
+        top: +(Math.random() * maxTop).toFixed(2),
+        image: starImages[Math.floor(Math.random() * 5)],
+        width: starWidth,
+        height: starHeight,
+        position: 'absolute',
+        display: 'flex',
+      }));
+      dispatch(modeActions.setStars(stars));
+    }
+  };
+
+  const handleOnMouseDown = async () => {
+    getMessages();
   };
 
   useEffect(() => {
     if (mode.searchingState.stars.length === 0) {
-      const stars = Array(starCount)
-        .fill(0)
-        .map((_, index) => (
-          <Star
-            id={index}
-            key={`${index}`}
-            left={+(Math.random() * maxLeft).toFixed(2)}
-            top={+(Math.random() * maxTop).toFixed(2)}
-            width={starWidth}
-            height={starHeight}
-            display='flex'
-            position='absolute'
-            image={starImages[Math.floor(Math.random() * 5)]}
-          />
-        ));
-      dispatch(modeActions.setStars(stars));
+      getMessages();
     }
   }, []);
 
@@ -80,7 +86,9 @@ function Space(props: CSSProperties) {
         onMouseDown={handleOnMouseDown}
         style={{ width: '100%', height: '100%' }}
       />
-      {mode.searchingState.stars}
+      {mode.searchingState.stars.map((starProps, index) => (
+        <Star key={index} {...starProps} />
+      ))}
     </div>
   );
 }

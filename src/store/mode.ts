@@ -2,6 +2,8 @@ import { ModeState } from 'types/ModeState';
 
 import { RootState } from 'store';
 
+import { StarProps } from 'components/Space/Star';
+
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
@@ -185,7 +187,7 @@ export const modeSlice = createSlice({
     },
     setStars: (
       state: ModeState.ModeManageState,
-      action: PayloadAction<EmotionJSX.Element[]>,
+      action: PayloadAction<StarProps[]>,
     ) => {
       Object.assign<
         ModeState.SearchingState,

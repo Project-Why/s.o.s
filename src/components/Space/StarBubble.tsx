@@ -4,10 +4,12 @@ import { CSSProperties } from 'react';
 
 export type StarBubbleProps = {
   id: number;
+  createAt: Date;
+  location: string;
 };
 
 function StarBubble(props: CSSProperties & StarBubbleProps) {
-  const { id, ...cssProps } = props;
+  const { id, createAt, location, ...cssProps } = props;
   return (
     <div id={`Star Bubble ${id}`} draggable='false' style={{ ...cssProps }}>
       <img
@@ -25,8 +27,8 @@ function StarBubble(props: CSSProperties & StarBubbleProps) {
         }}
       >
         id: {id} <br />
-        date: date <br />
-        location: location
+        date: {createAt.toString()} <br />
+        location: {location}
       </span>
     </div>
   );

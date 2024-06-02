@@ -6,7 +6,7 @@ export declare namespace ModeState {
     currentIdx: number;
   }
   export interface SearchingState extends ModeState {
-    stars: EmotionJSX.Element[];
+    stars: StarProps[];
   }
   export interface DecryptingState extends ModeState {
     starId: number;

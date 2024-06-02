@@ -236,7 +236,11 @@ function DecryptionPaperOpened(props: CSSProperties) {
       />
       <img
         draggable='false'
-        src={translate.index ? IndividualCode[translate.index] : MorseOpened}
+        src={
+          translate.index !== null
+            ? IndividualCode[translate.index]
+            : MorseOpened
+        }
         alt='paper opened'
         style={{ width: '100%', objectFit: 'cover', position: 'absolute' }}
       />

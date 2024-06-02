@@ -11,6 +11,9 @@ import { CSSProperties, MouseEventHandler, useState } from 'react';
 
 export type StarProps = {
   id: number;
+  createdAt: Date;
+  location: string;
+  message: string;
   image: string;
   width: number;
   height: number;
@@ -19,17 +22,25 @@ export type StarProps = {
 };
 
 function Star(props: CSSProperties & StarProps) {
-  const { id, image, width, height, left, top, ...cssProps } = props;
+  const {
+    id,
+    createdAt,
+    location,
+    message,
+    image,
+    width,
+    height,
+    left,
+    top,
+    ...cssProps
+  } = props;
   const [isHover, setIsHover] = useState(false);
   const dispatch = useAppDispatch();
   const clickHandler: MouseEventHandler = () => {
     dispatch(modeActions.changeMode('Decrypting'));
 
     // Get Morse Message from server.
-    const responseMessage =
-      '..-... -.---. ...--. -..-.. .....- ..-... --...- .....- ..-..- -..--. ...... -.--.. ...-.. ...... -.---. ....-- ...... --...- ..-..- -...-. ...... ...--- -..-.. ..-... .-.... -...-. .....- ...-.. -.-... .....- ..-..- -...-. ..-... ..-... -.---. ..-... --...- ..-... -..--- .-.-.- ..---. -.--.. ...... ...--- -.-... ...-.. -.-... .....- ..-..- -...-. ....-. -..--. ..-... -.---. .-.--. ..-... -..-.. ..-... -..--- .-.-.- -....- .-.-.- -....- .-.-.- -....- -....- ...-.. .....- -.-..- ..---- .....- ..-... .- ... -... -.. -... ... ..-. -.-.-. -.-.-- .-- --- .. -.. ..-. .--.-.';
-
-    const morseInfo = convertStringToMorseCode(responseMessage);
+    const morseInfo = convertStringToMorseCode(message);
     dispatch(
       modeActions.setStar({
         currentIdx: 0,
@@ -78,6 +89,8 @@ function Star(props: CSSProperties & StarProps) {
       </div>
       <StarBubble
         id={id}
+        createAt={createdAt}
+        location={location}
         width='12.5%'
         height='12%'
         left={`${left < 87.5 ? left : 87.5}%`}
