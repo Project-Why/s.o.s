@@ -27,7 +27,7 @@ function StarBubble(props: CSSProperties & StarBubbleProps) {
         }}
       >
         id: {id} <br />
-        date: {createAt.toString()} <br />
+        date: {createAt.toLocaleDateString()} <br />
         location: {location}
       </span>
     </div>

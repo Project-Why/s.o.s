@@ -17,7 +17,7 @@ import { modeActions, selectMode } from 'store/mode';
 
 import Star, { StarProps } from 'components/Space/Star';
 
-import { CSSProperties, useEffect } from 'react';
+import { CSSProperties, MouseEvent, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 export type StarInformation = {
@@ -50,6 +50,7 @@ function Space(props: CSSProperties) {
   const dispatch = useDispatch();
 
   const getMessages = async () => {
+    dispatch(modeActions.setStars([]));
     const messages = await messageAPI.getMessages();
     if (messages) {
       const stars = messages.map<StarProps>((message) => ({
@@ -68,23 +69,77 @@ function Space(props: CSSProperties) {
       dispatch(modeActions.setStars(stars));
     }
   };
+  const handleOnMouseDown = async (e: MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    dispatch(
+      modeActions.setMovingPosition([
+        e.clientX - rect.left,
+        e.clientY - rect.top,
+      ]),
+    );
+    dispatch(modeActions.setIsLoading());
 
-  const handleOnMouseDown = async () => {
     getMessages();
   };
 
+  /** Initial Loading. */
   useEffect(() => {
     if (mode.searchingState.stars.length === 0) {
       getMessages();
     }
   }, []);
 
+  /** Space Animation */
+  useEffect(() => {
+    const loading =
+      mode.searchingState.isLoading &&
+      setInterval(() => dispatch(modeActions.setIsLoading()), 1000);
+    return () => {
+      if (loading) {
+        clearInterval(loading);
+      }
+    };
+  }, [mode.searchingState.isLoading]);
+
+  useEffect(() => {
+    const movingCircleAnimation =
+      mode.searchingState.currentAnimation === 2 &&
+      setInterval(() => dispatch(modeActions.setNextAnimation()), 1000);
+    const movingPrevStars =
+      mode.searchingState.currentAnimation === 2 &&
+      setInterval(() => dispatch(modeActions.setNextAnimation()), 1000);
+    const movingCurrentStars =
+      mode.searchingState.currentAnimation === 2 &&
+      setInterval(() => dispatch(modeActions.setNextAnimation()), 1000);
+    const movingLineAnimation =
+      mode.searchingState.currentAnimation === 2 &&
+      setInterval(() => dispatch(modeActions.setNextAnimation()), 1000);
+    return () => {
+      if (movingCircleAnimation) {
+        clearInterval(movingCircleAnimation);
+      }
+      if (movingPrevStars) {
+        clearInterval(movingPrevStars);
+      }
+      if (movingCurrentStars) {
+        clearInterval(movingCurrentStars);
+      }
+      if (movingLineAnimation) {
+        clearInterval(movingLineAnimation);
+      }
+    };
+  }, [mode.searchingState.currentAnimation]);
+
   return (
     <div id='Space' draggable='false' style={{ ...props }}>
       <div
         id='Empty Space'
         onMouseDown={handleOnMouseDown}
-        style={{ width: '100%', height: '100%' }}
+        style={{
+          width: '100%',
+          height: '100%',
+          pointerEvents: `${mode.searchingState.isLoading ? 'none' : 'auto'}`,
+        }}
       />
       {mode.searchingState.stars.map((starProps, index) => (
         <Star key={index} {...starProps} />

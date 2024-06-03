@@ -1,17 +1,17 @@
-import { useAppDispatch } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 
-import { modeActions } from 'store/mode';
+import { modeActions, selectMode } from 'store/mode';
 
 import MorsePage from 'components/Cockpit/Display/MorsePage';
 import StarBubble from 'components/Space/StarBubble';
 
 import { convertStringToMorseCode } from 'common/morse';
 
-import { CSSProperties, MouseEventHandler, useState } from 'react';
+import { CSSProperties, MouseEventHandler, useEffect, useState } from 'react';
 
 export type StarProps = {
   id: number;
-  createdAt: Date;
+  createdAt: string;
   location: string;
   message: string;
   image: string;
@@ -35,6 +35,7 @@ function Star(props: CSSProperties & StarProps) {
     ...cssProps
   } = props;
   const [isHover, setIsHover] = useState(false);
+  const mode = useAppSelector(selectMode);
   const dispatch = useAppDispatch();
   const clickHandler: MouseEventHandler = () => {
     dispatch(modeActions.changeMode('Decrypting'));
@@ -62,6 +63,25 @@ function Star(props: CSSProperties & StarProps) {
       }),
     );
   };
+
+  useEffect(() => {
+    // Get component
+    const starElement = document.getElementById(`Star ${id}`);
+    if (starElement && mode.searchingState.isLoading) {
+      // Initial Position
+      starElement.style.position = 'absolute';
+      starElement.style.left = `${mode.searchingState.movingPosition[0]}px`;
+      starElement.style.top = `${mode.searchingState.movingPosition[1]}px`;
+
+      // Move
+      setTimeout(() => {
+        starElement.style.transition = 'left 1s ease-out, top 1s ease-out';
+        starElement.style.left = `${left}%`;
+        starElement.style.top = `${top}%`;
+      }, 0);
+    }
+  }, [mode.searchingState.isLoading]);
+
   return (
     <>
       <div
@@ -75,9 +95,8 @@ function Star(props: CSSProperties & StarProps) {
         style={{
           width: `${width}%`,
           height: `${height}%`,
-          left: `${left}%`,
-          top: `${top}%`,
           ...cssProps,
+          pointerEvents: `${mode.searchingState.isLoading ? 'none' : 'auto'}`,
         }}
       >
         <img
@@ -89,7 +108,7 @@ function Star(props: CSSProperties & StarProps) {
       </div>
       <StarBubble
         id={id}
-        createAt={createdAt}
+        createAt={new Date(createdAt)}
         location={location}
         width='12.5%'
         height='12%'

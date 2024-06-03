@@ -7,6 +7,9 @@ export declare namespace ModeState {
   }
   export interface SearchingState extends ModeState {
     stars: StarProps[];
+    isLoading: boolean;
+    currentAnimation: number;
+    movingPosition: [number, number];
   }
   export interface DecryptingState extends ModeState {
     starId: number;
