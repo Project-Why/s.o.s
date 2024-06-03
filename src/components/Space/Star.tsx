@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from 'hooks';
 
 import { modeActions, selectMode } from 'store/mode';
+import { selectScreen } from 'store/screen';
 
 import MorsePage from 'components/Cockpit/Display/MorsePage';
 import StarBubble from 'components/Space/StarBubble';
@@ -36,6 +37,7 @@ function Star(props: CSSProperties & StarProps) {
   } = props;
   const [isHover, setIsHover] = useState(false);
   const mode = useAppSelector(selectMode);
+  const screen = useAppSelector(selectScreen);
   const dispatch = useAppDispatch();
   const clickHandler: MouseEventHandler = () => {
     dispatch(modeActions.changeMode('Decrypting'));
@@ -67,20 +69,39 @@ function Star(props: CSSProperties & StarProps) {
   useEffect(() => {
     // Get component
     const starElement = document.getElementById(`Star ${id}`);
-    if (starElement && mode.searchingState.isLoading) {
-      // Initial Position
-      starElement.style.position = 'absolute';
-      starElement.style.left = `${mode.searchingState.movingPosition[0]}px`;
-      starElement.style.top = `${mode.searchingState.movingPosition[1]}px`;
-
-      // Move
-      setTimeout(() => {
-        starElement.style.transition = 'left 1s ease-out, top 1s ease-out';
-        starElement.style.left = `${left}%`;
-        starElement.style.top = `${top}%`;
-      }, 0);
+    if (starElement) {
+      switch (mode.searchingState.currentAnimation) {
+        case 1: // Initial Position
+        case 2:
+          starElement.style.left = `${0.98 * (mode.searchingState.movingPosition[0] - screen.width * width * 0.01 * 0.5) + 0.02 * screen.width * left * 0.01}px`;
+          starElement.style.top = `${0.98 * (mode.searchingState.movingPosition[1] - screen.height * height * 0.01 * 0.5) + 0.02 * screen.width * top * 0.01}px`;
+          starElement.style.width = `${width * 0.5}%`;
+          starElement.style.height = `${height * 0.5}%`;
+          break;
+        case 3:
+        case 4:
+          setTimeout(() => {
+            starElement.style.transition = `left 1.5s cubic-bezier(.7, 0, 1, 1), 
+              top 1.5s cubic-bezier(.7, 0, 1, 1), 
+              width 1.5s cubic-bezier(.99, 0, 1, 1), 
+              height 1.5s cubic-bezier(.99, 0, 1, 1)`;
+            starElement.style.left = `${left}%`;
+            starElement.style.top = `${top}%`;
+            starElement.style.width = `${width}%`;
+            starElement.style.height = `${height}%`;
+          }, 0);
+          break;
+        case 0:
+          starElement.style.left = `${left}%`;
+          starElement.style.top = `${top}%`;
+          starElement.style.width = `${width}%`;
+          starElement.style.height = `${height}%`;
+          break;
+        default:
+          break;
+      }
     }
-  }, [mode.searchingState.isLoading]);
+  }, [mode.searchingState.currentAnimation]);
 
   return (
     <>
@@ -96,7 +117,15 @@ function Star(props: CSSProperties & StarProps) {
           width: `${width}%`,
           height: `${height}%`,
           ...cssProps,
-          pointerEvents: `${mode.searchingState.isLoading ? 'none' : 'auto'}`,
+          pointerEvents: `${mode.searchingState.currentAnimation === 0 ? 'auto' : 'none'}`,
+          display: `${
+            mode.searchingState.currentAnimation === 2 ||
+            mode.searchingState.currentAnimation === 3 ||
+            mode.searchingState.currentAnimation === 4 ||
+            mode.searchingState.currentAnimation === 0
+              ? 'flex'
+              : 'none'
+          }`,
         }}
       >
         <img

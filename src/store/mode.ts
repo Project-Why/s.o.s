@@ -213,7 +213,7 @@ export const modeSlice = createSlice({
         Partial<ModeState.SearchingState>
       >(state.searchingState, {
         currentAnimation:
-          state.searchingState.currentAnimation === 3
+          state.searchingState.currentAnimation === 4
             ? 0
             : state.searchingState.currentAnimation + 1,
       });

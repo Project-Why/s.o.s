@@ -1,3 +1,5 @@
+import MovingCircle from 'assets/images/Window/Moving/Moving-Circle.gif';
+import MovingLine from 'assets/images/Window/Moving/Moving-Line.gif';
 import Star1 from 'assets/images/Window/Star/Star_1.gif';
 import Star2 from 'assets/images/Window/Star/Star_2.gif';
 import Star3 from 'assets/images/Window/Star/Star_3.gif';
@@ -14,10 +16,11 @@ import { messageAPI } from 'apis/message';
 import { useAppSelector } from 'hooks';
 
 import { modeActions, selectMode } from 'store/mode';
+import { selectScreen } from 'store/screen';
 
 import Star, { StarProps } from 'components/Space/Star';
 
-import { CSSProperties, MouseEvent, useEffect } from 'react';
+import { CSSProperties, Fragment, MouseEvent, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 export type StarInformation = {
@@ -47,6 +50,7 @@ function Space(props: CSSProperties) {
   ];
 
   const mode = useAppSelector(selectMode);
+  const screen = useAppSelector(selectScreen);
   const dispatch = useDispatch();
 
   const getMessages = async () => {
@@ -85,41 +89,52 @@ function Space(props: CSSProperties) {
   /** Initial Loading. */
   useEffect(() => {
     if (mode.searchingState.stars.length === 0) {
+      dispatch(modeActions.setIsLoading());
+
       getMessages();
     }
   }, []);
 
   /** Space Animation */
-  useEffect(() => {
-    const loading =
-      mode.searchingState.isLoading &&
-      setInterval(() => dispatch(modeActions.setIsLoading()), 1000);
-    return () => {
-      if (loading) {
-        clearInterval(loading);
-      }
-    };
-  }, [mode.searchingState.isLoading]);
+  const testAnimationTrigger = () => {
+    dispatch(modeActions.setNextAnimation());
+  };
+
+  const testAnimationLast = () => {
+    dispatch(modeActions.setNextAnimation());
+    dispatch(modeActions.setIsLoading());
+  };
 
   useEffect(() => {
+    const startAnimation =
+      mode.searchingState.isLoading &&
+      mode.searchingState.currentAnimation === 0 &&
+      setInterval(testAnimationTrigger, 0);
     const movingCircleAnimation =
+      mode.searchingState.isLoading &&
+      mode.searchingState.currentAnimation === 1 &&
+      setInterval(testAnimationTrigger, 666);
+    const settingCurrentStars =
+      mode.searchingState.isLoading &&
       mode.searchingState.currentAnimation === 2 &&
-      setInterval(() => dispatch(modeActions.setNextAnimation()), 1000);
-    const movingPrevStars =
-      mode.searchingState.currentAnimation === 2 &&
-      setInterval(() => dispatch(modeActions.setNextAnimation()), 1000);
+      setInterval(testAnimationTrigger, 500);
     const movingCurrentStars =
-      mode.searchingState.currentAnimation === 2 &&
-      setInterval(() => dispatch(modeActions.setNextAnimation()), 1000);
+      mode.searchingState.isLoading &&
+      mode.searchingState.currentAnimation === 3 &&
+      setInterval(testAnimationTrigger, 500);
     const movingLineAnimation =
-      mode.searchingState.currentAnimation === 2 &&
-      setInterval(() => dispatch(modeActions.setNextAnimation()), 1000);
+      mode.searchingState.isLoading &&
+      mode.searchingState.currentAnimation === 4 &&
+      setInterval(testAnimationLast, 2000);
     return () => {
+      if (startAnimation) {
+        clearInterval(startAnimation);
+      }
       if (movingCircleAnimation) {
         clearInterval(movingCircleAnimation);
       }
-      if (movingPrevStars) {
-        clearInterval(movingPrevStars);
+      if (settingCurrentStars) {
+        clearInterval(settingCurrentStars);
       }
       if (movingCurrentStars) {
         clearInterval(movingCurrentStars);
@@ -128,7 +143,7 @@ function Space(props: CSSProperties) {
         clearInterval(movingLineAnimation);
       }
     };
-  }, [mode.searchingState.currentAnimation]);
+  }, [mode.searchingState.isLoading, mode.searchingState.currentAnimation]);
 
   return (
     <div id='Space' draggable='false' style={{ ...props }}>
@@ -141,9 +156,48 @@ function Space(props: CSSProperties) {
           pointerEvents: `${mode.searchingState.isLoading ? 'none' : 'auto'}`,
         }}
       />
-      {mode.searchingState.stars.map((starProps, index) => (
-        <Star key={index} {...starProps} />
-      ))}
+      {mode.searchingState.currentAnimation === 1 ||
+      mode.searchingState.currentAnimation === 2 ||
+      mode.searchingState.currentAnimation === 3 ? (
+        <div
+          id='Moving Circle'
+          style={{
+            left: `${mode.searchingState.movingPosition[0] - screen.width * 0.05625}px`,
+            top: `${mode.searchingState.movingPosition[1] - screen.height * 0.1}px`,
+            width: '11.5%',
+            height: '20%',
+            position: 'absolute',
+            display: 'flex',
+            backgroundImage: `url(${MovingCircle})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        />
+      ) : null}
+      {mode.searchingState.currentAnimation === 2 ||
+      mode.searchingState.currentAnimation === 3 ||
+      mode.searchingState.currentAnimation === 4 ? (
+        <div
+          id='Moving Line'
+          style={{
+            width: '100%',
+            height: '100%',
+            left: 0,
+            top: 0,
+            position: 'absolute',
+            backgroundImage: `url(${MovingLine})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        />
+      ) : null}
+      <div id='Stars'>
+        {mode.searchingState.stars.map((starProps, index) => (
+          <Star key={index} {...starProps} />
+        ))}
+      </div>
     </div>
   );
 }
