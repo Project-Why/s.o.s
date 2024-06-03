@@ -117,15 +117,6 @@ function Star(props: CSSProperties & StarProps) {
           width: `${width}%`,
           height: `${height}%`,
           ...cssProps,
-          pointerEvents: `${mode.searchingState.currentAnimation === 0 ? 'auto' : 'none'}`,
-          display: `${
-            mode.searchingState.currentAnimation === 2 ||
-            mode.searchingState.currentAnimation === 3 ||
-            mode.searchingState.currentAnimation === 4 ||
-            mode.searchingState.currentAnimation === 0
-              ? 'flex'
-              : 'none'
-          }`,
         }}
       >
         <img

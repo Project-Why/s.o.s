@@ -193,7 +193,15 @@ function Space(props: CSSProperties) {
           }}
         />
       ) : null}
-      <div id='Stars'>
+      <div
+        id='Stars'
+        style={{
+          pointerEvents: `${mode.searchingState.currentAnimation === 0 ? 'auto' : 'none'}`,
+          display: `${
+            mode.searchingState.currentAnimation === 1 ? 'none' : 'flex'
+          }`,
+        }}
+      >
         {mode.searchingState.stars.map((starProps, index) => (
           <Star key={index} {...starProps} />
         ))}
