@@ -20,7 +20,7 @@ import { selectScreen } from 'store/screen';
 
 import Star, { StarProps } from 'components/Space/Star';
 
-import { CSSProperties, Fragment, MouseEvent, useEffect } from 'react';
+import { CSSProperties, MouseEvent, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 export type StarInformation = {
@@ -74,6 +74,7 @@ function Space(props: CSSProperties) {
     }
   };
   const handleOnMouseDown = async (e: MouseEvent) => {
+    // Set Animation Position.
     const rect = e.currentTarget.getBoundingClientRect();
     dispatch(
       modeActions.setMovingPosition([
@@ -81,51 +82,67 @@ function Space(props: CSSProperties) {
         e.clientY - rect.top,
       ]),
     );
-    dispatch(modeActions.setIsLoading());
 
+    // Get Stars.
     getMessages();
+
+    // Start Animation.
+    dispatch(modeActions.setMovingIsLoading());
+  };
+  const initStars = () => {
+    if (mode.searchingState.stars.length === 0 && screen.width > 0) {
+      // Set Animation Position.
+      dispatch(
+        modeActions.setMovingPosition([
+          screen.width * 0.5,
+          screen.height * 0.5,
+        ]),
+      );
+
+      // Get Stars.
+      getMessages();
+
+      // Start Animation.
+      dispatch(modeActions.setMovingIsLoading());
+    }
   };
 
   /** Initial Loading. */
   useEffect(() => {
-    if (mode.searchingState.stars.length === 0) {
-      dispatch(modeActions.setIsLoading());
-
-      getMessages();
-    }
-  }, []);
+    initStars();
+  }, [screen]);
 
   /** Space Animation */
-  const testAnimationTrigger = () => {
-    dispatch(modeActions.setNextAnimation());
+  const animationNext = () => {
+    dispatch(modeActions.setNextMovingAnimation());
   };
 
-  const testAnimationLast = () => {
-    dispatch(modeActions.setNextAnimation());
-    dispatch(modeActions.setIsLoading());
+  const animationLast = () => {
+    dispatch(modeActions.setMovingIsLoading());
+    dispatch(modeActions.setNextMovingAnimation());
   };
 
   useEffect(() => {
     const startAnimation =
       mode.searchingState.isLoading &&
       mode.searchingState.currentAnimation === 0 &&
-      setInterval(testAnimationTrigger, 0);
+      setInterval(animationNext, 0);
     const movingCircleAnimation =
       mode.searchingState.isLoading &&
       mode.searchingState.currentAnimation === 1 &&
-      setInterval(testAnimationTrigger, 666);
+      setInterval(animationNext, 666);
     const settingCurrentStars =
       mode.searchingState.isLoading &&
       mode.searchingState.currentAnimation === 2 &&
-      setInterval(testAnimationTrigger, 500);
+      setInterval(animationNext, 500);
     const movingCurrentStars =
       mode.searchingState.isLoading &&
       mode.searchingState.currentAnimation === 3 &&
-      setInterval(testAnimationTrigger, 500);
+      setInterval(animationNext, 500);
     const movingLineAnimation =
       mode.searchingState.isLoading &&
       mode.searchingState.currentAnimation === 4 &&
-      setInterval(testAnimationLast, 2000);
+      setInterval(animationLast, 2000);
     return () => {
       if (startAnimation) {
         clearInterval(startAnimation);
@@ -164,7 +181,7 @@ function Space(props: CSSProperties) {
           style={{
             left: `${mode.searchingState.movingPosition[0] - screen.width * 0.05625}px`,
             top: `${mode.searchingState.movingPosition[1] - screen.height * 0.1}px`,
-            width: '11.5%',
+            width: '11.25%',
             height: '20%',
             position: 'absolute',
             display: 'flex',

@@ -14,6 +14,8 @@ const initialState: ModeState.ModeManageState = {
     display: [],
     currentIdx: -1,
     text: '',
+    isLoading: false,
+    currentAnimation: 0,
   },
   searchingState: {
     display: [],
@@ -188,6 +190,25 @@ export const modeSlice = createSlice({
         },
       );
     },
+    setWritingIsLoading: (state: ModeState.ModeManageState) => {
+      Object.assign<ModeState.WritingState, Partial<ModeState.WritingState>>(
+        state.writingState,
+        {
+          isLoading: !state.searchingState.isLoading,
+        },
+      );
+    },
+    setNextWritingAnimation: (state: ModeState.ModeManageState) => {
+      Object.assign<ModeState.WritingState, Partial<ModeState.WritingState>>(
+        state.writingState,
+        {
+          currentAnimation:
+            state.searchingState.currentAnimation === 4
+              ? 0
+              : state.searchingState.currentAnimation + 1,
+        },
+      );
+    },
     setStars: (
       state: ModeState.ModeManageState,
       action: PayloadAction<StarProps[]>,
@@ -199,7 +220,7 @@ export const modeSlice = createSlice({
         stars: action.payload,
       });
     },
-    setIsLoading: (state: ModeState.ModeManageState) => {
+    setMovingIsLoading: (state: ModeState.ModeManageState) => {
       Object.assign<
         ModeState.SearchingState,
         Partial<ModeState.SearchingState>
@@ -207,7 +228,7 @@ export const modeSlice = createSlice({
         isLoading: !state.searchingState.isLoading,
       });
     },
-    setNextAnimation: (state: ModeState.ModeManageState) => {
+    setNextMovingAnimation: (state: ModeState.ModeManageState) => {
       Object.assign<
         ModeState.SearchingState,
         Partial<ModeState.SearchingState>
