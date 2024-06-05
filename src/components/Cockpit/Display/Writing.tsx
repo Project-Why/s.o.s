@@ -1,5 +1,6 @@
 import { ModeState } from 'types/ModeState';
 
+import ProgressBar from 'assets/images/Cockpit/Display/Writing/Progress-Bar.gif';
 import Send from 'assets/images/Cockpit/Display/Writing/Send.gif';
 import Toast1 from 'assets/images/Cockpit/Display/Writing/Toast/Toast_1.gif';
 import Toast2 from 'assets/images/Cockpit/Display/Writing/Toast/Toast_2.gif';
@@ -35,11 +36,22 @@ function DisplayWriting(props: CSSProperties) {
   ) => {
     e.currentTarget.style.scale = '1';
   };
+
+  const sendMessage = async (text: string) => {
+    const response = await messageAPI.createMessage(text);
+    if (response) {
+      dispatch(modeActions.setSendSuccess(true));
+    } else {
+      dispatch(modeActions.setSendSuccess(false));
+    }
+  };
+
   const handleMouseDown: EventHandler<MouseEvent> = () => {
     if (/^\s*$/.test(mode.writingState.text)) {
       dispatch(modeActions.setWritingToast('Blank'));
     } else {
-      messageAPI.createMessage(mode.writingState.text);
+      sendMessage(mode.writingState.text);
+      dispatch(modeActions.setWritingIsLoading());
     }
   };
 
@@ -59,26 +71,8 @@ function DisplayWriting(props: CSSProperties) {
     };
   }, [mode.writingState.toast]);
 
-  const renderImage = (toast: ModeState.Toast) => {
+  const renderImage = (toast: ModeState.Toast, animationState: number) => {
     switch (toast) {
-      case 'None':
-        return (
-          <img
-            src={Send}
-            alt='Writing Send Button'
-            draggable='false'
-            style={{
-              width: '100%',
-              objectFit: 'contain',
-            }}
-            role='presentation'
-            onMouseOver={handleMouseOver}
-            onFocus={handleMouseOver}
-            onMouseOut={handleMouseOut}
-            onBlur={handleMouseOut}
-            onMouseDown={handleMouseDown}
-          />
-        );
       case 'Blank':
         return (
           <img
@@ -141,14 +135,48 @@ function DisplayWriting(props: CSSProperties) {
             }}
           />
         );
+      case 'None':
       default:
-        return null;
+        switch (animationState) {
+          case 1:
+          case 2:
+          case 3:
+            return (
+              <img
+                src={ProgressBar}
+                alt='Writing Not Supported Character Toast'
+                draggable='false'
+                style={{
+                  width: '100%',
+                  objectFit: 'contain',
+                }}
+              />
+            );
+          default:
+            return (
+              <img
+                src={Send}
+                alt='Writing Send Button'
+                draggable='false'
+                style={{
+                  width: '100%',
+                  objectFit: 'contain',
+                }}
+                role='presentation'
+                onMouseOver={handleMouseOver}
+                onFocus={handleMouseOver}
+                onMouseOut={handleMouseOut}
+                onBlur={handleMouseOut}
+                onMouseDown={handleMouseDown}
+              />
+            );
+        }
     }
   };
 
   return (
     <div id='Display Writing' style={{ ...props }}>
-      {renderImage(mode.writingState.toast)}
+      {renderImage(mode.writingState.toast, mode.writingState.currentAnimation)}
     </div>
   );
 }

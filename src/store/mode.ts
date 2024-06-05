@@ -17,6 +17,7 @@ const initialState: ModeState.ModeManageState = {
     isLoading: false,
     currentAnimation: 0,
     toast: 'None',
+    sendSuccess: false,
   },
   searchingState: {
     display: [],
@@ -206,7 +207,7 @@ export const modeSlice = createSlice({
       Object.assign<ModeState.WritingState, Partial<ModeState.WritingState>>(
         state.writingState,
         {
-          isLoading: !state.searchingState.isLoading,
+          isLoading: !state.writingState.isLoading,
         },
       );
     },
@@ -215,10 +216,19 @@ export const modeSlice = createSlice({
         state.writingState,
         {
           currentAnimation:
-            state.searchingState.currentAnimation === 4
+            state.writingState.currentAnimation === 5
               ? 0
-              : state.searchingState.currentAnimation + 1,
+              : state.writingState.currentAnimation + 1,
         },
+      );
+    },
+    setSendSuccess: (
+      state: ModeState.ModeManageState,
+      action: PayloadAction<boolean>,
+    ) => {
+      Object.assign<ModeState.WritingState, Partial<ModeState.WritingState>>(
+        state.writingState,
+        { sendSuccess: action.payload },
       );
     },
     setStars: (

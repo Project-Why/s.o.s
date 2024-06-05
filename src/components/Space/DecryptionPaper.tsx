@@ -11,16 +11,7 @@ function DecryptionPaper(props: CSSProperties) {
     <State
       searchingElement={<DecryptionPaperRollUp {...props} />}
       decryptingElement={<DecryptionPaperOpened {...props} />}
-      writingElement={
-        <Writing
-          padding='10%'
-          paddingLeft='16%'
-          paddingRight='16%'
-          boxSizing='border-box'
-          backgroundColor='#FFFFFF'
-          {...props}
-        />
-      }
+      writingElement={<Writing {...props} />}
       animations={[
         {
           prevMode: 'Searching',

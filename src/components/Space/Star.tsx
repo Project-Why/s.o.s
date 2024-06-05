@@ -35,6 +35,10 @@ function Star(props: CSSProperties & StarProps) {
     top,
     ...cssProps
   } = props;
+
+  const initStarSize = 0.4;
+  const initStarPosition = 0.98;
+
   const [isHover, setIsHover] = useState(false);
   const mode = useAppSelector(selectMode);
   const screen = useAppSelector(selectScreen);
@@ -73,18 +77,28 @@ function Star(props: CSSProperties & StarProps) {
       switch (mode.searchingState.currentAnimation) {
         case 1: // Initial Position
         case 2:
-          starElement.style.left = `${0.98 * (mode.searchingState.movingPosition[0] - screen.width * width * 0.01 * 0.5) + 0.02 * screen.width * left * 0.01}px`;
-          starElement.style.top = `${0.98 * (mode.searchingState.movingPosition[1] - screen.height * height * 0.01 * 0.5) + 0.02 * screen.width * top * 0.01}px`;
-          starElement.style.width = `${width * 0.5}%`;
-          starElement.style.height = `${height * 0.5}%`;
+          starElement.style.left = `${
+            initStarPosition *
+              (mode.searchingState.movingPosition[0] -
+                screen.width * width * 0.01 * initStarSize) +
+            (1 - initStarPosition) * screen.width * left * 0.01
+          }px`;
+          starElement.style.top = `${
+            initStarPosition *
+              (mode.searchingState.movingPosition[1] -
+                screen.height * height * 0.01 * initStarSize) +
+            (1 - initStarPosition) * screen.width * top * 0.01
+          }px`;
+          starElement.style.width = `${width * initStarSize}%`;
+          starElement.style.height = `${height * initStarSize}%`;
           break;
         case 3:
         case 4:
           setTimeout(() => {
-            starElement.style.transition = `left 1.5s cubic-bezier(.7, 0, 1, 1), 
-              top 1.5s cubic-bezier(.7, 0, 1, 1), 
-              width 1.5s cubic-bezier(.99, 0, 1, 1), 
-              height 1.5s cubic-bezier(.99, 0, 1, 1)`;
+            starElement.style.transition = `left 1s cubic-bezier(0.7, 0, 1, 1), 
+              top 1s cubic-bezier(0.7, 0, 1, 1), 
+              width 1s cubic-bezier(.999, 0, 1, 1), 
+              height 1s cubic-bezier(.999, 0, 1, 1)`;
             starElement.style.left = `${left}%`;
             starElement.style.top = `${top}%`;
             starElement.style.width = `${width}%`;

@@ -27,6 +27,7 @@ export declare namespace ModeState {
     isLoading: boolean;
     currentAnimation: number;
     toast: Toast;
+    sendSuccess: boolean;
   }
   export interface ModeManageState {
     currentMode: Mode;
