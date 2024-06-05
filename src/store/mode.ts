@@ -16,6 +16,7 @@ const initialState: ModeState.ModeManageState = {
     text: '',
     isLoading: false,
     currentAnimation: 0,
+    toast: 'None',
   },
   searchingState: {
     display: [],
@@ -187,6 +188,17 @@ export const modeSlice = createSlice({
         state.writingState,
         {
           text: action.payload,
+        },
+      );
+    },
+    setWritingToast: (
+      state: ModeState.ModeManageState,
+      action: PayloadAction<ModeState.Toast>,
+    ) => {
+      Object.assign<ModeState.WritingState, Partial<ModeState.WritingState>>(
+        state.writingState,
+        {
+          toast: action.payload,
         },
       );
     },

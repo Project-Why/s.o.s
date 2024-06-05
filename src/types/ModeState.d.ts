@@ -1,6 +1,14 @@
 export declare namespace ModeState {
   export type Mode = 'Writing' | 'Searching' | 'Decrypting';
 
+  export type Toast =
+    | 'None'
+    | 'Blank'
+    | 'NotSupportedCharacter'
+    | 'Success'
+    | 'Fail'
+    | 'LimitLength';
+
   export interface ModeState {
     display: EmotionJSX.Element[];
     currentIdx: number;
@@ -18,6 +26,7 @@ export declare namespace ModeState {
     text: string;
     isLoading: boolean;
     currentAnimation: number;
+    toast: Toast;
   }
   export interface ModeManageState {
     currentMode: Mode;

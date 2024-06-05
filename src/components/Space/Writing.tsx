@@ -48,6 +48,13 @@ function Writing(props: CSSProperties) {
       textArea.clientHeight === textArea.scrollHeight
     ) {
       dispatch(modeActions.setText(inputText));
+    } else if (!allowedCharacters.test(inputText)) {
+      dispatch(modeActions.setWritingToast('NotSupportedCharacter'));
+    } else if (
+      byteLength > maxByte ||
+      (textArea && textArea.clientHeight !== textArea.scrollHeight)
+    ) {
+      dispatch(modeActions.setWritingToast('LimitLength'));
     }
   };
   const onTextChangeHandler = () => {
@@ -64,6 +71,56 @@ function Writing(props: CSSProperties) {
   useEffect(() => {
     onTextChangeHandler();
   }, [mode.writingState.text]);
+
+  /** Writing Animation */
+  const animationNext = () => {
+    dispatch(modeActions.setNextWritingAnimation());
+  };
+
+  const animationLast = () => {
+    dispatch(modeActions.setWritingIsLoading());
+    dispatch(modeActions.setNextWritingAnimation());
+  };
+
+  useEffect(() => {
+    const startAnimation =
+      mode.writingState.isLoading &&
+      mode.writingState.currentAnimation === 0 &&
+      setInterval(animationNext, 0);
+    const movingCircleAnimation =
+      mode.writingState.isLoading &&
+      mode.writingState.currentAnimation === 1 &&
+      setInterval(animationNext, 666);
+    const settingCurrentStars =
+      mode.writingState.isLoading &&
+      mode.writingState.currentAnimation === 2 &&
+      setInterval(animationNext, 500);
+    const movingCurrentStars =
+      mode.writingState.isLoading &&
+      mode.writingState.currentAnimation === 3 &&
+      setInterval(animationNext, 500);
+    const movingLineAnimation =
+      mode.writingState.isLoading &&
+      mode.writingState.currentAnimation === 4 &&
+      setInterval(animationLast, 2000);
+    return () => {
+      if (startAnimation) {
+        clearInterval(startAnimation);
+      }
+      if (movingCircleAnimation) {
+        clearInterval(movingCircleAnimation);
+      }
+      if (settingCurrentStars) {
+        clearInterval(settingCurrentStars);
+      }
+      if (movingCurrentStars) {
+        clearInterval(movingCurrentStars);
+      }
+      if (movingLineAnimation) {
+        clearInterval(movingLineAnimation);
+      }
+    };
+  }, [mode.writingState.isLoading, mode.writingState.currentAnimation]);
 
   return (
     <div
