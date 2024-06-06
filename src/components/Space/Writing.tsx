@@ -1,6 +1,6 @@
 import CamFail from 'assets/images/Window/Cam/Cam-Fail.gif';
 import CamSuccess from 'assets/images/Window/Cam/Cam-Success.gif';
-import SendSuccess from 'assets/images/Window/Send/Send-Success.gif';
+import SendSuccess from 'assets/images/Window/Send/Send-Animation.gif';
 import GuideLine1 from 'assets/images/Window/Writing/Guide-Line_1.gif';
 import GuideLine2 from 'assets/images/Window/Writing/Guide-Line_2.gif';
 
