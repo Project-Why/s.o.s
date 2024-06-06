@@ -2,7 +2,6 @@ import State from 'components/Common/State';
 import DecryptionPaperOpened from 'components/Space/DecrpytionPaper/Opened';
 import DecryptionPaperOpening from 'components/Space/DecrpytionPaper/Opening';
 import DecryptionPaperRollUp from 'components/Space/DecrpytionPaper/RollUp';
-import Writing from 'components/Space/Writing';
 
 import { CSSProperties } from 'react';
 
@@ -11,7 +10,7 @@ function DecryptionPaper(props: CSSProperties) {
     <State
       searchingElement={<DecryptionPaperRollUp {...props} />}
       decryptingElement={<DecryptionPaperOpened {...props} />}
-      writingElement={<Writing {...props} />}
+      writingElement={<DecryptionPaperRollUp {...props} />}
       animations={[
         {
           prevMode: 'Searching',

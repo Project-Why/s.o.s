@@ -28,6 +28,7 @@ export declare namespace ModeState {
     currentAnimation: number;
     toast: Toast;
     sendSuccess: boolean;
+    imageKey: number;
   }
   export interface ModeManageState {
     currentMode: Mode;

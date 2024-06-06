@@ -20,7 +20,7 @@ import { selectScreen } from 'store/screen';
 
 import Star, { StarProps } from 'components/Space/Star';
 
-import { CSSProperties, MouseEvent, useEffect } from 'react';
+import { CSSProperties, MouseEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 export type StarInformation = {
@@ -49,10 +49,12 @@ function Space(props: CSSProperties) {
     Star10,
   ];
 
+  const [imageKey, setImageKey] = useState(0);
   const mode = useAppSelector(selectMode);
   const screen = useAppSelector(selectScreen);
   const dispatch = useDispatch();
 
+  /** Utils. */
   const getMessages = async () => {
     dispatch(modeActions.setStars([]));
     const messages = await messageAPI.getMessages();
@@ -73,22 +75,6 @@ function Space(props: CSSProperties) {
       dispatch(modeActions.setStars(stars));
     }
   };
-  const handleOnMouseDown = async (e: MouseEvent) => {
-    // Set Animation Position.
-    const rect = e.currentTarget.getBoundingClientRect();
-    dispatch(
-      modeActions.setMovingPosition([
-        e.clientX - rect.left,
-        e.clientY - rect.top,
-      ]),
-    );
-
-    // Get Stars.
-    getMessages();
-
-    // Start Animation.
-    dispatch(modeActions.setMovingIsLoading());
-  };
   const initStars = () => {
     if (mode.searchingState.stars.length === 0 && screen.width > 0) {
       // Set Animation Position.
@@ -105,6 +91,27 @@ function Space(props: CSSProperties) {
       // Start Animation.
       dispatch(modeActions.setMovingIsLoading());
     }
+  };
+  const handleOnMouseDown = async (e: MouseEvent) => {
+    // Set Animation Position.
+    const rect = e.currentTarget.getBoundingClientRect();
+    dispatch(
+      modeActions.setMovingPosition([
+        e.clientX - rect.left,
+        e.clientY - rect.top,
+      ]),
+    );
+
+    // Get Stars.
+    getMessages();
+
+    // Change key.
+    setImageKey((prevKey) => {
+      return prevKey === 1000 ? 0 : prevKey + 1;
+    }); // Change key to force re-render
+
+    // Start Animation.
+    dispatch(modeActions.setMovingIsLoading());
   };
 
   /** Initial Loading. */
@@ -142,7 +149,7 @@ function Space(props: CSSProperties) {
     const movingLineAnimation =
       mode.searchingState.isLoading &&
       mode.searchingState.currentAnimation === 4 &&
-      setInterval(animationLast, 2000);
+      setInterval(animationLast, 700);
     return () => {
       if (startAnimation) {
         clearInterval(startAnimation);
@@ -173,43 +180,46 @@ function Space(props: CSSProperties) {
           pointerEvents: `${mode.searchingState.isLoading ? 'none' : 'auto'}`,
         }}
       />
-      {mode.searchingState.currentAnimation === 1 ||
-      mode.searchingState.currentAnimation === 2 ||
-      mode.searchingState.currentAnimation === 3 ? (
-        <div
-          id='Moving Circle'
-          style={{
-            left: `${mode.searchingState.movingPosition[0] - screen.width * 0.05625}px`,
-            top: `${mode.searchingState.movingPosition[1] - screen.height * 0.1}px`,
-            width: '11.25%',
-            height: '20%',
-            position: 'absolute',
-            display: 'flex',
-            backgroundImage: `url(${MovingCircle})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center center',
-            backgroundRepeat: 'no-repeat',
-          }}
-        />
-      ) : null}
-      {mode.searchingState.currentAnimation === 2 ||
-      mode.searchingState.currentAnimation === 3 ||
-      mode.searchingState.currentAnimation === 4 ? (
-        <div
-          id='Moving Line'
-          style={{
-            width: '100%',
-            height: '100%',
-            left: 0,
-            top: 0,
-            position: 'absolute',
-            backgroundImage: `url(${MovingLine})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center center',
-            backgroundRepeat: 'no-repeat',
-          }}
-        />
-      ) : null}
+      <img
+        id='Moving Circle'
+        src={`${MovingCircle}?${imageKey}`}
+        alt='Moving Circle'
+        style={{
+          left: `${mode.searchingState.movingPosition[0] - screen.width * 0.05625}px`,
+          top: `${mode.searchingState.movingPosition[1] - screen.height * 0.1}px`,
+          width: '11.25%',
+          height: '20%',
+          position: 'absolute',
+          display: `${
+            mode.searchingState.currentAnimation === 1 ||
+            mode.searchingState.currentAnimation === 2 ||
+            mode.searchingState.currentAnimation === 3
+              ? 'flex'
+              : 'none'
+          }`,
+          objectFit: 'cover',
+        }}
+      />
+      <img
+        id='Moving Line'
+        src={`${MovingLine}?${imageKey}`}
+        alt='Moving Line'
+        style={{
+          width: '100%',
+          height: '100%',
+          left: 0,
+          top: 0,
+          position: 'absolute',
+          display: `${
+            mode.searchingState.currentAnimation === 2 ||
+            mode.searchingState.currentAnimation === 3 ||
+            mode.searchingState.currentAnimation === 4
+              ? 'flex'
+              : 'none'
+          }`,
+          objectFit: 'cover',
+        }}
+      />
       <div
         id='Stars'
         style={{

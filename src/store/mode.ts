@@ -18,6 +18,7 @@ const initialState: ModeState.ModeManageState = {
     currentAnimation: 0,
     toast: 'None',
     sendSuccess: false,
+    imageKey: 0,
   },
   searchingState: {
     display: [],
@@ -216,7 +217,7 @@ export const modeSlice = createSlice({
         state.writingState,
         {
           currentAnimation:
-            state.writingState.currentAnimation === 5
+            state.writingState.currentAnimation === 3
               ? 0
               : state.writingState.currentAnimation + 1,
         },
@@ -229,6 +230,17 @@ export const modeSlice = createSlice({
       Object.assign<ModeState.WritingState, Partial<ModeState.WritingState>>(
         state.writingState,
         { sendSuccess: action.payload },
+      );
+    },
+    setNextImageKey: (state: ModeState.ModeManageState) => {
+      Object.assign<ModeState.WritingState, Partial<ModeState.WritingState>>(
+        state.writingState,
+        {
+          imageKey:
+            state.writingState.imageKey === 1000
+              ? 0
+              : state.writingState.imageKey + 1,
+        },
       );
     },
     setStars: (

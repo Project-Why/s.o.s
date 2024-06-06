@@ -51,6 +51,9 @@ function DisplayWriting(props: CSSProperties) {
       dispatch(modeActions.setWritingToast('Blank'));
     } else {
       sendMessage(mode.writingState.text);
+
+      dispatch(modeActions.setNextImageKey());
+
       dispatch(modeActions.setWritingIsLoading());
     }
   };
@@ -61,8 +64,18 @@ function DisplayWriting(props: CSSProperties) {
 
   /** Remove Toast */
   useEffect(() => {
-    const showToast =
-      mode.writingState.toast !== 'None' && setInterval(removeToast, 1000);
+    let showToast: NodeJS.Timer;
+
+    switch (mode.writingState.toast) {
+      case 'Blank':
+      case 'NotSupportedCharacter':
+      case 'LimitLength':
+        showToast = setInterval(removeToast, 1000);
+        break;
+      case 'None':
+      default:
+        break;
+    }
 
     return () => {
       if (showToast) {
@@ -71,6 +84,7 @@ function DisplayWriting(props: CSSProperties) {
     };
   }, [mode.writingState.toast]);
 
+  /** Choose Image */
   const renderImage = (toast: ModeState.Toast, animationState: number) => {
     switch (toast) {
       case 'Blank':
@@ -140,7 +154,6 @@ function DisplayWriting(props: CSSProperties) {
         switch (animationState) {
           case 1:
           case 2:
-          case 3:
             return (
               <img
                 src={ProgressBar}
@@ -152,6 +165,9 @@ function DisplayWriting(props: CSSProperties) {
                 }}
               />
             );
+          case 3:
+            return null;
+          case 0:
           default:
             return (
               <img

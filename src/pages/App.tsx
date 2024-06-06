@@ -10,6 +10,7 @@ import RightButton from 'components/Cockpit/RightButton';
 import WritingButton from 'components/Cockpit/WritingButton';
 import DescryptionPaper from 'components/Space/DecryptionPaper';
 import Space from 'components/Space/Space';
+import Writing from 'components/Space/Writing';
 
 import 'pages/App.css';
 
@@ -69,6 +70,7 @@ function App() {
           display='flex'
           pointerEvents={mode.currentMode === 'Searching' ? 'none' : 'auto'}
         />
+        <Writing zIndex={1} width='100%' height='100%' position='absolute' />
         <Cockpit
           zIndex={2}
           width='100%'
