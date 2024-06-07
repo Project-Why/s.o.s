@@ -41,6 +41,11 @@ function WritingButton(props: CSSProperties) {
       buttonType='Latching'
       condition={mode.currentMode === 'Writing'}
       clickHandler={clickHandler}
+      pointerEvents={
+        mode.writingState.isLoading || mode.searchingState.isLoading
+          ? 'none'
+          : 'auto'
+      }
     />
   );
 }

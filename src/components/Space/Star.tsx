@@ -37,7 +37,7 @@ function Star(props: CSSProperties & StarProps) {
   } = props;
 
   const initStarSize = 0.4;
-  const initStarPosition = 0.98;
+  const initStarPosition = 0.99;
 
   const [isHover, setIsHover] = useState(false);
   const mode = useAppSelector(selectMode);

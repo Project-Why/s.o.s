@@ -262,41 +262,18 @@ function Writing(props: CSSProperties) {
         }}
       />
       <img
-        id='Cam Fail'
+        id='Send Cam'
         draggable='false'
-        src={`${CamFail}?${mode.writingState.imageKey}`}
-        alt='Cam Fail'
+        src={`${mode.writingState.sendSuccess ? CamSuccess : CamFail}?${mode.writingState.imageKey}`}
+        alt='Send Cam'
         style={{
           width: '24.79%',
           height: '28.7%',
-          left: '2.91%',
-          top: '4.81%',
+          left: '37.605%',
+          top: '20.65%',
           position: 'absolute',
           display: `${
-            mode.writingState.currentAnimation === 3 &&
-            !mode.writingState.sendSuccess
-              ? 'flex'
-              : 'none'
-          }`,
-          objectFit: 'cover',
-        }}
-      />
-      <img
-        id='Cam Success'
-        draggable='false'
-        src={`${CamSuccess}?${mode.writingState.imageKey}`}
-        alt='Cam Success'
-        style={{
-          width: '24.79%',
-          height: '28.7%',
-          left: '2.91%',
-          top: '4.81%',
-          position: 'absolute',
-          display: `${
-            mode.writingState.currentAnimation === 3 &&
-            mode.writingState.sendSuccess
-              ? 'flex'
-              : 'none'
+            mode.writingState.currentAnimation === 3 ? 'flex' : 'none'
           }`,
           objectFit: 'cover',
         }}

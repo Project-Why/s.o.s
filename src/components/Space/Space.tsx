@@ -149,7 +149,7 @@ function Space(props: CSSProperties) {
     const movingLineAnimation =
       mode.searchingState.isLoading &&
       mode.searchingState.currentAnimation === 4 &&
-      setInterval(animationLast, 700);
+      setInterval(animationLast, 1000);
     return () => {
       if (startAnimation) {
         clearInterval(startAnimation);
@@ -185,10 +185,10 @@ function Space(props: CSSProperties) {
         src={`${MovingCircle}?${imageKey}`}
         alt='Moving Circle'
         style={{
-          left: `${mode.searchingState.movingPosition[0] - screen.width * 0.05625}px`,
-          top: `${mode.searchingState.movingPosition[1] - screen.height * 0.1}px`,
-          width: '11.25%',
-          height: '20%',
+          left: `${mode.searchingState.movingPosition[0] - screen.width * 0.0421875}px`,
+          top: `${mode.searchingState.movingPosition[1] - screen.height * 0.075}px`,
+          width: '8.4372%',
+          height: '15%',
           position: 'absolute',
           display: `${
             mode.searchingState.currentAnimation === 1 ||
@@ -205,10 +205,10 @@ function Space(props: CSSProperties) {
         src={`${MovingLine}?${imageKey}`}
         alt='Moving Line'
         style={{
-          width: '100%',
-          height: '100%',
-          left: 0,
-          top: 0,
+          width: '200%',
+          height: '200%',
+          transform: `translate(${(1 - mode.searchingState.movingPosition[0] / screen.width) * -50}%, 
+            ${(1 - mode.searchingState.movingPosition[1] / screen.height) * -50}%)` /** -50 to 0 */,
           position: 'absolute',
           display: `${
             mode.searchingState.currentAnimation === 2 ||
