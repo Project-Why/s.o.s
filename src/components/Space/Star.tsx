@@ -49,10 +49,8 @@ function Star(props: CSSProperties & StarProps) {
     // Get Morse Message from server.
     const morseInfo = convertStringToMorseCode(message);
     dispatch(
-      modeActions.setStar({
-        currentIdx: 0,
-        starId: id,
-        display: morseInfo.map((value, index) => (
+      modeActions.setDisplay(
+        morseInfo.map((value, index) => (
           <MorsePage
             key={`Morse ${index}`}
             index={index}
@@ -66,7 +64,7 @@ function Star(props: CSSProperties & StarProps) {
             flexDirection='column'
           />
         )),
-      }),
+      ),
     );
   };
 

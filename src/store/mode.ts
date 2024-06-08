@@ -4,6 +4,8 @@ import { RootState } from 'store';
 
 import { StarProps } from 'components/Space/Star';
 
+import { MorseCode } from 'common/morse';
+
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
@@ -31,7 +33,7 @@ const initialState: ModeState.ModeManageState = {
   decryptingState: {
     display: [],
     currentIdx: -1,
-    starId: -1,
+    code: null,
   },
 };
 
@@ -282,14 +284,17 @@ export const modeSlice = createSlice({
         Partial<ModeState.SearchingState>
       >(state.searchingState, { movingPosition: action.payload });
     },
-    setStar: (
+
+    setCode: (
       state: ModeState.ModeManageState,
-      action: PayloadAction<ModeState.DecryptingState>,
+      action: PayloadAction<MorseCode | null>,
     ) => {
       Object.assign<
-        ModeState.ModeManageState,
-        Partial<ModeState.ModeManageState>
-      >(state, { decryptingState: action.payload });
+        ModeState.DecryptingState,
+        Partial<ModeState.DecryptingState>
+      >(state.decryptingState, {
+        code: action.payload,
+      });
     },
   },
 });

@@ -99,19 +99,26 @@ import Morse98 from 'assets/images/Cockpit/Decryption/Morse/Individual/Individua
 import Morse99 from 'assets/images/Cockpit/Decryption/Morse/Individual/Individual_99.png';
 import Morse100 from 'assets/images/Cockpit/Decryption/Morse/Individual/Individual_100.png';
 import Morse101 from 'assets/images/Cockpit/Decryption/Morse/Individual/Individual_101.png';
+import Morse102 from 'assets/images/Cockpit/Decryption/Morse/Individual/Individual_102.png';
+import Morse103 from 'assets/images/Cockpit/Decryption/Morse/Individual/Individual_103.png';
+import Morse104 from 'assets/images/Cockpit/Decryption/Morse/Individual/Individual_104.png';
+import Morse105 from 'assets/images/Cockpit/Decryption/Morse/Individual/Individual_105.png';
+import Morse106 from 'assets/images/Cockpit/Decryption/Morse/Individual/Individual_106.png';
 import MorseOpened from 'assets/images/Cockpit/Decryption/Morse/Morse.png';
 import PaperOpened from 'assets/images/Cockpit/Decryption/Paper-Opened.gif';
 
 import { useAppSelector } from 'hooks';
 
-import { selectTranslate } from 'store/translate';
+import { selectMode } from 'store/mode';
 
 import DecryptionPaperXButton from 'components/Space/DecrpytionPaper/XButton';
+
+import { morseCodeIndex } from 'common/morse';
 
 import { CSSProperties } from 'react';
 
 function DecryptionPaperOpened(props: CSSProperties) {
-  const translate = useAppSelector(selectTranslate);
+  const mode = useAppSelector(selectMode);
   const IndividualCode = [
     Morse1,
     Morse2,
@@ -214,6 +221,11 @@ function DecryptionPaperOpened(props: CSSProperties) {
     Morse99,
     Morse100,
     Morse101,
+    Morse102,
+    Morse103,
+    Morse104,
+    Morse105,
+    Morse106,
   ];
   return (
     <div id='Paper Opened' draggable='false' style={{ ...props }}>
@@ -236,12 +248,17 @@ function DecryptionPaperOpened(props: CSSProperties) {
       />
       <img
         draggable='false'
-        src={translate.index ? IndividualCode[translate.index] : ''}
+        src={
+          mode.decryptingState.code
+            ? IndividualCode[morseCodeIndex[mode.decryptingState.code]]
+            : ''
+        }
         alt='paper opened'
         style={{
           width: '100%',
           objectFit: 'cover',
           position: 'absolute',
+          display: `${mode.decryptingState.code ? 'flex' : 'none'}`,
         }}
       />
       <DecryptionPaperXButton

@@ -1,3 +1,5 @@
+import { MorseCode } from 'common/morse';
+
 export declare namespace ModeState {
   export type Mode = 'Writing' | 'Searching' | 'Decrypting';
 
@@ -20,7 +22,7 @@ export declare namespace ModeState {
     movingPosition: [number, number];
   }
   export interface DecryptingState extends ModeState {
-    starId: number;
+    code: MorseCode | null;
   }
   export interface WritingState extends ModeState {
     text: string;

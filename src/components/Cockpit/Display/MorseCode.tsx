@@ -11,31 +11,32 @@ import MorseLine5 from 'assets/images/Cockpit/Display/Decrypting/Morse-Line_5.gi
 
 import { useAppDispatch } from 'hooks';
 
-import { translateActions } from 'store/translate';
+import { modeActions } from 'store/mode';
+
+import { MorseCode } from 'common/morse';
 
 import { CSSProperties, EventHandler, FocusEvent, MouseEvent } from 'react';
 
-export type SignalProps = {
-  signal: string;
-  index: number;
+export type CodeProps = {
+  code: MorseCode;
 };
 
-function Signal(props: SignalProps & CSSProperties) {
-  const { signal, index, ...cssProps } = props;
+function Code(props: CodeProps & CSSProperties) {
+  const { code, ...cssProps } = props;
   const dots = [MorseDot1, MorseDot2, MorseDot3, MorseDot4, MorseDot5];
   const lines = [MorseLine1, MorseLine2, MorseLine3, MorseLine4, MorseLine5];
 
   const dispatch = useAppDispatch();
 
   const handleMouseOut: EventHandler<MouseEvent | FocusEvent> = () => {
-    dispatch(translateActions.setTranslate({ index: null }));
+    dispatch(modeActions.setCode(null));
   };
   const handleMouseOver: EventHandler<MouseEvent | FocusEvent> = () => {
-    dispatch(translateActions.setTranslate({ index }));
+    dispatch(modeActions.setCode(code));
   };
   return (
     <div
-      id={`Signal ${index}`}
+      id={`code ${code}`}
       style={{
         ...cssProps,
       }}
@@ -44,14 +45,14 @@ function Signal(props: SignalProps & CSSProperties) {
       onMouseOut={handleMouseOut}
       onBlur={handleMouseOut}
     >
-      {Array.from(signal).map((code, codeIndex) => (
+      {Array.from(code).map((symbol, symbolIndex) => (
         <div
-          id={`Code ${codeIndex}`}
-          key={`Code ${codeIndex}`}
+          id={`Code ${symbolIndex}`}
+          key={`Code ${symbolIndex}`}
           style={{
             height: '100%',
             aspectRatio: 1,
-            backgroundImage: `url(${code === '-' ? lines[Math.floor(Math.random() * 5)] : dots[Math.floor(Math.random() * 5)]})`,
+            backgroundImage: `url(${symbol === '-' ? lines[Math.floor(Math.random() * 5)] : dots[Math.floor(Math.random() * 5)]})`,
             backgroundSize: 'contain',
             backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
@@ -62,4 +63,4 @@ function Signal(props: SignalProps & CSSProperties) {
   );
 }
 
-export default Signal;
+export default Code;

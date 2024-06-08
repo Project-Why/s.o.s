@@ -1,6 +1,5 @@
 import mode from 'store/mode';
 import screen from 'store/screen';
-import translate from 'store/translate';
 
 import { configureStore } from '@reduxjs/toolkit';
 
@@ -8,7 +7,6 @@ const store = configureStore({
   reducer: {
     mode,
     screen,
-    translate,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),

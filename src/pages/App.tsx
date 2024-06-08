@@ -8,6 +8,7 @@ import Display from 'components/Cockpit/Display';
 import LeftButton from 'components/Cockpit/LeftButton';
 import RightButton from 'components/Cockpit/RightButton';
 import WritingButton from 'components/Cockpit/WritingButton';
+import MorseSound from 'components/Common/MorseSound';
 import DescryptionPaper from 'components/Space/DecryptionPaper';
 import Space from 'components/Space/Space';
 import Writing from 'components/Space/Writing';
@@ -118,6 +119,7 @@ function App() {
           display='flex'
         />
       </div>
+      <MorseSound />
       <div
         id='Vertical Overlay Top'
         style={{
