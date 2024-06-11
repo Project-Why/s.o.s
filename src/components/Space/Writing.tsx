@@ -1,3 +1,4 @@
+import MouseWriting from 'assets/images/Mouse/Mouse-Writing.png';
 import CamFail from 'assets/images/Window/Cam/Cam-Fail.gif';
 import CamSuccess from 'assets/images/Window/Cam/Cam-Success.gif';
 import SendSuccess from 'assets/images/Window/Send/Send-Animation.gif';
@@ -205,6 +206,7 @@ function Writing(props: CSSProperties) {
             borderWidth: 0,
             outline: 'none',
             resize: 'none',
+            cursor: `url(${MouseWriting}), auto`,
           }}
         />
         <textarea

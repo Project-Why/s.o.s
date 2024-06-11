@@ -1,3 +1,4 @@
+import MouseSpace from 'assets/images/Mouse/Mouse-Space.png';
 import MovingCircle from 'assets/images/Window/Moving/Moving-Circle.gif';
 import MovingLine from 'assets/images/Window/Moving/Moving-Line.gif';
 import Star1 from 'assets/images/Window/Star/Star_1.gif';
@@ -178,6 +179,8 @@ function Space(props: CSSProperties) {
           width: '100%',
           height: '100%',
           pointerEvents: `${mode.searchingState.isLoading ? 'none' : 'auto'}`,
+
+          cursor: `url(${MouseSpace}), auto`,
         }}
       />
       <img

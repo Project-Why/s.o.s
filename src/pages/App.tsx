@@ -1,3 +1,5 @@
+import MouseDefault from 'assets/images/Mouse/Mouse-Default.png';
+
 import { useAppSelector } from 'hooks';
 
 import { selectMode } from 'store/mode';
@@ -50,10 +52,7 @@ function App() {
           alignItems: 'center',
           justifyContent: 'center',
           fontFamily: 'FlowerScent',
-          color: 'white',
-          WebkitUserSelect: 'none',
-          WebkitTouchCallout: 'none',
-          userSelect: 'none',
+          cursor: `url(${MouseDefault}), auto`,
         }}
       >
         <Space
