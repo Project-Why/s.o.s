@@ -18,7 +18,7 @@ export const messageAPI = {
       .then((result) => {
         return result.data;
       })
-      .catch((error) => alert(error));
+      .catch();
     return response;
   },
   getMessages: async () => {
@@ -29,7 +29,7 @@ export const messageAPI = {
       .then((result) => {
         return result.data;
       })
-      .catch((error) => alert(error));
+      .catch(() => alert('Fail to load messages.'));
     return response;
   },
 };

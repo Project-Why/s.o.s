@@ -10,9 +10,10 @@ import { CSSProperties, useEffect, useState } from 'react';
 function DecryptionPaperOpening(props: CSSProperties) {
   const [showPaperAnimation, setShowPaperAnimation] = useState(true);
   const [showMorseAnimation, setShowMorseAnimation] = useState(false);
+  const [imageKey, setImageKey] = useState(0);
 
-  const showPaperAnimationInterval = 1533;
-  const showMorseAnimationInterval = 500;
+  const showPaperAnimationInterval = 1550;
+  const showMorseAnimationInterval = 550;
 
   const turnOffshowPaperAnimation = () => {
     setShowPaperAnimation(false);
@@ -23,6 +24,7 @@ function DecryptionPaperOpening(props: CSSProperties) {
   };
 
   useEffect(() => {
+    setImageKey((prev) => (prev === 1000 ? 0 : prev + 1));
     const turnOffshowPaperAnimationTime =
       showPaperAnimation &&
       setInterval(turnOffshowPaperAnimation, showPaperAnimationInterval);
@@ -43,7 +45,7 @@ function DecryptionPaperOpening(props: CSSProperties) {
     <div id='Paper Opening 1' draggable='false' style={{ ...props }}>
       <img
         draggable='false'
-        src={paperAnimation}
+        src={`${paperAnimation}?${imageKey}`}
         alt='paper opening'
         style={{
           width: '100%',
@@ -63,12 +65,13 @@ function DecryptionPaperOpening(props: CSSProperties) {
       />
       <img
         draggable='false'
-        src={morseAnimation}
+        src={`${morseAnimation}?${imageKey}`}
         alt='morse open animation'
         style={{
           width: '100%',
           objectFit: 'cover',
           position: 'absolute',
+          opacity: 0.2,
         }}
       />
       <DecryptionPaperXButton

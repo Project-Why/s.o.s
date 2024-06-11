@@ -7,7 +7,7 @@ import { MorseCode } from 'common/morse';
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
 
 const MorseSound: React.FC<CSSProperties> = ({ ...cssProps }) => {
-  const dotTime = 100; // ms
+  const dotTime = 80; // ms
   const dashTime = dotTime * 3;
   const blankTime = dotTime;
 
@@ -38,9 +38,9 @@ const MorseSound: React.FC<CSSProperties> = ({ ...cssProps }) => {
     if (!noiseGainNodeRef.current) {
       noiseGainNodeRef.current = audioContextRef.current.createGain();
       noiseGainNodeRef.current.gain.setValueAtTime(
-        0.05,
+        0.03,
         audioContextRef.current.currentTime,
-      ); // Set gain to 30%
+      ); // Set gain to 3%
       noiseGainNodeRef.current.connect(audioContextRef.current.destination);
     }
     return {
@@ -60,7 +60,6 @@ const MorseSound: React.FC<CSSProperties> = ({ ...cssProps }) => {
       440,
       audioContext.currentTime,
     ); // A4 (440 Hz)
-    // sineOscillatorRef.current.connect(audioContext.destination);
     sineOscillatorRef.current.connect(sineGainNode);
     sineOscillatorRef.current.start();
 
@@ -68,7 +67,7 @@ const MorseSound: React.FC<CSSProperties> = ({ ...cssProps }) => {
     sineOscillatorRef.current.stop(audioContext.currentTime + duration / 1000);
   };
 
-  const playNoise = (duration: number) => {
+  const playNoise = () => {
     const { audioContext, noiseGainNode } = createAudioContext();
 
     // Create a noise oscillator
@@ -78,12 +77,21 @@ const MorseSound: React.FC<CSSProperties> = ({ ...cssProps }) => {
       50,
       audioContext.currentTime,
     ); // Low frequency (50 Hz)
-    // noiseOscillatorRef.current.connect(audioContext.destination);
     noiseOscillatorRef.current.connect(noiseGainNode);
     noiseOscillatorRef.current.start();
+  };
 
-    // Stop the noise after the specified duration
-    noiseOscillatorRef.current.stop(audioContext.currentTime + duration / 1000);
+  const PauseNoise = () => {
+    if (noiseOscillatorRef.current) {
+      noiseOscillatorRef.current.stop();
+      noiseOscillatorRef.current.disconnect();
+      noiseOscillatorRef.current = null;
+    }
+    if (sineOscillatorRef.current) {
+      sineOscillatorRef.current.stop();
+      sineOscillatorRef.current.disconnect();
+      sineOscillatorRef.current = null;
+    }
   };
 
   const playCode = async (code: MorseCode) => {
@@ -102,8 +110,6 @@ const MorseSound: React.FC<CSSProperties> = ({ ...cssProps }) => {
       }
     });
 
-    setTimeout(() => playNoise(totalTime), dotTime);
-
     setTimeout(() => {
       setIsPlaying(false);
     }, totalTime);
@@ -119,6 +125,14 @@ const MorseSound: React.FC<CSSProperties> = ({ ...cssProps }) => {
       playCode(mode.decryptingState.code);
     }
   }, [mode.decryptingState.code, isPlaying]);
+
+  useEffect(() => {
+    if (mode.currentMode === 'Decrypting') {
+      playNoise();
+    } else {
+      PauseNoise();
+    }
+  }, [mode.currentMode]);
 
   return <div id='Morse Code Sound' style={{ ...cssProps }} />;
 };

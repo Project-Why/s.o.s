@@ -94,9 +94,9 @@ function Writing(props: CSSProperties) {
     dispatch(modeActions.setNextWritingAnimation());
     if (mode.writingState.sendSuccess) {
       dispatch(modeActions.changeMode('Searching'));
-      dispatch(modeActions.setWritingToast('None'));
       dispatch(modeActions.setText(''));
     }
+    dispatch(modeActions.setWritingToast('None'));
   };
 
   useEffect(() => {
