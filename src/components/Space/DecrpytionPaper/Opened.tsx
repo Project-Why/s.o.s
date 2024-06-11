@@ -104,21 +104,25 @@ import Morse103 from 'assets/images/Cockpit/Decryption/Morse/Individual/Individu
 import Morse104 from 'assets/images/Cockpit/Decryption/Morse/Individual/Individual_104.png';
 import Morse105 from 'assets/images/Cockpit/Decryption/Morse/Individual/Individual_105.png';
 import Morse106 from 'assets/images/Cockpit/Decryption/Morse/Individual/Individual_106.png';
+import MorseAnimation from 'assets/images/Cockpit/Decryption/Morse/Morse-Animation.gif';
 import MorseOpened from 'assets/images/Cockpit/Decryption/Morse/Morse.png';
+import PaperAnimation from 'assets/images/Cockpit/Decryption/Paper-Animation.gif';
 import PaperOpened from 'assets/images/Cockpit/Decryption/Paper-Opened.gif';
 
-import { useAppSelector } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 
-import { selectMode } from 'store/mode';
+import { modeActions, selectMode } from 'store/mode';
 
 import DecryptionPaperXButton from 'components/Space/DecrpytionPaper/XButton';
 
 import { morseCodeIndex } from 'common/morse';
 
-import { CSSProperties } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 
 function DecryptionPaperOpened(props: CSSProperties) {
   const mode = useAppSelector(selectMode);
+  const dispatch = useAppDispatch();
+
   const IndividualCode = [
     Morse1,
     Morse2,
@@ -227,48 +231,154 @@ function DecryptionPaperOpened(props: CSSProperties) {
     Morse105,
     Morse106,
   ];
+
+  /** Open Animation */
+  const paperAnimationInterval = 1550;
+  const morseAnimationInterval = 550;
+
+  const [currentAnimation, setCurrentAnimation] = useState(0);
+
+  const animationNext = () => {
+    setCurrentAnimation((prev) => (prev === 2 ? 0 : prev + 1));
+  };
+
+  const animationLast = () => {
+    setCurrentAnimation((prev) => (prev === 2 ? 0 : prev + 1));
+    dispatch(modeActions.setOpeningIsLoading());
+  };
+
+  useEffect(() => {
+    const startAnimation =
+      mode.decryptingState.isLoading &&
+      currentAnimation === 0 &&
+      setInterval(animationNext, 0);
+    const paperAnimation =
+      mode.decryptingState.isLoading &&
+      currentAnimation === 1 &&
+      setInterval(animationNext, paperAnimationInterval);
+    const morseAnimation =
+      mode.decryptingState.isLoading &&
+      currentAnimation === 2 &&
+      setInterval(animationLast, morseAnimationInterval);
+
+    return () => {
+      if (startAnimation) {
+        clearInterval(startAnimation);
+      }
+      if (paperAnimation) {
+        clearInterval(paperAnimation);
+      }
+      if (morseAnimation) {
+        clearInterval(morseAnimation);
+      }
+    };
+  }, [mode.decryptingState.isLoading, currentAnimation]);
+
+  const renderImages = (isLoading: boolean, animation: number) => {
+    if (isLoading) {
+      switch (animation) {
+        case 1:
+          return (
+            <img
+              draggable='false'
+              src={`${PaperAnimation}?${mode.decryptingState.imageKey}`}
+              alt='paper opening'
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                position: 'absolute',
+              }}
+            />
+          );
+        case 2:
+          return (
+            <>
+              <img
+                draggable='false'
+                src={PaperOpened}
+                alt='paper opened'
+                style={{
+                  width: '100%',
+                  objectFit: 'cover',
+                  position: 'absolute',
+                }}
+              />
+              <img
+                draggable='false'
+                src={`${MorseAnimation}?${mode.decryptingState.imageKey}`}
+                alt='morse open animation'
+                style={{
+                  width: '100%',
+                  objectFit: 'cover',
+                  position: 'absolute',
+                  opacity: 0.2,
+                }}
+              />
+              <DecryptionPaperXButton
+                width='4%'
+                left='84%'
+                height='8%'
+                top='18%'
+                position='absolute'
+                display='flex'
+              />
+            </>
+          );
+        case 0:
+        default:
+          return null;
+      }
+    }
+    return (
+      <>
+        <img
+          draggable='false'
+          src={PaperOpened}
+          alt='paper opened'
+          style={{ width: '100%', objectFit: 'cover', position: 'absolute' }}
+        />
+        <img
+          draggable='false'
+          src={MorseOpened}
+          alt='morse opened'
+          style={{
+            width: '100%',
+            objectFit: 'cover',
+            position: 'absolute',
+            opacity: 0.2,
+          }}
+        />
+        <img
+          draggable='false'
+          src={
+            mode.decryptingState.code
+              ? IndividualCode[morseCodeIndex[mode.decryptingState.code]]
+              : ''
+          }
+          alt='paper opened'
+          style={{
+            width: '100%',
+            objectFit: 'cover',
+            position: 'absolute',
+            display: `${mode.decryptingState.code ? 'flex' : 'none'}`,
+          }}
+        />
+        <DecryptionPaperXButton
+          width='4%'
+          left='84%'
+          height='8%'
+          top='18%'
+          position='absolute'
+          display='flex'
+        />
+      </>
+    );
+  };
+
   return (
     <div id='Paper Opened' draggable='false' style={{ ...props }}>
-      <img
-        draggable='false'
-        src={PaperOpened}
-        alt='paper opened'
-        style={{ width: '100%', objectFit: 'cover', position: 'absolute' }}
-      />
-      <img
-        draggable='false'
-        src={MorseOpened}
-        alt='morse opened'
-        style={{
-          width: '100%',
-          objectFit: 'cover',
-          position: 'absolute',
-          opacity: 0.2,
-        }}
-      />
-      <img
-        draggable='false'
-        src={
-          mode.decryptingState.code
-            ? IndividualCode[morseCodeIndex[mode.decryptingState.code]]
-            : ''
-        }
-        alt='paper opened'
-        style={{
-          width: '100%',
-          objectFit: 'cover',
-          position: 'absolute',
-          display: `${mode.decryptingState.code ? 'flex' : 'none'}`,
-        }}
-      />
-      <DecryptionPaperXButton
-        width='4%'
-        left='84%'
-        height='8%'
-        top='18%'
-        position='absolute'
-        display='flex'
-      />
+      {renderImages(mode.decryptingState.isLoading, currentAnimation)}
     </div>
   );
 }

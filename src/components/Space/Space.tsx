@@ -179,7 +179,6 @@ function Space(props: CSSProperties) {
           width: '100%',
           height: '100%',
           pointerEvents: `${mode.searchingState.isLoading ? 'none' : 'auto'}`,
-
           cursor: `url(${MouseSpace}), auto`,
         }}
       />

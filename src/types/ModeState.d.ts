@@ -22,6 +22,8 @@ export declare namespace ModeState {
     movingPosition: [number, number];
   }
   export interface DecryptingState extends ModeState {
+    isLoading: boolean;
+    imageKey: number;
     code: MorseCode | null;
   }
   export interface WritingState extends ModeState {

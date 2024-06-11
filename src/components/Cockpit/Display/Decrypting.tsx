@@ -17,6 +17,7 @@ function DisplayDecrypting(props: CSSProperties) {
         current={mode.decryptingState.currentIdx + 1}
         max={mode.decryptingState.display.length}
         fontSize={4}
+        color='white'
       />
     </div>
   );

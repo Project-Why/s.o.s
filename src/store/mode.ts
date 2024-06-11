@@ -33,6 +33,8 @@ const initialState: ModeState.ModeManageState = {
   decryptingState: {
     display: [],
     currentIdx: -1,
+    isLoading: false,
+    imageKey: 0,
     code: null,
   },
 };
@@ -284,7 +286,25 @@ export const modeSlice = createSlice({
         Partial<ModeState.SearchingState>
       >(state.searchingState, { movingPosition: action.payload });
     },
-
+    setOpeningIsLoading: (state: ModeState.ModeManageState) => {
+      Object.assign<
+        ModeState.DecryptingState,
+        Partial<ModeState.DecryptingState>
+      >(state.decryptingState, {
+        isLoading: !state.decryptingState.isLoading,
+      });
+    },
+    setOpeningImageKey: (state: ModeState.ModeManageState) => {
+      Object.assign<
+        ModeState.DecryptingState,
+        Partial<ModeState.DecryptingState>
+      >(state.decryptingState, {
+        imageKey:
+          state.decryptingState.imageKey === 1000
+            ? 0
+            : state.decryptingState.imageKey + 1,
+      });
+    },
     setCode: (
       state: ModeState.ModeManageState,
       action: PayloadAction<MorseCode | null>,
