@@ -137,7 +137,6 @@ function Writing(props: CSSProperties) {
     <div
       id='Writing'
       style={{
-        display: `${mode.currentMode === 'Writing' ? 'flex' : 'none'}`,
         ...props,
       }}
     >

@@ -67,10 +67,15 @@ function App() {
           width='100%'
           height='100%'
           position='absolute'
-          display='flex'
           pointerEvents={mode.currentMode === 'Searching' ? 'none' : 'auto'}
         />
-        <Writing zIndex={1} width='100%' height='100%' position='absolute' />
+        <Writing
+          zIndex={1}
+          display={`${mode.currentMode === 'Writing' ? 'flex' : 'none'}`}
+          width='100%'
+          height='100%'
+          position='absolute'
+        />
         <Cockpit
           zIndex={2}
           width='100%'
