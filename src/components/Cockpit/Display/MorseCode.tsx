@@ -19,10 +19,11 @@ import { CSSProperties, EventHandler, FocusEvent, MouseEvent } from 'react';
 
 export type CodeProps = {
   code: MorseCode;
+  codeIndex: number;
 };
 
 function Code(props: CodeProps & CSSProperties) {
-  const { code, ...cssProps } = props;
+  const { code, codeIndex, ...cssProps } = props;
   const dots = [MorseDot1, MorseDot2, MorseDot3, MorseDot4, MorseDot5];
   const lines = [MorseLine1, MorseLine2, MorseLine3, MorseLine4, MorseLine5];
 
@@ -33,6 +34,7 @@ function Code(props: CodeProps & CSSProperties) {
   };
   const handleMouseOver: EventHandler<MouseEvent | FocusEvent> = () => {
     dispatch(modeActions.setCode(code));
+    dispatch(modeActions.setCodeIndex(codeIndex));
   };
   return (
     <div

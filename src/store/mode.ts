@@ -36,6 +36,7 @@ const initialState: ModeState.ModeManageState = {
     isLoading: false,
     imageKey: 0,
     code: null,
+    codeIndex: 0,
   },
 };
 
@@ -314,6 +315,17 @@ export const modeSlice = createSlice({
         Partial<ModeState.DecryptingState>
       >(state.decryptingState, {
         code: action.payload,
+      });
+    },
+    setCodeIndex: (
+      state: ModeState.ModeManageState,
+      action: PayloadAction<number>,
+    ) => {
+      Object.assign<
+        ModeState.DecryptingState,
+        Partial<ModeState.DecryptingState>
+      >(state.decryptingState, {
+        codeIndex: action.payload,
       });
     },
   },

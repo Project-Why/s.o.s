@@ -25,6 +25,7 @@ export declare namespace ModeState {
     isLoading: boolean;
     imageKey: number;
     code: MorseCode | null;
+    codeIndex: number;
   }
   export interface WritingState extends ModeState {
     text: string;

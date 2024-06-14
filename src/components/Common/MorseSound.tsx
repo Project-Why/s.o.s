@@ -17,7 +17,7 @@ const MorseSound: React.FC<CSSProperties> = ({ ...cssProps }) => {
   const sineOscillatorRef = useRef<OscillatorNode | null>(null);
   const noiseOscillatorRef = useRef<OscillatorNode | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentCode, setCurrentCode] = useState<MorseCode | null>(null);
+  const [currentCodeIndex, setCurrentCodeIndex] = useState<number>(0);
   const mode = useAppSelector(selectMode);
 
   const createAudioContext = () => {
@@ -38,9 +38,9 @@ const MorseSound: React.FC<CSSProperties> = ({ ...cssProps }) => {
     if (!noiseGainNodeRef.current) {
       noiseGainNodeRef.current = audioContextRef.current.createGain();
       noiseGainNodeRef.current.gain.setValueAtTime(
-        0.03,
+        0.005,
         audioContextRef.current.currentTime,
-      ); // Set gain to 3%
+      ); // Set gain to 0.5%
       noiseGainNodeRef.current.connect(audioContextRef.current.destination);
     }
     return {
@@ -119,12 +119,12 @@ const MorseSound: React.FC<CSSProperties> = ({ ...cssProps }) => {
     if (
       !isPlaying &&
       mode.decryptingState.code &&
-      currentCode !== mode.decryptingState.code
+      currentCodeIndex !== mode.decryptingState.codeIndex
     ) {
-      setCurrentCode(mode.decryptingState.code);
+      setCurrentCodeIndex(mode.decryptingState.codeIndex);
       playCode(mode.decryptingState.code);
     }
-  }, [mode.decryptingState.code, isPlaying]);
+  }, [mode.decryptingState.code, mode.decryptingState.codeIndex, isPlaying]);
 
   useEffect(() => {
     if (mode.currentMode === 'Decrypting') {

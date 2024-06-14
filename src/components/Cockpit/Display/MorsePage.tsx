@@ -28,6 +28,7 @@ function MorsePage(props: CSSProperties & MorsePageProps) {
             <React.Fragment key={`${lineIndex}_${codeIndex}`}>
               <Code
                 code={code}
+                codeIndex={(index + 1) * (lineIndex + 1) * (codeIndex + 1)}
                 display='flex'
                 height='100%'
                 aspectRatio={`${code.length}/1`}
