@@ -172,16 +172,25 @@ function Space(props: CSSProperties) {
 
   return (
     <div id='Space' draggable='false' style={{ ...props }}>
-      <div
+      <svg
         id='Empty Space'
-        onMouseDown={handleOnMouseDown}
+        width='100%'
+        height='100%'
+        viewBox='0 0 100 100'
+        preserveAspectRatio='none'
         style={{
-          width: '100%',
-          height: '100%',
-          pointerEvents: `${mode.searchingState.isLoading ? 'none' : 'auto'}`,
-          cursor: `url(${MouseSpace}), auto`,
+          position: 'absolute',
         }}
-      />
+      >
+        <polygon
+          points='0,0 0,100 4,100 22,84 23,78 31,76 35,78 34,50 68,50 68,78 78,84 79,68 86,62 91,64 88,92 95,100 100,100 100,0 0,0'
+          onMouseDown={handleOnMouseDown}
+          style={{
+            pointerEvents: `${mode.searchingState.isLoading ? 'none' : 'auto'}`,
+            cursor: `url(${MouseSpace}), auto`,
+          }}
+        />
+      </svg>
       <img
         id='Moving Circle'
         src={`${MovingCircle}?${imageKey}`}
