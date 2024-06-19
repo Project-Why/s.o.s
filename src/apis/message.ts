@@ -29,7 +29,10 @@ export const messageAPI = {
       .then((result) => {
         return result.data;
       })
-      .catch(() => alert('Fail to load messages.'));
+      .catch(() => {
+        /* eslint-disable */
+        alert('Fail to load messages.');
+      });
     return response;
   },
 };

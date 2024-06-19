@@ -122,8 +122,8 @@ function App() {
           position='absolute'
           display='flex'
         />
+        <MorseSound />
       </div>
-      <MorseSound />
       <div
         id='Vertical Overlay Top'
         style={{
