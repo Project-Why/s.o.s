@@ -12,6 +12,7 @@ import Star7 from 'assets/images/Window/Star/Star_7.gif';
 import Star8 from 'assets/images/Window/Star/Star_8.gif';
 import Star9 from 'assets/images/Window/Star/Star_9.gif';
 import Star10 from 'assets/images/Window/Star/Star_10.gif';
+import MovingSound from 'assets/sounds/Moving.mp3';
 
 import { messageAPI } from 'apis/message';
 
@@ -67,6 +68,7 @@ function Space(props: CSSProperties) {
   );
 
   // Moving Animation
+  const audioRef = useRef(new Audio(MovingSound));
   const [imageKey, setImageKey] = useState(0);
 
   // Global State
@@ -186,6 +188,11 @@ function Space(props: CSSProperties) {
   }, [screen]);
 
   /** Space Animation */
+  const animationNextSound = () => {
+    audioRef.current.currentTime = 0;
+    audioRef.current.play();
+    dispatch(modeActions.setNextMovingAnimation());
+  };
   const animationNext = () => {
     dispatch(modeActions.setNextMovingAnimation());
   };
@@ -199,7 +206,7 @@ function Space(props: CSSProperties) {
     const startAnimation =
       mode.searchingState.isLoading &&
       mode.searchingState.currentAnimation === 0 &&
-      setInterval(animationNext, 0);
+      setInterval(animationNextSound, 0);
     const movingCircleAnimation =
       mode.searchingState.isLoading &&
       mode.searchingState.currentAnimation === 1 &&

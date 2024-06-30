@@ -108,6 +108,8 @@ import MorseAnimation from 'assets/images/Cockpit/Decryption/Morse/Morse-Animati
 import MorseOpened from 'assets/images/Cockpit/Decryption/Morse/Morse.png';
 import PaperAnimation from 'assets/images/Cockpit/Decryption/Paper-Animation.gif';
 import PaperOpened from 'assets/images/Cockpit/Decryption/Paper-Opened.gif';
+import MorseOpeningSound from 'assets/sounds/MorseOpening.mp3';
+import PaperOpeningSound from 'assets/sounds/PaperOpening.mp3';
 
 import { useAppDispatch, useAppSelector } from 'hooks';
 
@@ -117,9 +119,12 @@ import DecryptionPaperXButton from 'components/Space/DecrpytionPaper/XButton';
 
 import { morseCodeIndex } from 'common/morse';
 
-import { CSSProperties, useEffect, useState } from 'react';
+import { CSSProperties, useEffect, useRef, useState } from 'react';
 
 function DecryptionPaperOpened(props: CSSProperties) {
+  const paperOpenAudioRef = useRef(new Audio(PaperOpeningSound));
+  const morseOpenAudioRef = useRef(new Audio(MorseOpeningSound));
+
   const mode = useAppSelector(selectMode);
   const dispatch = useAppDispatch();
 
@@ -238,8 +243,16 @@ function DecryptionPaperOpened(props: CSSProperties) {
 
   const [currentAnimation, setCurrentAnimation] = useState(0);
 
-  const animationNext = () => {
+  const animationFirst = () => {
     setCurrentAnimation((prev) => (prev === 2 ? 0 : prev + 1));
+    paperOpenAudioRef.current.currentTime = 0;
+    paperOpenAudioRef.current.play();
+  };
+
+  const animationSecond = () => {
+    setCurrentAnimation((prev) => (prev === 2 ? 0 : prev + 1));
+    morseOpenAudioRef.current.currentTime = 0;
+    morseOpenAudioRef.current.play();
   };
 
   const animationLast = () => {
@@ -251,11 +264,11 @@ function DecryptionPaperOpened(props: CSSProperties) {
     const startAnimation =
       mode.decryptingState.isLoading &&
       currentAnimation === 0 &&
-      setInterval(animationNext, 0);
+      setInterval(animationFirst, 0);
     const paperAnimation =
       mode.decryptingState.isLoading &&
       currentAnimation === 1 &&
-      setInterval(animationNext, paperAnimationInterval);
+      setInterval(animationSecond, paperAnimationInterval);
     const morseAnimation =
       mode.decryptingState.isLoading &&
       currentAnimation === 2 &&

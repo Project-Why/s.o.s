@@ -4,6 +4,7 @@ import CamSuccess from 'assets/images/Window/Cam/Cam-Success.gif';
 import SendSuccess from 'assets/images/Window/Send/Send-Animation.gif';
 import GuideLine1 from 'assets/images/Window/Writing/Guide-Line_1.gif';
 import GuideLine2 from 'assets/images/Window/Writing/Guide-Line_2.gif';
+import SendingSound from 'assets/sounds/Sending.mp3';
 
 import { useAppDispatch, useAppSelector } from 'hooks';
 
@@ -29,6 +30,7 @@ function Writing(props: CSSProperties) {
   const maxByte = 150;
   const maxLineCount = 2;
 
+  const audioRef = useRef(new Audio(SendingSound));
   const [lineCount, setLineCount] = useState(1);
   const mode = useAppSelector(selectMode);
   const { height } = useAppSelector(selectScreen);
@@ -77,6 +79,12 @@ function Writing(props: CSSProperties) {
   }, [mode.writingState.text]);
 
   /** Writing Animation */
+  const animationNextSound = () => {
+    audioRef.current.currentTime = 0;
+    audioRef.current.play();
+    dispatch(modeActions.setNextWritingAnimation());
+  };
+
   const animationNext = () => {
     dispatch(modeActions.setNextWritingAnimation());
   };
@@ -108,7 +116,7 @@ function Writing(props: CSSProperties) {
     const progressBarAnimation =
       mode.writingState.isLoading &&
       mode.writingState.currentAnimation === 1 &&
-      setInterval(animationNext, 2500);
+      setInterval(animationNextSound, 2500);
     const sendSuccessAnimation =
       mode.writingState.isLoading &&
       mode.writingState.currentAnimation === 2 &&
