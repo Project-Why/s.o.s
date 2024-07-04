@@ -1,7 +1,7 @@
 {
-  "homepage": "https://Project-Why.github.io/s.o.s/",
+  "homepage": "https://project-why.github.io/s.o.s/",
   "name": "sos",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -42,11 +42,13 @@
   "scripts": {
     "start": "react-scripts start",
     "start:local": "react-scripts start NODE_ENV=local",
-    "build": "react-scripts build",
+    "build": "NODE_ENV=production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "eslint \"src/**/*.ts\" --fix"
+    "lint": "eslint \"src/**/*.ts\" --fix",
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build"
   },
   "eslintConfig": {
     "extends": ["react-app", "react-app/jest"]
