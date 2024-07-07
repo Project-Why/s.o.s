@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/s.o.s/static/css/main.3e45449f.css",
-    "main.js": "/s.o.s/static/js/main.dd44d67a.js",
+    "main.js": "/s.o.s/static/js/main.71d690d5.js",
     "static/media/Flower Scent.woff2": "/s.o.s/static/media/Flower Scent.64916d681dc7333165f0.woff2",
     "static/media/Paper-Animation.gif": "/s.o.s/static/media/Paper-Animation.21ba8ebf653f43178b15.gif",
     "static/media/Moving-Line.gif": "/s.o.s/static/media/Moving-Line.b97b80b3f95e897a85fe.gif",
@@ -177,10 +177,10 @@
     "static/media/Morse-Dot_1.gif": "/s.o.s/static/media/Morse-Dot_1.cd0a9b5df5071459a09e.gif",
     "index.html": "/s.o.s/index.html",
     "main.3e45449f.css.map": "/s.o.s/static/css/main.3e45449f.css.map",
-    "main.dd44d67a.js.map": "/s.o.s/static/js/main.dd44d67a.js.map"
+    "main.71d690d5.js.map": "/s.o.s/static/js/main.71d690d5.js.map"
   },
   "entrypoints": [
     "static/css/main.3e45449f.css",
-    "static/js/main.dd44d67a.js"
+    "static/js/main.71d690d5.js"
   ]
 }
