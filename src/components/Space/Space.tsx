@@ -186,8 +186,10 @@ function Space(props: CSSProperties) {
 
   /** Initial Loading. */
   useEffect(() => {
-    initStars();
-  }, [screen]);
+    if (mode.searchingState.initLaunch) {
+      initStars();
+    }
+  }, [mode.searchingState.initLaunch]);
 
   /** Space Animation */
   const animationNextSound = () => {
@@ -264,8 +266,9 @@ function Space(props: CSSProperties) {
           onMouseOver={handleOnMouseOver}
           onMouseLeave={handleOnMouseLeave}
           style={{
-            pointerEvents: `${mode.searchingState.isLoading ? 'none' : 'auto'}`,
+            pointerEvents: `${!mode.searchingState.isLoading && mode.searchingState.initLaunch ? 'auto' : 'none'}`,
             cursor: `url(${MouseSpace}), auto`,
+            fillOpacity: 0,
           }}
         />
       </svg>

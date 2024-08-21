@@ -3,6 +3,7 @@ import Searching2 from 'assets/images/Cockpit/Display/Searching/Searching_2.gif'
 import Searching3 from 'assets/images/Cockpit/Display/Searching/Searching_3.gif';
 import Searching4 from 'assets/images/Cockpit/Display/Searching/Searching_4.gif';
 import Searching5 from 'assets/images/Cockpit/Display/Searching/Searching_5.gif';
+import Send from 'assets/images/Cockpit/Display/Writing/Send.gif';
 import Toast4 from 'assets/images/Cockpit/Display/Writing/Toast/Toast_4.gif';
 
 import { useAppSelector } from 'hooks';
@@ -10,12 +11,33 @@ import { useAppSelector } from 'hooks';
 import { modeActions, selectMode } from 'store/mode';
 
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { CSSProperties, useEffect } from 'react';
+import {
+  CSSProperties,
+  EventHandler,
+  FocusEvent,
+  MouseEvent,
+  useEffect,
+} from 'react';
 import { useDispatch } from 'react-redux';
 
 function DisplaySearching(props: CSSProperties) {
   const mode = useAppSelector(selectMode);
   const dispatch = useDispatch();
+
+  const handleMouseDown = async () => {
+    dispatch(modeActions.setInitLaunch(true));
+  };
+  const handleMouseOver: EventHandler<MouseEvent | FocusEvent> = (
+    e: MouseEvent<HTMLImageElement> | FocusEvent<HTMLImageElement>,
+  ) => {
+    e.currentTarget.style.scale = '1.1';
+  };
+  const handleMouseOut: EventHandler<MouseEvent | FocusEvent> = (
+    e: MouseEvent<HTMLImageElement> | FocusEvent<HTMLImageElement>,
+  ) => {
+    e.currentTarget.style.scale = '1';
+  };
+
   useEffect(() => {
     if (mode.searchingState.display.length === 0) {
       const displayList: EmotionJSX.Element[] = [
@@ -60,7 +82,25 @@ function DisplaySearching(props: CSSProperties) {
   }, []);
   return (
     <div id='Display Searching' style={{ ...props }}>
-      {mode.searchingState.moveSuccess ? (
+      {!mode.searchingState.initLaunch ? (
+        <img
+          src={Send} // Temp
+          alt='Writing Not Supported Character Toast'
+          draggable='false'
+          role='presentation'
+          onMouseOver={handleMouseOver}
+          onFocus={handleMouseOver}
+          onMouseOut={handleMouseOut}
+          onBlur={handleMouseOut}
+          onMouseDown={handleMouseDown}
+          style={{
+            width: '100%',
+            objectFit: 'contain',
+            position: 'absolute',
+            zIndex: 1,
+          }}
+        />
+      ) : mode.searchingState.moveSuccess ? (
         mode.searchingState.display[mode.searchingState.currentIdx]
       ) : (
         <img

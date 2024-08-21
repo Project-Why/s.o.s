@@ -17,7 +17,7 @@ import Writing from 'components/Space/Writing';
 
 import 'pages/App.css';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 function App() {
@@ -38,6 +38,15 @@ function App() {
     window.onresize = FixRatio;
     FixRatio();
   }, []);
+
+  // Init animation
+  const [animate, setAnimate] = useState(false);
+  useEffect(() => {
+    if (mode.searchingState.initLaunch) {
+      setAnimate(true);
+    }
+  }, [mode.searchingState.initLaunch]);
+
   return (
     <>
       <div
@@ -46,7 +55,7 @@ function App() {
         style={{
           width: screen.width,
           height: screen.height,
-          backgroundColor: 'black',
+          background: 'black',
           position: 'relative',
           display: 'flex',
           alignItems: 'center',
@@ -55,6 +64,33 @@ function App() {
           cursor: `url(${MouseDefault}), auto`,
         }}
       >
+        <div
+          id='background'
+          draggable='false'
+          style={{
+            pointerEvents: 'none',
+            width: '100%',
+            height: '100%',
+            position: 'relative',
+            background: 'linear-gradient(to bottom, #87CEFA, #B0E0E6)',
+            opacity: animate ? 0 : 1,
+            animation: animate ? 'skyToSpace 3s ease-in-out forwards' : 'none',
+          }}
+        >
+          <style>
+            {`
+              @keyframes skyToSpace {
+                0% {
+                  opacity:1
+                }
+                100% {
+                  opacity:0,
+                  visible: hidden
+                }
+              }
+            `}
+          </style>
+        </div>
         <Space
           zIndex={0}
           width='100%'

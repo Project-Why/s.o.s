@@ -244,7 +244,7 @@ function Writing(props: CSSProperties) {
           max={150}
           info='Bytes'
           fontSize={4}
-          color='#000000'
+          color='black'
         />
         <LimitInfo
           right={15}
@@ -253,7 +253,7 @@ function Writing(props: CSSProperties) {
           max={maxLineCount}
           info='Lines'
           fontSize={4}
-          color='#000000'
+          color='black'
         />
       </div>
       <img
