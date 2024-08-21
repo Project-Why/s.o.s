@@ -18,7 +18,7 @@ export const messageAPI = {
       .then((result) => {
         return result.data;
       })
-      .catch();
+      .catch(() => {});
     return response;
   },
   getMessages: async () => {
@@ -29,10 +29,7 @@ export const messageAPI = {
       .then((result) => {
         return result.data;
       })
-      .catch(() => {
-        /* eslint-disable */
-        alert('Fail to load messages.');
-      });
+      .catch(() => {});
     return response;
   },
 };

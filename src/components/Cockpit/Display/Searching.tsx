@@ -3,6 +3,7 @@ import Searching2 from 'assets/images/Cockpit/Display/Searching/Searching_2.gif'
 import Searching3 from 'assets/images/Cockpit/Display/Searching/Searching_3.gif';
 import Searching4 from 'assets/images/Cockpit/Display/Searching/Searching_4.gif';
 import Searching5 from 'assets/images/Cockpit/Display/Searching/Searching_5.gif';
+import Toast4 from 'assets/images/Cockpit/Display/Writing/Toast/Toast_4.gif';
 
 import { useAppSelector } from 'hooks';
 
@@ -59,7 +60,19 @@ function DisplaySearching(props: CSSProperties) {
   }, []);
   return (
     <div id='Display Searching' style={{ ...props }}>
-      {mode.searchingState.display[mode.searchingState.currentIdx]}
+      {mode.searchingState.moveSuccess ? (
+        mode.searchingState.display[mode.searchingState.currentIdx]
+      ) : (
+        <img
+          src={Toast4}
+          alt='Writing Not Supported Character Toast'
+          draggable='false'
+          style={{
+            width: '100%',
+            objectFit: 'contain',
+          }}
+        />
+      )}
     </div>
   );
 }

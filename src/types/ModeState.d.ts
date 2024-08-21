@@ -20,6 +20,7 @@ export declare namespace ModeState {
     isLoading: boolean;
     currentAnimation: number;
     movingPosition: [number, number];
+    moveSuccess: boolean;
   }
   export interface DecryptingState extends ModeState {
     isLoading: boolean;

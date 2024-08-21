@@ -29,6 +29,7 @@ const initialState: ModeState.ModeManageState = {
     isLoading: false,
     currentAnimation: 0,
     movingPosition: [0, 0],
+    moveSuccess: true,
   },
   decryptingState: {
     display: [],
@@ -258,6 +259,15 @@ export const modeSlice = createSlice({
       >(state.searchingState, {
         stars: action.payload,
       });
+    },
+    setMoveSuccess: (
+      state: ModeState.ModeManageState,
+      action: PayloadAction<boolean>,
+    ) => {
+      Object.assign<
+        ModeState.SearchingState,
+        Partial<ModeState.SearchingState>
+      >(state.searchingState, { moveSuccess: action.payload });
     },
     setMovingIsLoading: (state: ModeState.ModeManageState) => {
       Object.assign<

@@ -95,6 +95,8 @@ function Space(props: CSSProperties) {
         display: 'flex',
       }));
       dispatch(modeActions.setStars(stars));
+    } else {
+      dispatch(modeActions.setMoveSuccess(false));
     }
   };
   const initStars = () => {
@@ -200,6 +202,7 @@ function Space(props: CSSProperties) {
   const animationLast = () => {
     dispatch(modeActions.setMovingIsLoading());
     dispatch(modeActions.setNextMovingAnimation());
+    dispatch(modeActions.setMoveSuccess(true));
   };
 
   useEffect(() => {
