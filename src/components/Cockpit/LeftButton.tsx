@@ -4,7 +4,9 @@ import LeftButtonImageHover from 'assets/images/Cockpit/Button/Left/L-Button-Hov
 import LeftButtonImage from 'assets/images/Cockpit/Button/Left/L-Button.gif';
 import LeftButtonSound from 'assets/sounds/LButton.mp3';
 
-import { modeActions } from 'store/mode';
+import { useAppSelector } from 'hooks';
+
+import { modeActions, selectMode } from 'store/mode';
 
 import Button from 'components/Common/Button';
 
@@ -13,6 +15,8 @@ import { useDispatch } from 'react-redux';
 
 function LeftButton(props: CSSProperties) {
   const audioRef = useRef(new Audio(LeftButtonSound));
+
+  const mode = useAppSelector(selectMode);
 
   const dispatch = useDispatch();
   const clickHandler: MouseEventHandler = () => {
@@ -30,6 +34,7 @@ function LeftButton(props: CSSProperties) {
       hoverClickImage={LeftButtonImageClickHover}
       buttonType='Momentary'
       clickHandler={clickHandler}
+      pointerEvents={mode.searchingState.initLaunch ? 'auto' : 'none'}
     />
   );
 }

@@ -70,22 +70,28 @@ function App() {
           style={{
             pointerEvents: 'none',
             width: '100%',
-            height: '100%',
+            height: '200%',
+            backgroundSize: '100% 200%',
             position: 'relative',
-            background: 'linear-gradient(to bottom, #87CEFA, #B0E0E6)',
-            opacity: animate ? 0 : 1,
+            background:
+              'linear-gradient(to top, #87CEFA 0%, #B0E0E6 25%, #1E90FF 50%, #4682B4 70%, #191970 80%, #000000 90%)',
             animation: animate ? 'skyToSpace 3s ease-in-out forwards' : 'none',
+            transform: mode.searchingState.initLaunch
+              ? 'translate(0%, 50%)'
+              : 'translate(0%, 0%)',
+            opacity: mode.searchingState.initLaunch ? 0 : 1,
           }}
         >
           <style>
             {`
               @keyframes skyToSpace {
-                0% {
-                  opacity:1
+                from {
+                  transform: translate(0%, 0%);
+                  opacity: 1;
                 }
-                100% {
-                  opacity:0,
-                  visible: hidden
+                to {
+                  transform: translate(0%, 50%);
+                  opacity: 0;
                 }
               }
             `}
@@ -148,6 +154,7 @@ function App() {
           height='9.7%'
           position='absolute'
           display='flex'
+          pointerEvents={animate ? 'auto' : 'none'}
         />
         <RightButton
           zIndex={3}
@@ -157,6 +164,7 @@ function App() {
           height='9.6%'
           position='absolute'
           display='flex'
+          pointerEvents={animate ? 'auto' : 'none'}
         />
         <MorseSound />
       </div>

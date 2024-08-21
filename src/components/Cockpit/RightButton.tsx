@@ -4,7 +4,9 @@ import RightButtonImageHover from 'assets/images/Cockpit/Button/Right/R-Button-H
 import RightButtonImage from 'assets/images/Cockpit/Button/Right/R-Button.gif';
 import RightButtonSound from 'assets/sounds/RButton.mp3';
 
-import { modeActions } from 'store/mode';
+import { useAppSelector } from 'hooks';
+
+import { modeActions, selectMode } from 'store/mode';
 
 import Button from 'components/Common/Button';
 
@@ -13,6 +15,8 @@ import { useDispatch } from 'react-redux';
 
 function RightButton(props: CSSProperties) {
   const audioRef = useRef(new Audio(RightButtonSound));
+
+  const mode = useAppSelector(selectMode);
 
   const dispatch = useDispatch();
   const clickHandler: MouseEventHandler = () => {
@@ -30,6 +34,7 @@ function RightButton(props: CSSProperties) {
       hoverClickImage={RightButtonImageClickHover}
       buttonType='Momentary'
       clickHandler={clickHandler}
+      pointerEvents={mode.searchingState.initLaunch ? 'auto' : 'none'}
     />
   );
 }
