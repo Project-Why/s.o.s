@@ -1,7 +1,5 @@
 import MouseSpace from 'assets/images/Mouse/Mouse-Space.png';
 import Smoke from 'assets/images/Mouse/Smoke.png';
-import MovingCircle from 'assets/images/Window/Moving/Moving-Circle.gif';
-import MovingLine from 'assets/images/Window/Moving/Moving-Line.gif';
 import Star1 from 'assets/images/Window/Star/Star_1.gif';
 import Star2 from 'assets/images/Window/Star/Star_2.gif';
 import Star3 from 'assets/images/Window/Star/Star_3.gif';
@@ -12,7 +10,6 @@ import Star7 from 'assets/images/Window/Star/Star_7.gif';
 import Star8 from 'assets/images/Window/Star/Star_8.gif';
 import Star9 from 'assets/images/Window/Star/Star_9.gif';
 import Star10 from 'assets/images/Window/Star/Star_10.gif';
-import MovingSound from 'assets/sounds/Moving.mp3';
 
 import { messageAPI } from 'apis/message';
 
@@ -21,7 +18,10 @@ import { useAppSelector } from 'hooks';
 import { modeActions, selectMode } from 'store/mode';
 import { selectScreen } from 'store/screen';
 
+import MovingAnimation from 'components/Space/MovingAnimation';
 import Star, { StarProps } from 'components/Space/Star';
+
+import { isPointInPolygon } from 'common/polygon';
 
 import {
   CSSProperties,
@@ -33,18 +33,12 @@ import {
 } from 'react';
 import { useDispatch } from 'react-redux';
 
-export type StarInformation = {
-  left: number;
-  top: number;
-  image: string;
-};
-
 function Space(props: CSSProperties) {
   const starWidth = 3.13; // 60px when 1920px
   const starHeight = 5.56; // 60px when 1080px
 
   const maxLeft = 100 - starWidth;
-  const maxTop = 80 - starHeight;
+  const maxTop = 90 - starHeight;
 
   const starImages = [
     Star1,
@@ -59,6 +53,12 @@ function Space(props: CSSProperties) {
     Star10,
   ];
 
+  const pointString =
+    '0.0,0.0 0.0,100.0 6.588,100.0 7.898,98.403 10.197,95.9 12.413,93.433 14.779,91.187 17.071,89.365 20.412,87.107 22.179,85.904 25.094,84.229 25.094,83.419 25.301,82.486 25.853,81.505 26.861,80.572 27.813,80.155 29.332,79.934 30.233,80.17 30.867,80.711 31.31,81.366 36.09,79.182 35.58,75.893 35.317,71.867 35.165,68.677 35.193,62.761 35.179,60.626 35.621,57.951 36.491,55.005 37.112,53.803 38.177,52.692 39.335,52.256 40.647,52.109 43.173,51.79 47.044,51.885 49.156,51.836 58.144,52.032 62.008,52.201 64.038,52.606 65.589,54.28 66.206,56.134 66.675,60.209 66.565,68.726 66.413,77.071 66.233,79.157 72.225,81.747 80.198,86.324 79.984,82.127 79.901,80.262 80.392,79.538 79.867,77.231 80.26,76.089 79.86,75.046 80.06,74.813 80.454,74.837 79.722,73.046 79.794,72.724 80.312,72.665 80.022,71.956 83.02,71.423 82.865,70.561 83.03,70.395 83.942,70.763 83.91,67.999 84.242,68.135 84.918,68.545 85.132,65.366 85.547,64.705 86.254,64.159 87.414,64.184 88.287,64.306 89.226,64.527 89.823,65.036 90.165,65.932 90.275,66.632 90.31,67.907 89.68,73.044 88.82,81.771 87.133,92.52 90.752,96.23 92.576,98.626 93.409,100.0 100.0,100.0 100.0,0.0 0.0,0.0';
+  const points = pointString
+    .split(' ')
+    .map((p) => p.split(',').map(parseFloat));
+
   // Smoke Animation
   const cursorXRef = useRef(0);
   const cursorYRef = useRef(0);
@@ -66,10 +66,6 @@ function Space(props: CSSProperties) {
   const [images, setImages] = useState<{ id: number; x: number; y: number }[]>(
     [],
   );
-
-  // Moving Animation
-  const audioRef = useRef(new Audio(MovingSound));
-  const [imageKey, setImageKey] = useState(0);
 
   // Global State
   const mode = useAppSelector(selectMode);
@@ -79,21 +75,33 @@ function Space(props: CSSProperties) {
   /** Moving Animation Utils. */
   const getMessages = async () => {
     dispatch(modeActions.setStars([]));
-    const messages = await messageAPI.getMessages();
+    const messages = await messageAPI.getMessages(20);
     if (messages) {
-      const stars = messages.map<StarProps>((message) => ({
-        id: message.id,
-        location: message.location,
-        createdAt: message.createdAt,
-        message: message.code,
-        left: +(Math.random() * maxLeft).toFixed(2),
-        top: +(Math.random() * maxTop).toFixed(2),
-        image: starImages[Math.floor(Math.random() * 5)],
-        width: starWidth,
-        height: starHeight,
-        position: 'absolute',
-        display: 'flex',
-      }));
+      const stars = messages.map<StarProps>((message) => {
+        let left;
+        let top;
+        do {
+          left = +(Math.random() * maxLeft).toFixed(2);
+          top = +(Math.random() * maxTop).toFixed(2);
+        } while (
+          !isPointInPolygon(points, left, top + starHeight) ||
+          !isPointInPolygon(points, left + starWidth, top + starHeight)
+        );
+
+        return {
+          id: message.id,
+          location: message.location,
+          createdAt: message.createdAt,
+          message: message.code,
+          left,
+          top,
+          image: starImages[Math.floor(Math.random() * 5)],
+          width: starWidth,
+          height: starHeight,
+          position: 'absolute',
+          display: 'flex',
+        };
+      });
       dispatch(modeActions.setStars(stars));
     } else {
       dispatch(modeActions.setMoveSuccess(false));
@@ -129,10 +137,8 @@ function Space(props: CSSProperties) {
     // Get Stars.
     getMessages();
 
-    // Change key.
-    setImageKey((prevKey) => {
-      return prevKey === 1000 ? 0 : prevKey + 1;
-    }); // Change key to force re-render
+    // Change key to force re-render
+    dispatch(modeActions.setMovingImageKey());
 
     // Start Animation.
     dispatch(modeActions.setMovingIsLoading());
@@ -191,62 +197,6 @@ function Space(props: CSSProperties) {
     }
   }, [mode.searchingState.initLaunch]);
 
-  /** Space Animation */
-  const animationNextSound = () => {
-    audioRef.current.currentTime = 0;
-    audioRef.current.play();
-    dispatch(modeActions.setNextMovingAnimation());
-  };
-  const animationNext = () => {
-    dispatch(modeActions.setNextMovingAnimation());
-  };
-
-  const animationLast = () => {
-    dispatch(modeActions.setMovingIsLoading());
-    dispatch(modeActions.setNextMovingAnimation());
-    dispatch(modeActions.setMoveSuccess(true));
-  };
-
-  useEffect(() => {
-    const startAnimation =
-      mode.searchingState.isLoading &&
-      mode.searchingState.currentAnimation === 0 &&
-      setInterval(animationNextSound, 0);
-    const movingCircleAnimation =
-      mode.searchingState.isLoading &&
-      mode.searchingState.currentAnimation === 1 &&
-      setInterval(animationNext, 666);
-    const settingCurrentStars =
-      mode.searchingState.isLoading &&
-      mode.searchingState.currentAnimation === 2 &&
-      setInterval(animationNext, 500);
-    const movingCurrentStars =
-      mode.searchingState.isLoading &&
-      mode.searchingState.currentAnimation === 3 &&
-      setInterval(animationNext, 500);
-    const movingLineAnimation =
-      mode.searchingState.isLoading &&
-      mode.searchingState.currentAnimation === 4 &&
-      setInterval(animationLast, 1000);
-    return () => {
-      if (startAnimation) {
-        clearInterval(startAnimation);
-      }
-      if (movingCircleAnimation) {
-        clearInterval(movingCircleAnimation);
-      }
-      if (settingCurrentStars) {
-        clearInterval(settingCurrentStars);
-      }
-      if (movingCurrentStars) {
-        clearInterval(movingCurrentStars);
-      }
-      if (movingLineAnimation) {
-        clearInterval(movingLineAnimation);
-      }
-    };
-  }, [mode.searchingState.isLoading, mode.searchingState.currentAnimation]);
-
   return (
     <div id='Space' draggable='false' style={{ ...props }}>
       <svg
@@ -260,7 +210,7 @@ function Space(props: CSSProperties) {
         }}
       >
         <polygon
-          points='0.0,0.0 0.0,100.0 6.588,100.0 7.898,98.403 10.197,95.9 12.413,93.433 14.779,91.187 17.071,89.365 20.412,87.107 22.179,85.904 25.094,84.229 25.094,83.419 25.301,82.486 25.853,81.505 26.861,80.572 27.813,80.155 29.332,79.934 30.233,80.17 30.867,80.711 31.31,81.366 36.09,79.182 35.58,75.893 35.317,71.867 35.165,68.677 35.193,62.761 35.179,60.626 35.621,57.951 36.491,55.005 37.112,53.803 38.177,52.692 39.335,52.256 40.647,52.109 43.173,51.79 47.044,51.885 49.156,51.836 58.144,52.032 62.008,52.201 64.038,52.606 65.589,54.28 66.206,56.134 66.675,60.209 66.565,68.726 66.413,77.071 66.233,79.157 72.225,81.747 80.198,86.324 79.984,82.127 79.901,80.262 80.392,79.538 79.867,77.231 80.26,76.089 79.86,75.046 80.06,74.813 80.454,74.837 79.722,73.046 79.794,72.724 80.312,72.665 80.022,71.956 83.02,71.423 82.865,70.561 83.03,70.395 83.942,70.763 83.91,67.999 84.242,68.135 84.918,68.545 85.132,65.366 85.547,64.705 86.254,64.159 87.414,64.184 88.287,64.306 89.226,64.527 89.823,65.036 90.165,65.932 90.275,66.632 90.31,67.907 89.68,73.044 88.82,81.771 87.133,92.52 90.752,96.23 92.576,98.626 93.409,100.0 100.0,100.0 100.0,0.0 0.0,0.0'
+          points={pointString}
           onMouseDown={handleOnMouseDown}
           onMouseMove={handleOnMouseMove}
           onMouseOver={handleOnMouseOver}
@@ -306,47 +256,6 @@ function Space(props: CSSProperties) {
         `}
         </style>
       </div>
-      <img
-        id='Moving Circle'
-        src={`${MovingCircle}?${imageKey}`}
-        alt='Moving Circle'
-        style={{
-          left: mode.searchingState.movingPosition[0],
-          top: mode.searchingState.movingPosition[1],
-          width: '8.4372%',
-          height: '15%',
-          position: 'absolute',
-          display: `${
-            mode.searchingState.currentAnimation === 1 ||
-            mode.searchingState.currentAnimation === 2 ||
-            mode.searchingState.currentAnimation === 3
-              ? 'flex'
-              : 'none'
-          }`,
-          transform: 'translate(-50%, -50%)',
-          objectFit: 'cover',
-        }}
-      />
-      <img
-        id='Moving Line'
-        src={`${MovingLine}?${imageKey}`}
-        alt='Moving Line'
-        style={{
-          width: '200%',
-          height: '200%',
-          transform: `translate(${(1 - mode.searchingState.movingPosition[0] / screen.width) * -50}%, 
-            ${(1 - mode.searchingState.movingPosition[1] / screen.height) * -50}%)` /** -50 to 0 */,
-          position: 'absolute',
-          display: `${
-            mode.searchingState.currentAnimation === 2 ||
-            mode.searchingState.currentAnimation === 3 ||
-            mode.searchingState.currentAnimation === 4
-              ? 'flex'
-              : 'none'
-          }`,
-          objectFit: 'cover',
-        }}
-      />
       <div
         id='Stars'
         style={{
@@ -360,6 +269,7 @@ function Space(props: CSSProperties) {
           <Star key={index} {...starProps} />
         ))}
       </div>
+      <MovingAnimation />
     </div>
   );
 }

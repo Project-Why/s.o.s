@@ -27,6 +27,7 @@ const initialState: ModeState.ModeManageState = {
     currentIdx: -1,
     stars: [],
     isLoading: false,
+    imageKey: 0,
     currentAnimation: 0,
     movingPosition: [0, 0],
     moveSuccess: true,
@@ -211,7 +212,7 @@ export const modeSlice = createSlice({
         },
       );
     },
-    setWritingIsLoading: (state: ModeState.ModeManageState) => {
+    setSendingIsLoading: (state: ModeState.ModeManageState) => {
       Object.assign<ModeState.WritingState, Partial<ModeState.WritingState>>(
         state.writingState,
         {
@@ -219,7 +220,7 @@ export const modeSlice = createSlice({
         },
       );
     },
-    setNextWritingAnimation: (state: ModeState.ModeManageState) => {
+    setNextSendingAnimation: (state: ModeState.ModeManageState) => {
       Object.assign<ModeState.WritingState, Partial<ModeState.WritingState>>(
         state.writingState,
         {
@@ -239,7 +240,7 @@ export const modeSlice = createSlice({
         { sendSuccess: action.payload },
       );
     },
-    setNextImageKey: (state: ModeState.ModeManageState) => {
+    setSendingImageKey: (state: ModeState.ModeManageState) => {
       Object.assign<ModeState.WritingState, Partial<ModeState.WritingState>>(
         state.writingState,
         {
@@ -296,6 +297,17 @@ export const modeSlice = createSlice({
           state.searchingState.currentAnimation === 4
             ? 0
             : state.searchingState.currentAnimation + 1,
+      });
+    },
+    setMovingImageKey: (state: ModeState.ModeManageState) => {
+      Object.assign<
+        ModeState.SearchingState,
+        Partial<ModeState.SearchingState>
+      >(state.searchingState, {
+        imageKey:
+          state.searchingState.imageKey === 1000
+            ? 0
+            : state.searchingState.imageKey + 1,
       });
     },
     setMovingPosition: (

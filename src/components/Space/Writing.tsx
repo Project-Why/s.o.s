@@ -82,15 +82,15 @@ function Writing(props: CSSProperties) {
   const animationNextSound = () => {
     audioRef.current.currentTime = 0;
     audioRef.current.play();
-    dispatch(modeActions.setNextWritingAnimation());
+    dispatch(modeActions.setNextSendingAnimation());
   };
 
   const animationNext = () => {
-    dispatch(modeActions.setNextWritingAnimation());
+    dispatch(modeActions.setNextSendingAnimation());
   };
 
   const setToast = () => {
-    dispatch(modeActions.setNextWritingAnimation());
+    dispatch(modeActions.setNextSendingAnimation());
     if (mode.writingState.sendSuccess) {
       dispatch(modeActions.setWritingToast('Success'));
     } else {
@@ -99,8 +99,8 @@ function Writing(props: CSSProperties) {
   };
 
   const animationLast = () => {
-    dispatch(modeActions.setWritingIsLoading());
-    dispatch(modeActions.setNextWritingAnimation());
+    dispatch(modeActions.setSendingIsLoading());
+    dispatch(modeActions.setNextSendingAnimation());
     if (mode.writingState.sendSuccess) {
       dispatch(modeActions.changeMode('Searching'));
       dispatch(modeActions.setText(''));

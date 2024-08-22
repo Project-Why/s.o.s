@@ -1,5 +1,7 @@
 import MouseDefault from 'assets/images/Mouse/Mouse-Default.png';
 
+import { messageAPI } from 'apis/message';
+
 import { useAppSelector } from 'hooks';
 
 import { selectMode } from 'store/mode';
@@ -46,6 +48,22 @@ function App() {
       setAnimate(true);
     }
   }, [mode.searchingState.initLaunch]);
+
+  // Get connection
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        messageAPI.getConnection();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // Cleanup
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
 
   return (
     <>

@@ -52,9 +52,9 @@ function DisplayWriting(props: CSSProperties) {
     } else {
       sendMessage(mode.writingState.text);
 
-      dispatch(modeActions.setNextImageKey());
+      dispatch(modeActions.setSendingImageKey());
 
-      dispatch(modeActions.setWritingIsLoading());
+      dispatch(modeActions.setSendingIsLoading());
     }
   };
 

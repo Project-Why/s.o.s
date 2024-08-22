@@ -18,6 +18,7 @@ export declare namespace ModeState {
   export interface SearchingState extends ModeState {
     stars: StarProps[];
     isLoading: boolean;
+    imageKey: number;
     currentAnimation: number;
     movingPosition: [number, number];
     moveSuccess: boolean;
