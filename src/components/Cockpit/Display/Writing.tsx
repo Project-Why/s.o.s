@@ -14,6 +14,8 @@ import { useAppDispatch, useAppSelector } from 'hooks';
 
 import { modeActions, selectMode } from 'store/mode';
 
+import { SendingAnimationState } from 'util/animation';
+
 import {
   CSSProperties,
   EventHandler,
@@ -85,7 +87,10 @@ function DisplayWriting(props: CSSProperties) {
   }, [mode.writingState.toast]);
 
   /** Choose Image */
-  const renderImage = (toast: ModeState.Toast, animationState: number) => {
+  const renderImage = (
+    toast: ModeState.Toast,
+    animationState: SendingAnimationState,
+  ) => {
     switch (toast) {
       case 'Blank':
         return (
@@ -152,8 +157,8 @@ function DisplayWriting(props: CSSProperties) {
       case 'None':
       default:
         switch (animationState) {
-          case 1:
-          case 2:
+          case SendingAnimationState.ProgressBar:
+          case SendingAnimationState.Sending:
             return (
               <img
                 src={ProgressBar}
@@ -165,9 +170,9 @@ function DisplayWriting(props: CSSProperties) {
                 }}
               />
             );
-          case 3:
+          case SendingAnimationState.Cam:
             return null;
-          case 0:
+          case SendingAnimationState.Completed:
           default:
             return (
               <img

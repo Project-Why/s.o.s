@@ -4,7 +4,12 @@ import { RootState } from 'store';
 
 import { StarProps } from 'components/Space/Star';
 
-import { MovingAnimationState, movingAnimationStateFlow } from 'util/animation';
+import {
+  MovingAnimationState,
+  SendingAnimationState,
+  movingAnimationStateFlow,
+  sendingAnimationStateFlow,
+} from 'util/animation';
 import { MorseCode } from 'util/morse';
 
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
@@ -18,7 +23,7 @@ const initialState: ModeState.ModeManageState = {
     currentIdx: -1,
     text: '',
     isLoading: false,
-    currentAnimation: 0,
+    currentAnimation: SendingAnimationState.Completed,
     toast: 'None',
     sendSuccess: false,
     imageKey: 0,
@@ -226,9 +231,7 @@ export const modeSlice = createSlice({
         state.writingState,
         {
           currentAnimation:
-            state.writingState.currentAnimation === 3
-              ? 0
-              : state.writingState.currentAnimation + 1,
+            sendingAnimationStateFlow[state.writingState.currentAnimation],
         },
       );
     },

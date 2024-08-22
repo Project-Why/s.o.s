@@ -1,4 +1,4 @@
-import { MovingAnimationState } from 'util/animation';
+import { MovingAnimationState, SendingAnimationState } from 'util/animation';
 import { MorseCode } from 'util/morse';
 
 export declare namespace ModeState {
@@ -34,7 +34,7 @@ export declare namespace ModeState {
   export interface WritingState extends ModeState {
     text: string;
     isLoading: boolean;
-    currentAnimation: number;
+    currentAnimation: SendingAnimationState;
     toast: Toast;
     sendSuccess: boolean;
     imageKey: number;

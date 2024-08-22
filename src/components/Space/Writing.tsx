@@ -1,10 +1,6 @@
 import MouseWriting from 'assets/images/Mouse/Mouse-Writing.png';
-import CamFail from 'assets/images/Window/Cam/Cam-Fail.gif';
-import CamSuccess from 'assets/images/Window/Cam/Cam-Success.gif';
-import SendSuccess from 'assets/images/Window/Send/Send-Animation.gif';
 import GuideLine1 from 'assets/images/Window/Writing/Guide-Line_1.gif';
 import GuideLine2 from 'assets/images/Window/Writing/Guide-Line_2.gif';
-import SendingSound from 'assets/sounds/Sending.mp3';
 
 import { useAppDispatch, useAppSelector } from 'hooks';
 
@@ -12,7 +8,9 @@ import { modeActions, selectMode } from 'store/mode';
 import { selectScreen } from 'store/screen';
 
 import LimitInfo from 'components/Common/LimitInfo';
+import SendingAnimation from 'components/Space/SendingAnimation';
 
+import { SendingAnimationState } from 'util/animation';
 import { allowedCharacters } from 'util/morse';
 
 import {
@@ -30,7 +28,6 @@ function Writing(props: CSSProperties) {
   const maxByte = 150;
   const maxLineCount = 2;
 
-  const audioRef = useRef(new Audio(SendingSound));
   const [lineCount, setLineCount] = useState(1);
   const mode = useAppSelector(selectMode);
   const { height } = useAppSelector(selectScreen);
@@ -78,69 +75,6 @@ function Writing(props: CSSProperties) {
     onTextChangeHandler();
   }, [mode.writingState.text]);
 
-  /** Writing Animation */
-  const animationNextSound = () => {
-    audioRef.current.currentTime = 0;
-    audioRef.current.play();
-    dispatch(modeActions.setNextSendingAnimation());
-  };
-
-  const animationNext = () => {
-    dispatch(modeActions.setNextSendingAnimation());
-  };
-
-  const setToast = () => {
-    dispatch(modeActions.setNextSendingAnimation());
-    if (mode.writingState.sendSuccess) {
-      dispatch(modeActions.setWritingToast('Success'));
-    } else {
-      dispatch(modeActions.setWritingToast('Fail'));
-    }
-  };
-
-  const animationLast = () => {
-    dispatch(modeActions.setSendingIsLoading());
-    dispatch(modeActions.setNextSendingAnimation());
-    if (mode.writingState.sendSuccess) {
-      dispatch(modeActions.changeMode('Searching'));
-      dispatch(modeActions.setText(''));
-    }
-    dispatch(modeActions.setWritingToast('None'));
-  };
-
-  useEffect(() => {
-    const startAnimation =
-      mode.writingState.isLoading &&
-      mode.writingState.currentAnimation === 0 &&
-      setInterval(animationNext, 0);
-    const progressBarAnimation =
-      mode.writingState.isLoading &&
-      mode.writingState.currentAnimation === 1 &&
-      setInterval(animationNextSound, 2500);
-    const sendSuccessAnimation =
-      mode.writingState.isLoading &&
-      mode.writingState.currentAnimation === 2 &&
-      setInterval(setToast, 1750);
-    const camAnimation =
-      mode.writingState.isLoading &&
-      mode.writingState.currentAnimation === 3 &&
-      setInterval(animationLast, 2000);
-    return () => {
-      if (startAnimation) {
-        clearInterval(startAnimation);
-      }
-      if (progressBarAnimation) {
-        clearInterval(progressBarAnimation);
-      }
-      if (sendSuccessAnimation) {
-        clearInterval(sendSuccessAnimation);
-      }
-      if (camAnimation) {
-        clearInterval(camAnimation);
-      }
-    };
-  }, [mode.writingState.isLoading, mode.writingState.currentAnimation]);
-
   return (
     <div
       id='Writing'
@@ -160,13 +94,18 @@ function Writing(props: CSSProperties) {
           paddingRight: '16%',
           boxSizing: 'border-box',
           backgroundColor: '#FFFFFF',
-          pointerEvents: `${mode.writingState.currentAnimation === 0 ? 'auto' : 'none'}`,
-          display: `${
-            mode.writingState.currentAnimation === 0 ||
-            mode.writingState.currentAnimation === 1
+          pointerEvents:
+            mode.writingState.currentAnimation ===
+            SendingAnimationState.Completed
+              ? 'auto'
+              : 'none',
+          display:
+            mode.writingState.currentAnimation ===
+              SendingAnimationState.Completed ||
+            mode.writingState.currentAnimation ===
+              SendingAnimationState.ProgressBar
               ? 'flex'
-              : 'none'
-          }`,
+              : 'none',
         }}
       >
         <img
@@ -256,37 +195,7 @@ function Writing(props: CSSProperties) {
           color='black'
         />
       </div>
-      <img
-        id='Send Animation'
-        draggable='false'
-        src={`${SendSuccess}?${mode.writingState.imageKey}`}
-        alt='Send Animation'
-        style={{
-          ...props,
-          position: 'absolute',
-          display: `${
-            mode.writingState.currentAnimation === 2 ? 'flex' : 'none'
-          }`,
-          objectFit: 'cover',
-        }}
-      />
-      <img
-        id='Send Cam'
-        draggable='false'
-        src={`${mode.writingState.sendSuccess ? CamSuccess : CamFail}?${mode.writingState.imageKey}`}
-        alt='Send Cam'
-        style={{
-          width: '24.79%',
-          height: '28.7%',
-          left: '37.605%',
-          top: '20.65%',
-          position: 'absolute',
-          display: `${
-            mode.writingState.currentAnimation === 3 ? 'flex' : 'none'
-          }`,
-          objectFit: 'cover',
-        }}
-      />
+      <SendingAnimation {...props} />
     </div>
   );
 }

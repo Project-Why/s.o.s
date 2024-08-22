@@ -1,3 +1,4 @@
+// Moving Animation
 export enum MovingAnimationState {
   Completed = 'COMPLETED',
   PassingStars = 'PASSING_STARS',
@@ -27,4 +28,30 @@ export const movingAnimationStateFlow: {
   [MovingAnimationState.SettingStars]: MovingAnimationState.MovingStars,
   [MovingAnimationState.MovingStars]: MovingAnimationState.MovingLine,
   [MovingAnimationState.MovingLine]: MovingAnimationState.Completed,
+};
+
+// Sending Animation
+export enum SendingAnimationState {
+  Completed = 'COMPLETED',
+  ProgressBar = 'PROGRASS_BAR',
+  Sending = 'SENDING',
+  Cam = 'CAM',
+}
+
+export const sendingAnimationStateInterval: {
+  [key in SendingAnimationState]: number;
+} = {
+  [SendingAnimationState.Completed]: 0,
+  [SendingAnimationState.ProgressBar]: 2500,
+  [SendingAnimationState.Sending]: 1750,
+  [SendingAnimationState.Cam]: 2000,
+};
+
+export const sendingAnimationStateFlow: {
+  [key in SendingAnimationState]: SendingAnimationState;
+} = {
+  [SendingAnimationState.Completed]: SendingAnimationState.ProgressBar,
+  [SendingAnimationState.ProgressBar]: SendingAnimationState.Sending,
+  [SendingAnimationState.Sending]: SendingAnimationState.Cam,
+  [SendingAnimationState.Cam]: SendingAnimationState.Completed,
 };
