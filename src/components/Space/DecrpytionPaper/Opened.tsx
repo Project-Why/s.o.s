@@ -117,6 +117,11 @@ import { modeActions, selectMode } from 'store/mode';
 
 import DecryptionPaperXButton from 'components/Space/DecrpytionPaper/XButton';
 
+import {
+  RollupAnimationState,
+  rollupAnimationStateFlow,
+  rollupAnimationStateInterval,
+} from 'util/animation';
 import { morseCodeIndex } from 'util/morse';
 
 import { CSSProperties, useEffect, useRef, useState } from 'react';
@@ -238,59 +243,57 @@ function DecryptionPaperOpened(props: CSSProperties) {
   ];
 
   /** Open Animation */
-  const paperAnimationInterval = 1550;
-  const morseAnimationInterval = 550;
 
-  const [currentAnimation, setCurrentAnimation] = useState(0);
+  const [currentAnimation, setCurrentAnimation] = useState(
+    RollupAnimationState.Completed,
+  );
 
   const animationFirst = () => {
-    setCurrentAnimation((prev) => (prev === 2 ? 0 : prev + 1));
+    setCurrentAnimation(rollupAnimationStateFlow[currentAnimation]);
     paperOpenAudioRef.current.currentTime = 0;
     paperOpenAudioRef.current.play();
   };
-
   const animationSecond = () => {
-    setCurrentAnimation((prev) => (prev === 2 ? 0 : prev + 1));
+    setCurrentAnimation(rollupAnimationStateFlow[currentAnimation]);
     morseOpenAudioRef.current.currentTime = 0;
     morseOpenAudioRef.current.play();
   };
-
   const animationLast = () => {
-    setCurrentAnimation((prev) => (prev === 2 ? 0 : prev + 1));
+    setCurrentAnimation(rollupAnimationStateFlow[currentAnimation]);
     dispatch(modeActions.setOpeningIsLoading());
+  };
+  const rollupAnimationStateAction: {
+    [key in RollupAnimationState]: () => void;
+  } = {
+    [RollupAnimationState.Completed]: animationFirst,
+    [RollupAnimationState.Paper]: animationSecond,
+    [RollupAnimationState.Morse]: animationLast,
   };
 
   useEffect(() => {
-    const startAnimation =
-      mode.decryptingState.isLoading &&
-      currentAnimation === 0 &&
-      setInterval(animationFirst, 0);
-    const paperAnimation =
-      mode.decryptingState.isLoading &&
-      currentAnimation === 1 &&
-      setInterval(animationSecond, paperAnimationInterval);
-    const morseAnimation =
-      mode.decryptingState.isLoading &&
-      currentAnimation === 2 &&
-      setInterval(animationLast, morseAnimationInterval);
+    let intervalId: NodeJS.Timeout | null = null;
+
+    if (mode.decryptingState.isLoading) {
+      intervalId = setInterval(
+        rollupAnimationStateAction[currentAnimation],
+        rollupAnimationStateInterval[currentAnimation],
+      );
+    }
 
     return () => {
-      if (startAnimation) {
-        clearInterval(startAnimation);
-      }
-      if (paperAnimation) {
-        clearInterval(paperAnimation);
-      }
-      if (morseAnimation) {
-        clearInterval(morseAnimation);
+      if (intervalId) {
+        clearInterval(intervalId);
       }
     };
   }, [mode.decryptingState.isLoading, currentAnimation]);
 
-  const renderImages = (isLoading: boolean, animation: number) => {
+  const renderImages = (
+    isLoading: boolean,
+    animation: RollupAnimationState,
+  ) => {
     if (isLoading) {
       switch (animation) {
-        case 1:
+        case RollupAnimationState.Paper:
           return (
             <img
               draggable='false'
@@ -304,7 +307,7 @@ function DecryptionPaperOpened(props: CSSProperties) {
               }}
             />
           );
-        case 2:
+        case RollupAnimationState.Morse:
           return (
             <>
               <img
@@ -338,7 +341,7 @@ function DecryptionPaperOpened(props: CSSProperties) {
               />
             </>
           );
-        case 0:
+        case RollupAnimationState.Completed:
         default:
           return null;
       }

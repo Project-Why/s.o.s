@@ -55,3 +55,26 @@ export const sendingAnimationStateFlow: {
   [SendingAnimationState.Sending]: SendingAnimationState.Cam,
   [SendingAnimationState.Cam]: SendingAnimationState.Completed,
 };
+
+// Roll up Animation
+export enum RollupAnimationState {
+  Completed = 'COMPLETED',
+  Paper = 'PAPER',
+  Morse = 'MORSE',
+}
+
+export const rollupAnimationStateInterval: {
+  [key in RollupAnimationState]: number;
+} = {
+  [RollupAnimationState.Completed]: 0,
+  [RollupAnimationState.Paper]: 1550,
+  [RollupAnimationState.Morse]: 550,
+};
+
+export const rollupAnimationStateFlow: {
+  [key in RollupAnimationState]: RollupAnimationState;
+} = {
+  [RollupAnimationState.Completed]: RollupAnimationState.Paper,
+  [RollupAnimationState.Paper]: RollupAnimationState.Morse,
+  [RollupAnimationState.Morse]: RollupAnimationState.Completed,
+};
