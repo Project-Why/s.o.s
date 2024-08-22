@@ -4,6 +4,7 @@ import { messageAPI } from 'apis/message';
 
 import { useAppSelector } from 'hooks';
 
+import { selectBubble } from 'store/bubble';
 import { selectMode } from 'store/mode';
 import { screenActions, selectScreen } from 'store/screen';
 
@@ -15,6 +16,7 @@ import WritingButton from 'components/Cockpit/WritingButton';
 import MorseSound from 'components/Common/MorseSound';
 import DescryptionPaper from 'components/Space/DecryptionPaper';
 import Space from 'components/Space/Space';
+import StarBubble from 'components/Space/StarBubble';
 import Writing from 'components/Space/Writing';
 
 import 'pages/App.css';
@@ -25,6 +27,7 @@ import { useDispatch } from 'react-redux';
 function App() {
   const mode = useAppSelector(selectMode);
   const screen = useAppSelector(selectScreen);
+  const bubble = useAppSelector(selectBubble);
   const dispatch = useDispatch();
   const FixRatio = () => {
     let width = window.innerWidth;
@@ -183,6 +186,16 @@ function App() {
           position='absolute'
           display='flex'
           pointerEvents={animate ? 'auto' : 'none'}
+        />
+        <StarBubble
+          id={bubble.id}
+          createAt={bubble.createdAt}
+          location={bubble.location}
+          left={bubble.left}
+          top={bubble.top}
+          zIndex={4}
+          display={bubble.isHover ? 'flex' : 'none'}
+          position='absolute'
         />
         <MorseSound />
       </div>

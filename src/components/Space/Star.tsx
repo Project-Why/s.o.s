@@ -1,10 +1,10 @@
 import { useAppDispatch, useAppSelector } from 'hooks';
 
+import { bubbleActions } from 'store/bubble';
 import { modeActions, selectMode } from 'store/mode';
 import { selectScreen } from 'store/screen';
 
 import MorsePage from 'components/Cockpit/Display/MorsePage';
-import StarBubble from 'components/Space/StarBubble';
 
 import { convertStringToMorseCode } from 'common/morse';
 
@@ -39,10 +39,26 @@ function Star(props: CSSProperties & StarProps) {
   const initStarSize = 0.4;
   const initStarPosition = 0.99;
 
-  const [isHover, setIsHover] = useState(false);
   const mode = useAppSelector(selectMode);
   const screen = useAppSelector(selectScreen);
   const dispatch = useAppDispatch();
+
+  const mouseOverHander = () => {
+    dispatch(
+      bubbleActions.setBubble({
+        isHover: true,
+        left: left + width,
+        top: top + height,
+        id,
+        createdAt: new Date(createdAt),
+        location,
+      }),
+    );
+  };
+  const mouseOutHander = () => {
+    dispatch(bubbleActions.setIsHover(false));
+  };
+
   const clickHandler: MouseEventHandler = () => {
     dispatch(modeActions.changeMode('Decrypting'));
     dispatch(modeActions.setOpeningImageKey());
@@ -118,41 +134,27 @@ function Star(props: CSSProperties & StarProps) {
   }, [mode.searchingState.currentAnimation]);
 
   return (
-    <>
-      <div
-        id={`Star ${id}`}
+    <div
+      id={`Star ${id}`}
+      draggable='false'
+      onMouseOver={mouseOverHander}
+      onMouseOut={mouseOutHander}
+      onFocus={mouseOverHander}
+      onBlur={mouseOutHander}
+      onMouseDown={clickHandler}
+      style={{
+        width: `${width}%`,
+        height: `${height}%`,
+        ...cssProps,
+      }}
+    >
+      <img
         draggable='false'
-        onMouseOver={() => setIsHover(true)}
-        onMouseOut={() => setIsHover(false)}
-        onFocus={() => setIsHover(true)}
-        onBlur={() => setIsHover(false)}
-        onMouseDown={clickHandler}
-        style={{
-          width: `${width}%`,
-          height: `${height}%`,
-          ...cssProps,
-        }}
-      >
-        <img
-          draggable='false'
-          src={image}
-          alt={`star_${id}`}
-          style={{ objectFit: 'cover' }}
-        />
-      </div>
-      <StarBubble
-        id={id}
-        createAt={new Date(createdAt)}
-        location={location}
-        width='12.5%'
-        height='12%'
-        left={`${left < 87.5 ? left : 87.5}%`}
-        top={`${top + height + 12 < 80 ? top + height : top - 12}%`}
-        zIndex={5}
-        display={isHover ? 'flex' : 'none'}
-        position='absolute'
+        src={image}
+        alt={`star_${id}`}
+        style={{ objectFit: 'cover' }}
       />
-    </>
+    </div>
   );
 }
 

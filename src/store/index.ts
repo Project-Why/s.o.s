@@ -1,3 +1,4 @@
+import bubble from 'store/bubble';
 import mode from 'store/mode';
 import screen from 'store/screen';
 
@@ -7,6 +8,7 @@ const store = configureStore({
   reducer: {
     mode,
     screen,
+    bubble,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),
