@@ -1,6 +1,6 @@
 import Code from 'components/Cockpit/Display/MorseCode';
 
-import { DecryptingDisplay, MorseCode } from 'common/morse';
+import { DecryptingDisplay, MorseCode } from 'util/morse';
 
 import React, { CSSProperties } from 'react';
 

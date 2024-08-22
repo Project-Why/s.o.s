@@ -117,7 +117,7 @@ import { modeActions, selectMode } from 'store/mode';
 
 import DecryptionPaperXButton from 'components/Space/DecrpytionPaper/XButton';
 
-import { morseCodeIndex } from 'common/morse';
+import { morseCodeIndex } from 'util/morse';
 
 import { CSSProperties, useEffect, useRef, useState } from 'react';
 

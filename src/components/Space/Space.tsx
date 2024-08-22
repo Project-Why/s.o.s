@@ -21,7 +21,7 @@ import { selectScreen } from 'store/screen';
 import MovingAnimation from 'components/Space/MovingAnimation';
 import Star, { StarProps } from 'components/Space/Star';
 
-import { isPointInPolygon } from 'common/polygon';
+import { isPointInPolygon } from 'util/polygon';
 
 import {
   CSSProperties,
@@ -113,7 +113,7 @@ function Space(props: CSSProperties) {
       dispatch(
         modeActions.setMovingPosition([
           screen.width * 0.5,
-          screen.height * 0.5,
+          screen.height * 0.2,
         ]),
       );
 

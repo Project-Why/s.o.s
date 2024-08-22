@@ -13,7 +13,7 @@ import { useAppDispatch } from 'hooks';
 
 import { modeActions } from 'store/mode';
 
-import { MorseCode } from 'common/morse';
+import { MorseCode } from 'util/morse';
 
 import { CSSProperties, EventHandler, FocusEvent, MouseEvent } from 'react';
 

@@ -13,7 +13,7 @@ import { selectScreen } from 'store/screen';
 
 import LimitInfo from 'components/Common/LimitInfo';
 
-import { allowedCharacters } from 'common/morse';
+import { allowedCharacters } from 'util/morse';
 
 import {
   CSSProperties,

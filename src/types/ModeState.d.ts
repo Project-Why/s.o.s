@@ -1,4 +1,4 @@
-import { MorseCode } from 'common/morse';
+import { MorseCode } from 'util/morse';
 
 export declare namespace ModeState {
   export type Mode = 'Writing' | 'Searching' | 'Decrypting';

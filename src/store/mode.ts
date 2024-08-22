@@ -4,7 +4,7 @@ import { RootState } from 'store';
 
 import { StarProps } from 'components/Space/Star';
 
-import { MorseCode } from 'common/morse';
+import { MorseCode } from 'util/morse';
 
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';

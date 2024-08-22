@@ -15,8 +15,8 @@
     "^store",
     "^components/(.*)$",
     "^pages/(.*)$",
-    "^common/(.*)$",
-    "^common",
+    "^util/(.*)$",
+    "^util",
     "^@testing-library/(.*)$",
     "<THIRD_PARTY_MODULES>",
     "^[./]"

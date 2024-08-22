@@ -2,7 +2,7 @@ import { useAppSelector } from 'hooks';
 
 import { selectMode } from 'store/mode';
 
-import { MorseCode } from 'common/morse';
+import { MorseCode } from 'util/morse';
 
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
 

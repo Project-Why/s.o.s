@@ -6,9 +6,9 @@ import { selectScreen } from 'store/screen';
 
 import MorsePage from 'components/Cockpit/Display/MorsePage';
 
-import { convertStringToMorseCode } from 'common/morse';
+import { convertStringToMorseCode } from 'util/morse';
 
-import { CSSProperties, MouseEventHandler, useEffect, useState } from 'react';
+import { CSSProperties, MouseEventHandler, useEffect } from 'react';
 
 export type StarProps = {
   id: number;
