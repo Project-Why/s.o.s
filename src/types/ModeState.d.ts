@@ -1,3 +1,4 @@
+import { MovingAnimationState } from 'util/animation';
 import { MorseCode } from 'util/morse';
 
 export declare namespace ModeState {
@@ -19,7 +20,7 @@ export declare namespace ModeState {
     stars: StarProps[];
     isLoading: boolean;
     imageKey: number;
-    currentAnimation: number;
+    currentAnimation: MovingAnimationState;
     movingPosition: [number, number];
     moveSuccess: boolean;
     initLaunch: boolean;

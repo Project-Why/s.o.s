@@ -6,6 +6,7 @@ import { selectScreen } from 'store/screen';
 
 import MorsePage from 'components/Cockpit/Display/MorsePage';
 
+import { MovingAnimationState } from 'util/animation';
 import { convertStringToMorseCode } from 'util/morse';
 
 import { CSSProperties, MouseEventHandler, useEffect } from 'react';
@@ -91,8 +92,8 @@ function Star(props: CSSProperties & StarProps) {
     const starElement = document.getElementById(`Star ${id}`);
     if (starElement) {
       switch (mode.searchingState.currentAnimation) {
-        case 1: // Initial Position
-        case 2:
+        case MovingAnimationState.MovingCircle: // Initial Position
+        case MovingAnimationState.SettingStars:
           starElement.style.left = `${
             initStarPosition *
               (mode.searchingState.movingPosition[0] -
@@ -108,8 +109,8 @@ function Star(props: CSSProperties & StarProps) {
           starElement.style.width = `${width * initStarSize}%`;
           starElement.style.height = `${height * initStarSize}%`;
           break;
-        case 3:
-        case 4:
+        case MovingAnimationState.MovingStars:
+        case MovingAnimationState.MovingLine:
           setTimeout(() => {
             starElement.style.transition = `left 1s cubic-bezier(0.7, 0, 1, 1), 
               top 1s cubic-bezier(0.7, 0, 1, 1), 
@@ -121,7 +122,7 @@ function Star(props: CSSProperties & StarProps) {
             starElement.style.height = `${height}%`;
           }, 0);
           break;
-        case 0:
+        case MovingAnimationState.Completed:
           starElement.style.left = `${left}%`;
           starElement.style.top = `${top}%`;
           starElement.style.width = `${width}%`;

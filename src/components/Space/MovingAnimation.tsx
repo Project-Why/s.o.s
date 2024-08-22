@@ -7,6 +7,11 @@ import { useAppSelector } from 'hooks';
 import { modeActions, selectMode } from 'store/mode';
 import { selectScreen } from 'store/screen';
 
+import {
+  MovingAnimationState,
+  movingAnimationStateInterval,
+} from 'util/animation';
+
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -41,42 +46,29 @@ function MovingAnimation() {
     dispatch(modeActions.setMoveSuccess(true));
   };
 
+  const movingAnimationStateAction: {
+    [key in MovingAnimationState]: () => void;
+  } = {
+    [MovingAnimationState.Completed]: animationNextSound,
+    [MovingAnimationState.PassingStars]: animationNextSound,
+    [MovingAnimationState.MovingCircle]: animationNext,
+    [MovingAnimationState.SettingStars]: animationNext,
+    [MovingAnimationState.MovingStars]: animationNext,
+    [MovingAnimationState.MovingLine]: animationLast,
+  };
+
   useEffect(() => {
-    const startAnimation =
-      mode.searchingState.isLoading &&
-      mode.searchingState.currentAnimation === 0 &&
-      setInterval(animationNextSound, 0);
-    const movingCircleAnimation =
-      mode.searchingState.isLoading &&
-      mode.searchingState.currentAnimation === 1 &&
-      setInterval(animationNext, 666);
-    const settingCurrentStars =
-      mode.searchingState.isLoading &&
-      mode.searchingState.currentAnimation === 2 &&
-      setInterval(animationNext, 500);
-    const movingCurrentStars =
-      mode.searchingState.isLoading &&
-      mode.searchingState.currentAnimation === 3 &&
-      setInterval(animationNext, 500);
-    const movingLineAnimation =
-      mode.searchingState.isLoading &&
-      mode.searchingState.currentAnimation === 4 &&
-      setInterval(animationLast, 1000);
+    let intervalId: NodeJS.Timeout | null = null;
+
+    if (mode.searchingState.isLoading) {
+      intervalId = setInterval(
+        movingAnimationStateAction[mode.searchingState.currentAnimation],
+        movingAnimationStateInterval[mode.searchingState.currentAnimation],
+      );
+    }
     return () => {
-      if (startAnimation) {
-        clearInterval(startAnimation);
-      }
-      if (movingCircleAnimation) {
-        clearInterval(movingCircleAnimation);
-      }
-      if (settingCurrentStars) {
-        clearInterval(settingCurrentStars);
-      }
-      if (movingCurrentStars) {
-        clearInterval(movingCurrentStars);
-      }
-      if (movingLineAnimation) {
-        clearInterval(movingLineAnimation);
+      if (intervalId) {
+        clearInterval(intervalId);
       }
     };
   }, [mode.searchingState.isLoading, mode.searchingState.currentAnimation]);
@@ -93,13 +85,15 @@ function MovingAnimation() {
           width: '8.4372%',
           height: '15%',
           position: 'absolute',
-          display: `${
-            mode.searchingState.currentAnimation === 1 ||
-            mode.searchingState.currentAnimation === 2 ||
-            mode.searchingState.currentAnimation === 3
+          display:
+            mode.searchingState.currentAnimation ===
+              MovingAnimationState.MovingCircle ||
+            mode.searchingState.currentAnimation ===
+              MovingAnimationState.SettingStars ||
+            mode.searchingState.currentAnimation ===
+              MovingAnimationState.MovingStars
               ? 'flex'
-              : 'none'
-          }`,
+              : 'none',
           transform: 'translate(-50%, -50%)',
           objectFit: 'cover',
         }}
@@ -114,13 +108,15 @@ function MovingAnimation() {
           transform: `translate(${(1 - mode.searchingState.movingPosition[0] / screen.width) * -50}%, 
             ${(1 - mode.searchingState.movingPosition[1] / screen.height) * -50}%)` /** -50 to 0 */,
           position: 'absolute',
-          display: `${
-            mode.searchingState.currentAnimation === 2 ||
-            mode.searchingState.currentAnimation === 3 ||
-            mode.searchingState.currentAnimation === 4
+          display:
+            mode.searchingState.currentAnimation ===
+              MovingAnimationState.SettingStars ||
+            mode.searchingState.currentAnimation ===
+              MovingAnimationState.MovingStars ||
+            mode.searchingState.currentAnimation ===
+              MovingAnimationState.MovingLine
               ? 'flex'
-              : 'none'
-          }`,
+              : 'none',
           objectFit: 'cover',
         }}
       />

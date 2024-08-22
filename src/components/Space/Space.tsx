@@ -21,6 +21,7 @@ import { selectScreen } from 'store/screen';
 import MovingAnimation from 'components/Space/MovingAnimation';
 import Star, { StarProps } from 'components/Space/Star';
 
+import { MovingAnimationState } from 'util/animation';
 import { isPointInPolygon } from 'util/polygon';
 
 import {
@@ -216,7 +217,10 @@ function Space(props: CSSProperties) {
           onMouseOver={handleOnMouseOver}
           onMouseLeave={handleOnMouseLeave}
           style={{
-            pointerEvents: `${!mode.searchingState.isLoading && mode.searchingState.initLaunch ? 'auto' : 'none'}`,
+            pointerEvents:
+              !mode.searchingState.isLoading && mode.searchingState.initLaunch
+                ? 'auto'
+                : 'none',
             cursor: `url(${MouseSpace}), auto`,
             fillOpacity: 0,
           }}
@@ -259,10 +263,12 @@ function Space(props: CSSProperties) {
       <div
         id='Stars'
         style={{
-          pointerEvents: `${mode.searchingState.currentAnimation === 0 ? 'auto' : 'none'}`,
-          display: `${
-            mode.searchingState.currentAnimation === 1 ? 'none' : 'flex'
-          }`,
+          pointerEvents: `${mode.searchingState.currentAnimation === MovingAnimationState.Completed ? 'auto' : 'none'}`,
+          display:
+            mode.searchingState.currentAnimation ===
+            MovingAnimationState.MovingCircle
+              ? 'none'
+              : 'flex',
         }}
       >
         {mode.searchingState.stars.map((starProps, index) => (

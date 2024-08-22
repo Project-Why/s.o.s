@@ -4,6 +4,7 @@ import { RootState } from 'store';
 
 import { StarProps } from 'components/Space/Star';
 
+import { MovingAnimationState, movingAnimationStateFlow } from 'util/animation';
 import { MorseCode } from 'util/morse';
 
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
@@ -28,7 +29,7 @@ const initialState: ModeState.ModeManageState = {
     stars: [],
     isLoading: false,
     imageKey: 0,
-    currentAnimation: 0,
+    currentAnimation: MovingAnimationState.Completed,
     movingPosition: [0, 0],
     moveSuccess: true,
     initLaunch: false,
@@ -294,9 +295,7 @@ export const modeSlice = createSlice({
         Partial<ModeState.SearchingState>
       >(state.searchingState, {
         currentAnimation:
-          state.searchingState.currentAnimation === 4
-            ? 0
-            : state.searchingState.currentAnimation + 1,
+          movingAnimationStateFlow[state.searchingState.currentAnimation],
       });
     },
     setMovingImageKey: (state: ModeState.ModeManageState) => {
