@@ -92,7 +92,37 @@ function Star(props: CSSProperties & StarProps) {
     const starElement = document.getElementById(`Star ${id}`);
     if (starElement) {
       switch (mode.searchingState.currentAnimation) {
-        case MovingAnimationState.MovingCircle: // Initial Position
+        case MovingAnimationState.PassingStars: {
+          const startX = screen.width * left * 0.01;
+          const startY = screen.height * top * 0.01;
+
+          const targetX = mode.searchingState.movingPosition[0];
+          const targetY = mode.searchingState.movingPosition[1];
+
+          // Calculate direction vector
+          const deltaX = startX - targetX;
+          const deltaY = startY - targetY;
+
+          // Normalize the direction vector
+          const magnitude = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+          const normalizedX = deltaX / magnitude;
+          const normalizedY = deltaY / magnitude;
+
+          // Define the distance to move away
+          const moveDistance = 1250; // Adjust this value to control how far the star moves
+
+          // Calculate the new position
+          const newX = startX + normalizedX * moveDistance;
+          const newY = startY + normalizedY * moveDistance;
+
+          // Apply the new position with transition
+          starElement.style.transition = `left 0.5s ease-out, top 0.5s ease-out`;
+          starElement.style.left = `${newX}px`;
+          starElement.style.top = `${newY}px`;
+
+          break;
+        }
+        case MovingAnimationState.MovingCircle:
         case MovingAnimationState.SettingStars:
           starElement.style.left = `${
             initStarPosition *

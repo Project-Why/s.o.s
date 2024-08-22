@@ -36,6 +36,10 @@ function MovingAnimation() {
     audioRef.current.play();
     dispatch(modeActions.setNextMovingAnimation());
   };
+  const animationGetStars = () => {
+    dispatch(modeActions.setNextMovingAnimation());
+    dispatch(modeActions.changeStars());
+  };
   const animationNext = () => {
     dispatch(modeActions.setNextMovingAnimation());
   };
@@ -50,7 +54,7 @@ function MovingAnimation() {
     [key in MovingAnimationState]: () => void;
   } = {
     [MovingAnimationState.Completed]: animationNextSound,
-    [MovingAnimationState.PassingStars]: animationNextSound,
+    [MovingAnimationState.PassingStars]: animationGetStars,
     [MovingAnimationState.MovingCircle]: animationNext,
     [MovingAnimationState.SettingStars]: animationNext,
     [MovingAnimationState.MovingStars]: animationNext,

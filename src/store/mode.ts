@@ -32,6 +32,7 @@ const initialState: ModeState.ModeManageState = {
     display: [],
     currentIdx: -1,
     stars: [],
+    nextStars: [],
     isLoading: false,
     imageKey: 0,
     currentAnimation: MovingAnimationState.Completed,
@@ -263,7 +264,16 @@ export const modeSlice = createSlice({
         ModeState.SearchingState,
         Partial<ModeState.SearchingState>
       >(state.searchingState, {
-        stars: action.payload,
+        nextStars: action.payload,
+      });
+    },
+    changeStars: (state: ModeState.ModeManageState) => {
+      Object.assign<
+        ModeState.SearchingState,
+        Partial<ModeState.SearchingState>
+      >(state.searchingState, {
+        stars: state.searchingState.nextStars,
+        nextStars: [],
       });
     },
     setInitLaunch: (

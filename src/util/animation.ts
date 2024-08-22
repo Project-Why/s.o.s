@@ -22,7 +22,7 @@ export const movingAnimationStateInterval: {
 export const movingAnimationStateFlow: {
   [key in MovingAnimationState]: MovingAnimationState;
 } = {
-  [MovingAnimationState.Completed]: MovingAnimationState.MovingCircle,
+  [MovingAnimationState.Completed]: MovingAnimationState.PassingStars,
   [MovingAnimationState.PassingStars]: MovingAnimationState.MovingCircle,
   [MovingAnimationState.MovingCircle]: MovingAnimationState.SettingStars,
   [MovingAnimationState.SettingStars]: MovingAnimationState.MovingStars,
