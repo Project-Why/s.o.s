@@ -1,9 +1,9 @@
+import Launch from 'assets/images/Cockpit/Display/Searching/Launch.gif';
 import Searching1 from 'assets/images/Cockpit/Display/Searching/Searching_1.gif';
 import Searching2 from 'assets/images/Cockpit/Display/Searching/Searching_2.gif';
 import Searching3 from 'assets/images/Cockpit/Display/Searching/Searching_3.gif';
 import Searching4 from 'assets/images/Cockpit/Display/Searching/Searching_4.gif';
 import Searching5 from 'assets/images/Cockpit/Display/Searching/Searching_5.gif';
-import Send from 'assets/images/Cockpit/Display/Writing/Send.gif';
 import Toast4 from 'assets/images/Cockpit/Display/Writing/Toast/Toast_4.gif';
 
 import { useAppSelector } from 'hooks';
@@ -84,7 +84,7 @@ function DisplaySearching(props: CSSProperties) {
     <div id='Display Searching' style={{ ...props }}>
       {!mode.searchingState.initLaunch ? (
         <img
-          src={Send} // Temp
+          src={Launch} // Temp
           alt='Writing Not Supported Character Toast'
           draggable='false'
           role='presentation'
