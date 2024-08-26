@@ -260,7 +260,7 @@ function DecryptionPaperOpened(props: CSSProperties) {
   };
   const animationLast = () => {
     setCurrentAnimation(rollupAnimationStateFlow[currentAnimation]);
-    dispatch(modeActions.setOpeningIsLoading());
+    dispatch(modeActions.setOpeningIsStart());
   };
   const rollupAnimationStateAction: {
     [key in RollupAnimationState]: () => void;
@@ -273,7 +273,7 @@ function DecryptionPaperOpened(props: CSSProperties) {
   useEffect(() => {
     let intervalId: NodeJS.Timeout | null = null;
 
-    if (mode.decryptingState.isLoading) {
+    if (mode.decryptingState.isStart) {
       intervalId = setInterval(
         rollupAnimationStateAction[currentAnimation],
         rollupAnimationStateInterval[currentAnimation],
@@ -285,13 +285,10 @@ function DecryptionPaperOpened(props: CSSProperties) {
         clearInterval(intervalId);
       }
     };
-  }, [mode.decryptingState.isLoading, currentAnimation]);
+  }, [mode.decryptingState.isStart, currentAnimation]);
 
-  const renderImages = (
-    isLoading: boolean,
-    animation: RollupAnimationState,
-  ) => {
-    if (isLoading) {
+  const renderImages = (isStart: boolean, animation: RollupAnimationState) => {
+    if (isStart) {
       switch (animation) {
         case RollupAnimationState.Paper:
           return (
@@ -394,7 +391,7 @@ function DecryptionPaperOpened(props: CSSProperties) {
 
   return (
     <div id='Paper Opened' draggable='false' style={{ ...props }}>
-      {renderImages(mode.decryptingState.isLoading, currentAnimation)}
+      {renderImages(mode.decryptingState.isStart, currentAnimation)}
     </div>
   );
 }

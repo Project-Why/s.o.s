@@ -40,7 +40,7 @@ function SendingAnimation(props: CSSProperties) {
   };
 
   const animationLast = () => {
-    dispatch(modeActions.setSendingIsLoading());
+    dispatch(modeActions.setSendingIsStart());
     dispatch(modeActions.setNextSendingAnimation());
     if (mode.writingState.sendSuccess) {
       dispatch(modeActions.changeMode('Searching'));
@@ -60,7 +60,7 @@ function SendingAnimation(props: CSSProperties) {
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout | null = null;
-    if (mode.writingState.isLoading) {
+    if (mode.writingState.isStart) {
       intervalId = setInterval(
         sendingAnimationStateAction[mode.writingState.currentAnimation],
         sendingAnimationStateInterval[mode.writingState.currentAnimation],
@@ -71,7 +71,7 @@ function SendingAnimation(props: CSSProperties) {
         clearInterval(intervalId);
       }
     };
-  }, [mode.writingState.isLoading, mode.writingState.currentAnimation]);
+  }, [mode.writingState.isStart, mode.writingState.currentAnimation]);
   return (
     <>
       <img

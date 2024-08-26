@@ -19,6 +19,7 @@ export declare namespace ModeState {
   export interface SearchingState extends ModeState {
     stars: StarProps[];
     nextStars: StarProps[];
+    isStart: boolean;
     isLoading: boolean;
     imageKey: number;
     currentAnimation: MovingAnimationState;
@@ -27,14 +28,14 @@ export declare namespace ModeState {
     initLaunch: boolean;
   }
   export interface DecryptingState extends ModeState {
-    isLoading: boolean;
+    isStart: boolean;
     imageKey: number;
     code: MorseCode | null;
     codeIndex: number;
   }
   export interface WritingState extends ModeState {
     text: string;
-    isLoading: boolean;
+    isStart: boolean;
     currentAnimation: SendingAnimationState;
     toast: Toast;
     sendSuccess: boolean;

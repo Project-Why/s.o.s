@@ -45,7 +45,7 @@ function MovingAnimation() {
   };
 
   const animationLast = () => {
-    dispatch(modeActions.setMovingIsLoading());
+    dispatch(modeActions.setMovingIsStart());
     dispatch(modeActions.setNextMovingAnimation());
     dispatch(modeActions.setMoveSuccess(true));
   };
@@ -64,7 +64,7 @@ function MovingAnimation() {
   useEffect(() => {
     let intervalId: NodeJS.Timeout | null = null;
 
-    if (mode.searchingState.isLoading) {
+    if (mode.searchingState.isStart) {
       intervalId = setInterval(
         movingAnimationStateAction[mode.searchingState.currentAnimation],
         movingAnimationStateInterval[mode.searchingState.currentAnimation],
@@ -75,7 +75,7 @@ function MovingAnimation() {
         clearInterval(intervalId);
       }
     };
-  }, [mode.searchingState.isLoading, mode.searchingState.currentAnimation]);
+  }, [mode.searchingState.isStart, mode.searchingState.currentAnimation]);
 
   return (
     <>

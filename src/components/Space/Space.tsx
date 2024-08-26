@@ -122,7 +122,7 @@ function Space(props: CSSProperties) {
       getMessages();
 
       // Start Animation.
-      dispatch(modeActions.setMovingIsLoading());
+      dispatch(modeActions.setMovingIsStart());
     }
   };
   const handleOnMouseDown = async (e: MouseEvent) => {
@@ -142,7 +142,7 @@ function Space(props: CSSProperties) {
     dispatch(modeActions.setMovingImageKey());
 
     // Start Animation.
-    dispatch(modeActions.setMovingIsLoading());
+    dispatch(modeActions.setMovingIsStart());
   };
 
   /** Smoke Animation Utils. */
@@ -218,7 +218,7 @@ function Space(props: CSSProperties) {
           onMouseLeave={handleOnMouseLeave}
           style={{
             pointerEvents:
-              !mode.searchingState.isLoading && mode.searchingState.initLaunch
+              !mode.searchingState.isStart && mode.searchingState.initLaunch
                 ? 'auto'
                 : 'none',
             cursor: `url(${MouseSpace}), auto`,

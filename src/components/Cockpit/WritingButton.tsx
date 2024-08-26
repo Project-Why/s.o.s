@@ -47,8 +47,8 @@ function WritingButton(props: CSSProperties) {
       condition={mode.currentMode === 'Writing'}
       clickHandler={clickHandler}
       pointerEvents={
-        mode.writingState.isLoading ||
-        mode.searchingState.isLoading ||
+        mode.writingState.isStart ||
+        mode.searchingState.isStart ||
         !mode.searchingState.initLaunch
           ? 'none'
           : 'auto'

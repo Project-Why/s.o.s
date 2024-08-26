@@ -56,7 +56,7 @@ function DisplayWriting(props: CSSProperties) {
 
       dispatch(modeActions.setSendingImageKey());
 
-      dispatch(modeActions.setSendingIsLoading());
+      dispatch(modeActions.setSendingIsStart());
     }
   };
 

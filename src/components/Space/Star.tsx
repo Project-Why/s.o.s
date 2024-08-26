@@ -63,7 +63,7 @@ function Star(props: CSSProperties & StarProps) {
   const clickHandler: MouseEventHandler = () => {
     dispatch(modeActions.changeMode('Decrypting'));
     dispatch(modeActions.setOpeningImageKey());
-    dispatch(modeActions.setOpeningIsLoading());
+    dispatch(modeActions.setOpeningIsStart());
 
     // Get Morse Message from server.
     const morseInfo = convertStringToMorseCode(message);

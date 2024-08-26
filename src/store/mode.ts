@@ -22,7 +22,7 @@ const initialState: ModeState.ModeManageState = {
     display: [],
     currentIdx: -1,
     text: '',
-    isLoading: false,
+    isStart: false,
     currentAnimation: SendingAnimationState.Completed,
     toast: 'None',
     sendSuccess: false,
@@ -33,6 +33,7 @@ const initialState: ModeState.ModeManageState = {
     currentIdx: -1,
     stars: [],
     nextStars: [],
+    isStart: false,
     isLoading: false,
     imageKey: 0,
     currentAnimation: MovingAnimationState.Completed,
@@ -43,7 +44,7 @@ const initialState: ModeState.ModeManageState = {
   decryptingState: {
     display: [],
     currentIdx: -1,
-    isLoading: false,
+    isStart: false,
     imageKey: 0,
     code: null,
     codeIndex: 0,
@@ -219,11 +220,11 @@ export const modeSlice = createSlice({
         },
       );
     },
-    setSendingIsLoading: (state: ModeState.ModeManageState) => {
+    setSendingIsStart: (state: ModeState.ModeManageState) => {
       Object.assign<ModeState.WritingState, Partial<ModeState.WritingState>>(
         state.writingState,
         {
-          isLoading: !state.writingState.isLoading,
+          isStart: !state.writingState.isStart,
         },
       );
     },
@@ -294,7 +295,15 @@ export const modeSlice = createSlice({
         Partial<ModeState.SearchingState>
       >(state.searchingState, { moveSuccess: action.payload });
     },
-    setMovingIsLoading: (state: ModeState.ModeManageState) => {
+    setMovingIsStart: (state: ModeState.ModeManageState) => {
+      Object.assign<
+        ModeState.SearchingState,
+        Partial<ModeState.SearchingState>
+      >(state.searchingState, {
+        isStart: !state.searchingState.isStart,
+      });
+    },
+    setStarIsLoading: (state: ModeState.ModeManageState) => {
       Object.assign<
         ModeState.SearchingState,
         Partial<ModeState.SearchingState>
@@ -331,12 +340,12 @@ export const modeSlice = createSlice({
         Partial<ModeState.SearchingState>
       >(state.searchingState, { movingPosition: action.payload });
     },
-    setOpeningIsLoading: (state: ModeState.ModeManageState) => {
+    setOpeningIsStart: (state: ModeState.ModeManageState) => {
       Object.assign<
         ModeState.DecryptingState,
         Partial<ModeState.DecryptingState>
       >(state.decryptingState, {
-        isLoading: !state.decryptingState.isLoading,
+        isStart: !state.decryptingState.isStart,
       });
     },
     setOpeningImageKey: (state: ModeState.ModeManageState) => {
