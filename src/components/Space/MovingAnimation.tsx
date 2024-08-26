@@ -31,21 +31,21 @@ function MovingAnimation() {
   const dispatch = useDispatch();
 
   /** Space Animation */
-  const animationNextSound = () => {
+  const animationFirst = () => {
+    dispatch(modeActions.setMovingIsStart());
+    dispatch(modeActions.setNextMovingAnimation());
+  };
+  const animationMovingStart = () => {
     audioRef.current.currentTime = 0;
     audioRef.current.play();
     dispatch(modeActions.setNextMovingAnimation());
-  };
-  const animationGetStars = () => {
-    dispatch(modeActions.setNextMovingAnimation());
-    dispatch(modeActions.changeStars());
   };
   const animationNext = () => {
     dispatch(modeActions.setNextMovingAnimation());
   };
 
   const animationLast = () => {
-    dispatch(modeActions.setMovingIsStart());
+    dispatch(modeActions.setStarIsLoading());
     dispatch(modeActions.setNextMovingAnimation());
     dispatch(modeActions.setMoveSuccess(true));
   };
@@ -53,14 +53,15 @@ function MovingAnimation() {
   const movingAnimationStateAction: {
     [key in MovingAnimationState]: () => void;
   } = {
-    [MovingAnimationState.Completed]: animationNextSound,
-    [MovingAnimationState.PassingStars]: animationGetStars,
+    [MovingAnimationState.Completed]: animationFirst,
+    [MovingAnimationState.PassingStars]: animationMovingStart,
     [MovingAnimationState.MovingCircle]: animationNext,
     [MovingAnimationState.SettingStars]: animationNext,
     [MovingAnimationState.MovingStars]: animationNext,
     [MovingAnimationState.MovingLine]: animationLast,
   };
 
+  // Start Animation
   useEffect(() => {
     let intervalId: NodeJS.Timeout | null = null;
 
@@ -76,6 +77,35 @@ function MovingAnimation() {
       }
     };
   }, [mode.searchingState.isStart, mode.searchingState.currentAnimation]);
+
+  // Animation After Get Stars
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout | null = null;
+
+    if (
+      mode.searchingState.isLoading &&
+      (mode.searchingState.currentAnimation ===
+        MovingAnimationState.PassingStars ||
+        mode.searchingState.currentAnimation ===
+          MovingAnimationState.MovingCircle ||
+        mode.searchingState.currentAnimation ===
+          MovingAnimationState.SettingStars ||
+        mode.searchingState.currentAnimation ===
+          MovingAnimationState.MovingStars ||
+        mode.searchingState.currentAnimation ===
+          MovingAnimationState.MovingLine)
+    ) {
+      intervalId = setInterval(
+        movingAnimationStateAction[mode.searchingState.currentAnimation],
+        movingAnimationStateInterval[mode.searchingState.currentAnimation],
+      );
+    }
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [mode.searchingState.isLoading, mode.searchingState.currentAnimation]);
 
   return (
     <>

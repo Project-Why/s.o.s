@@ -76,7 +76,12 @@ function Space(props: CSSProperties) {
   /** Moving Animation Utils. */
   const getMessages = async () => {
     dispatch(modeActions.setStars([]));
-    const messages = await messageAPI.getMessages(20);
+    const [messages] = await Promise.all([
+      messageAPI.getMessages(20),
+      new Promise((resolve) => {
+        setTimeout(resolve, 500);
+      }), // Least 500ms latency
+    ]);
     if (messages) {
       const stars = messages.map<StarProps>((message) => {
         let left;
@@ -104,6 +109,8 @@ function Space(props: CSSProperties) {
         };
       });
       dispatch(modeActions.setStars(stars));
+      dispatch(modeActions.changeStars());
+      dispatch(modeActions.setStarIsLoading());
     } else {
       dispatch(modeActions.setMoveSuccess(false));
     }

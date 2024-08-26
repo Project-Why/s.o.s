@@ -12,7 +12,7 @@ export const movingAnimationStateInterval: {
   [key in MovingAnimationState]: number;
 } = {
   [MovingAnimationState.Completed]: 0,
-  [MovingAnimationState.PassingStars]: 500,
+  [MovingAnimationState.PassingStars]: 0,
   [MovingAnimationState.MovingCircle]: 666,
   [MovingAnimationState.SettingStars]: 500,
   [MovingAnimationState.MovingStars]: 500,
