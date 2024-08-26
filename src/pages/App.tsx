@@ -100,7 +100,6 @@ function App() {
             transform: mode.searchingState.initLaunch
               ? 'translate(0%, 50%)'
               : 'translate(0%, 0%)',
-            opacity: mode.searchingState.initLaunch ? 0 : 1,
           }}
         >
           <style>
