@@ -43,7 +43,7 @@ export const sendingAnimationStateInterval: {
 } = {
   [SendingAnimationState.Completed]: 0,
   [SendingAnimationState.ProgressBar]: 2500,
-  [SendingAnimationState.Sending]: 1750,
+  [SendingAnimationState.Sending]: 0,
   [SendingAnimationState.Cam]: 2000,
 };
 

@@ -21,26 +21,18 @@ function SendingAnimation(props: CSSProperties) {
 
   /** Writing Animation */
   const animationNextSound = () => {
+    dispatch(modeActions.setSendingIsStart());
+    dispatch(modeActions.setNextSendingAnimation());
     audioRef.current.currentTime = 0;
     audioRef.current.play();
-    dispatch(modeActions.setNextSendingAnimation());
   };
 
   const animationNext = () => {
     dispatch(modeActions.setNextSendingAnimation());
   };
 
-  const setToast = () => {
-    dispatch(modeActions.setNextSendingAnimation());
-    if (mode.writingState.sendSuccess) {
-      dispatch(modeActions.setWritingToast('Success'));
-    } else {
-      dispatch(modeActions.setWritingToast('Fail'));
-    }
-  };
-
   const animationLast = () => {
-    dispatch(modeActions.setSendingIsStart());
+    dispatch(modeActions.setSendingIsLoading());
     dispatch(modeActions.setNextSendingAnimation());
     if (mode.writingState.sendSuccess) {
       dispatch(modeActions.changeMode('Searching'));
@@ -54,7 +46,7 @@ function SendingAnimation(props: CSSProperties) {
   } = {
     [SendingAnimationState.Completed]: animationNext,
     [SendingAnimationState.ProgressBar]: animationNextSound,
-    [SendingAnimationState.Sending]: setToast,
+    [SendingAnimationState.Sending]: animationNext,
     [SendingAnimationState.Cam]: animationLast,
   };
 
@@ -72,6 +64,26 @@ function SendingAnimation(props: CSSProperties) {
       }
     };
   }, [mode.writingState.isStart, mode.writingState.currentAnimation]);
+
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout | null = null;
+    if (
+      mode.writingState.isLoading &&
+      (mode.writingState.currentAnimation === SendingAnimationState.Sending ||
+        mode.writingState.currentAnimation === SendingAnimationState.Cam)
+    ) {
+      intervalId = setInterval(
+        sendingAnimationStateAction[mode.writingState.currentAnimation],
+        sendingAnimationStateInterval[mode.writingState.currentAnimation],
+      );
+    }
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [mode.writingState.isLoading, mode.writingState.currentAnimation]);
+
   return (
     <>
       <img

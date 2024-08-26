@@ -36,6 +36,7 @@ export declare namespace ModeState {
   export interface WritingState extends ModeState {
     text: string;
     isStart: boolean;
+    isLoading: boolean;
     currentAnimation: SendingAnimationState;
     toast: Toast;
     sendSuccess: boolean;

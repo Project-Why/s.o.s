@@ -40,12 +40,20 @@ function DisplayWriting(props: CSSProperties) {
   };
 
   const sendMessage = async (text: string) => {
-    const response = await messageAPI.createMessage(text);
+    const [response] = await Promise.all([
+      messageAPI.createMessage(text),
+      new Promise((resolve) => {
+        setTimeout(resolve, 4250);
+      }), // Least 4250ms latency
+    ]);
     if (response) {
       dispatch(modeActions.setSendSuccess(true));
+      dispatch(modeActions.setWritingToast('Success'));
     } else {
       dispatch(modeActions.setSendSuccess(false));
+      dispatch(modeActions.setWritingToast('Fail'));
     }
+    dispatch(modeActions.setSendingIsLoading());
   };
 
   const handleMouseDown: EventHandler<MouseEvent> = () => {

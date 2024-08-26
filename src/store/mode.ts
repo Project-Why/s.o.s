@@ -23,6 +23,7 @@ const initialState: ModeState.ModeManageState = {
     currentIdx: -1,
     text: '',
     isStart: false,
+    isLoading: false,
     currentAnimation: SendingAnimationState.Completed,
     toast: 'None',
     sendSuccess: false,
@@ -225,6 +226,14 @@ export const modeSlice = createSlice({
         state.writingState,
         {
           isStart: !state.writingState.isStart,
+        },
+      );
+    },
+    setSendingIsLoading: (state: ModeState.ModeManageState) => {
+      Object.assign<ModeState.WritingState, Partial<ModeState.WritingState>>(
+        state.writingState,
+        {
+          isLoading: !state.writingState.isLoading,
         },
       );
     },
