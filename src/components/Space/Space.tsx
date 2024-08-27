@@ -75,7 +75,6 @@ function Space(props: CSSProperties) {
 
   /** Moving Animation Utils. */
   const getMessages = async () => {
-    dispatch(modeActions.setStars([]));
     const [messages] = await Promise.all([
       messageAPI.getMessages(20),
       new Promise((resolve) => {
@@ -109,11 +108,12 @@ function Space(props: CSSProperties) {
         };
       });
       dispatch(modeActions.setStars(stars));
-      dispatch(modeActions.changeStars());
-      dispatch(modeActions.setStarIsLoading());
     } else {
+      dispatch(modeActions.setStars([]));
       dispatch(modeActions.setMoveSuccess(false));
     }
+    dispatch(modeActions.changeStars());
+    dispatch(modeActions.setStarIsLoading());
   };
   const initStars = () => {
     if (mode.searchingState.stars.length === 0 && screen.width > 0) {
@@ -225,7 +225,8 @@ function Space(props: CSSProperties) {
           onMouseLeave={handleOnMouseLeave}
           style={{
             pointerEvents:
-              !mode.searchingState.isStart && mode.searchingState.initLaunch
+              mode.searchingState.currentAnimation ===
+                MovingAnimationState.Completed && mode.searchingState.initLaunch
                 ? 'auto'
                 : 'none',
             cursor: `url(${MouseSpace}), auto`,
