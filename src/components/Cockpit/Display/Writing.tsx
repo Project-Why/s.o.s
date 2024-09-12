@@ -8,8 +8,7 @@ import Toast3 from 'assets/images/Cockpit/Display/Writing/Toast/Toast_3.gif';
 import Toast4 from 'assets/images/Cockpit/Display/Writing/Toast/Toast_4.gif';
 import Toast5 from 'assets/images/Cockpit/Display/Writing/Toast/Toast_5.gif';
 
-import { messageAPI } from 'apis/message';
-
+// import { messageAPI } from 'apis/message';
 import { useAppDispatch, useAppSelector } from 'hooks';
 
 import { modeActions, selectMode } from 'store/mode';
@@ -41,7 +40,9 @@ function DisplayWriting(props: CSSProperties) {
 
   const sendMessage = async (text: string) => {
     const [response] = await Promise.all([
-      messageAPI.createMessage(text),
+      // messageAPI.createMessage(text),
+      null,
+      text,
       new Promise((resolve) => {
         setTimeout(resolve, 4250);
       }), // Least 4250ms latency

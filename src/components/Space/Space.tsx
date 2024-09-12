@@ -11,8 +11,7 @@ import Star8 from 'assets/images/Window/Star/Star_8.gif';
 import Star9 from 'assets/images/Window/Star/Star_9.gif';
 import Star10 from 'assets/images/Window/Star/Star_10.gif';
 
-import { messageAPI } from 'apis/message';
-
+// import { messageAPI } from 'apis/message';
 import { useAppSelector } from 'hooks';
 
 import { modeActions, selectMode } from 'store/mode';
@@ -22,6 +21,7 @@ import MovingAnimation from 'components/Space/MovingAnimation';
 import Star, { StarProps } from 'components/Space/Star';
 
 import { MovingAnimationState } from 'util/animation';
+import { hardMessages } from 'util/messages';
 import { isPointInPolygon } from 'util/polygon';
 
 import {
@@ -76,7 +76,7 @@ function Space(props: CSSProperties) {
   /** Moving Animation Utils. */
   const getMessages = async () => {
     const [messages] = await Promise.all([
-      messageAPI.getMessages(20),
+      hardMessages,
       new Promise((resolve) => {
         setTimeout(resolve, 500);
       }), // Least 500ms latency
